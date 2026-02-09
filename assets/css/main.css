@@ -1,0 +1,67 @@
+:root {
+    /* No Color */
+    --Transparent: hsla(0, 0%, 0%, 0);
+    
+    /* Achromatic Color Wheel */
+    --Black: hsl(0, 0%, 0%);
+    --DarkGray: hsl(0, 0%, 25%);
+    --Gray: hsl(0, 0%, 50%);
+    --LightGray: hsl(0, 0%, 75%);
+    --White: hsl(0, 0%, 100%);
+    
+    /* Chromatic Color Wheel */
+    --Mulberry: hsl(330, 50%, 50%);
+    --Red: hsl(0, 50%, 50%);
+    --Musmula: hsl(30, 50%, 50%);
+    --Yellow: hsl(60, 50%, 50%);
+    --Olive: hsl(90, 50%, 50%);
+    --Green: hsl(120, 50%, 50%);
+    --Teal: hsl(150, 50%, 50%);
+    --Azure: hsl(180, 50%, 50%);
+    --Indigo: hsl(210, 50%, 50%);
+    --Blue: hsl(240, 50%, 50%);
+    --Lavender: hsl(270, 50%, 50%);
+    --Cylamen: hsl(300, 50%, 50%);
+    
+    /* Dark Color Wheel */
+    --DarkMulberry: hsl(330, 50%, 25%);
+    --DarkRed: hsl(0, 50%, 25%);
+    --DarkMusmula: hsl(30, 50%, 25%);
+    --DarkYellow: hsl(60, 50%, 25%);
+    --DarkOlive: hsl(90, 50%, 25%);
+    --DarkGreen: hsl(120, 50%, 25%);
+    --DarkTeal: hsl(150, 50%, 25%);
+    --DarkAzure: hsl(180, 50%, 25%);
+    --DarkIndigo: hsl(210, 50%, 25%);
+    --DarkBlue: hsl(240, 50%, 25%);
+    --DarkLavender: hsl(270, 50%, 25%);
+    --DarkCylamen: hsl(300, 50%, 25%);
+    
+    /* Light Color Wheel */
+    --LightMulberry: hsl(330, 50%, 75%);
+    --LightRed: hsl(0, 50%, 75%);
+    --LightMusmula: hsl(30, 50%, 75%);
+    --LightYellow: hsl(60, 50%, 75%);
+    --LightOlive: hsl(90, 50%, 75%);
+    --LightGreen: hsl(120, 50%, 75%);
+    --LightTeal: hsl(150, 50%, 75%);
+    --LightAzure: hsl(180, 50%, 75%);
+    --LightIndigo: hsl(210, 50%, 75%);
+    --LightBlue: hsl(240, 50%, 75%);
+    --LightLavender: hsl(270, 50%, 75%);
+    --LightCylamen: hsl(300, 50%, 75%);
+    
+    /* The 12 Sounds (Hz) */
+    --C: 1;        /* 3^0 (should be called A) */
+    --Cx: 2187;    /* C# → 3^7 */
+    --D: 9;        /* 3^2 */
+    --Dx: 19683;   /* D# → 3^9 */
+    --E: 243;      /* 3^5 */
+    --F: 729;      /* F (should be called E#) → 3^6 */
+    --Fx: 177147;  /* F# (should be called F) → 3^11 */
+    --G: 3;        /* 3^1 */
+    --Gx: 6561;    /* G# → 3^8 */
+    --A: 27;       /* 3^3 */
+    --Ax: 59049;   /* A# → 3^10 */
+    --B: 81;       /* 3^4 */
+}
