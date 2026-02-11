@@ -1,64 +1,248 @@
+/* ROOT VARIABLES */
 :root {
-/* Uniform Values */
---Hairline: 1px;
---HolyTrinity: 3px;
---Thin: 0.9rem;
---Line: 1rem;
---Strong: 1.1rem;
---Triangle: 3rem;
---Hexagon: 6rem;
---Space: 12rem;
+/* sizes */
+--hairline: 1px;
+--outline: 3px;
+--default-font-size: 16px;
+--space: 1rem;
+--more-space: 2rem;
 
-/* Anti Colors */
---Transparent: hsla(0, 0%, 0%, 0);
---Shadow: hsla(0, 0%, 0%, 0.25);
+/* animation times */
+--blink: 0.1s;
+--slow-motion: 0.3s;
+--heartbeat: 1s;
+--waltz: 3s;
 
-/* Achromatic Scale */
---Black: hsl(0, 0%, 0%);
---DarkGray: hsl(0, 0%, 25%);
---Gray: hsl(0, 0%, 50%);
---LightGray: hsl(0, 0%, 75%);
---White: hsl(0, 0%, 100%);
+/* COLOR PALLETE */
 
-/* Chromatic Wheel */
---Mulberry: hsl(330, 50%, 50%);
---Red: hsl(0, 50%, 50%);
---Mushmula: hsl(30, 50%, 50%);
---Yellow: hsl(60, 50%, 50%);
---Olive: hsl(90, 50%, 50%);
---Green: hsl(120, 50%, 50%);
---Teal: hsl(150, 50%, 50%);
---Azure: hsl(180, 50%, 50%);
---Indigo: hsl(210, 50%, 50%);
---Blue: hsl(240, 50%, 50%);
---Lavender: hsl(270, 50%, 50%);
---Cylamen: hsl(300, 50%, 50%);
+/* chromatic wheel */
+--mulberry: hsl(330, 50%, 50%);
+--red: hsl(0, 50%, 50%);
+--mushmula: hsl(30, 50%, 50%);
+--yellow: hsl(60, 50%, 50%);
+--olive: hsl(90, 50%, 50%);
+--green: hsl(120, 50%, 50%);
+--teal: hsl(150, 50%, 50%);
+--azure: hsl(180, 50%, 50%);
+--indigo: hsl(210, 50%, 50%);
+--blue: hsl(240, 50%, 50%);
+--lavender: hsl(270, 50%, 50%);
+--cyclamen: hsl(300, 50%, 50%);
 
-/* Dark Wheel */
---DarkMulberry: hsl(330, 50%, 25%);
---DarkRed: hsl(0, 50%, 25%);
---DarkMushmula: hsl(30, 50%, 25%);
---DarkYellow: hsl(60, 50%, 25%);
---DarkOlive: hsl(90, 50%, 25%);
---DarkGreen: hsl(120, 50%, 25%);
---DarkTeal: hsl(150, 50%, 25%);
---DarkAzure: hsl(180, 50%, 25%);
---DarkIndigo: hsl(210, 50%, 25%);
---DarkBlue: hsl(240, 50%, 25%);
---DarkLavender: hsl(270, 50%, 25%);
---DarkCylamen: hsl(300, 50%, 25%);
+/* dark wheel */
+--dark-mulberry: hsl(330, 50%, 25%);
+--dark-red: hsl(0, 50%, 25%);
+--dark-mushmula: hsl(30, 50%, 25%);
+--dark-yellow: hsl(60, 50%, 25%);
+--dark-olive: hsl(90, 50%, 25%);
+--dark-green: hsl(120, 50%, 25%);
+--dark-teal: hsl(150, 50%, 25%);
+--dark-azure: hsl(180, 50%, 25%);
+--dark-indigo: hsl(210, 50%, 25%);
+--dark-blue: hsl(240, 50%, 25%);
+--dark-lavender: hsl(270, 50%, 25%);
+--dark-cyclamen: hsl(300, 50%, 25%);
 
-/* Light Wheel */
---LightMulberry: hsl(330, 50%, 75%);
---LightRed: hsl(0, 50%, 75%);
---LightMushmula: hsl(30, 50%, 75%);
---LightYellow: hsl(60, 50%, 75%);
---LightOlive: hsl(90, 50%, 75%);
---LightGreen: hsl(120, 50%, 75%);
---LightTeal: hsl(150, 50%, 75%);
---LightAzure: hsl(180, 50%, 75%);
---LightIndigo: hsl(210, 50%, 75%);
---LightBlue: hsl(240, 50%, 75%);
---LightLavender: hsl(270, 50%, 75%);
---LightCylamen: hsl(300, 50%, 75%);
+/* light wheel */
+--light-mulberry: hsl(330, 50%, 75%);
+--light-red: hsl(0, 50%, 75%);
+--light-mushmula: hsl(30, 50%, 75%);
+--light-yellow: hsl(60, 50%, 75%);
+--light-olive: hsl(90, 50%, 75%);
+--light-green: hsl(120, 50%, 75%);
+--light-teal: hsl(150, 50%, 75%);
+--light-azure: hsl(180, 50%, 75%);
+--light-indigo: hsl(210, 50%, 75%);
+--light-blue: hsl(240, 50%, 75%);
+--light-lavender: hsl(270, 50%, 75%);
+--light-cyclamen: hsl(300, 50%, 75%);
+
+/* achromatic scale */
+--black: hsl(0, 0%, 0%);
+--pitch-black: hsl(240, 00%, 13%);
+--dark-gray: hsl(0, 0%, 25%);
+--gray: hsl(0, 0%, 50%);
+--light-gray: hsl(0, 0%, 75%);
+--snow-white: hsl(0, 0%, 87%);
+--white: hsl(0, 0%, 100%);
+
+/* anti colors */
+--transparent: hsla(0, 0%, 0%, 0);
+--shadow: hsla(0, 0%, 0%, 0.25);
+--light: hsla(0, 0%, 100%, 0.95);
+}
+
+/* fonts */
+@font-face {
+  font-family: 'Local-Header-Font';
+  /* TODO: src: url('/fonts/...woff2') format('woff2'); */
+  src: url('/fonts/Major_Mono_Display/MajorMonoDisplay-Regular.ttf');
+  font-display: swap; 
+}
+
+@font-face {
+  font-family: 'Local-Main-Font';
+  /* TODO: src: url('/fonts/...woff2') format('woff2'); */
+  src: url('/fonts/Atkinson_Hyperlegible_Mono/AtkinsonHyperlegibleMono-VariableFont_wght.ttf');
+  font-display: swap;
+}
+
+/* BLANK CANVAS */
+
+/* remove default spacing and use border-box sizing on all elements */
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* set document-wide typography */
+html {
+  font-family: monospace;
+  font-size: var(--default-font-size);
+  line-height: 1.5;
+}
+
+body {
+  min-height: 100vh;
+  font-family: 'Local-Main-Font';
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Local-Header-Font';
+}
+
+/* remove default list styling */
+ul, ol {
+  list-style: none;
+}
+
+/* keyboard navigation focus outline */
+:focus-visible {
+  outline: var(--outline) solid var(--yellow);
+  outline-offset: var(--outline);
+}
+
+table {
+  border-collapse: collapse;
+}
+
+/* normalize form elements */
+input, button, select, textarea {
+  font: inherit;
+  color: inherit;
+  background: var(--transparent);
+  border: 0;
+}
+
+button, [type="button"], [type="submit"] {
+  cursor: pointer;
+}
+
+/* responsive media elements */
+img, picture, video, canvas, svg {
+  display: block;
+  max-width: 100%;
+}
+
+/* PAINTED CANVAS */
+
+/* link states */
+a {
+  color: var(--azure);
+  text-decoration: inherit;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+a:active {
+  color: var(--red);
+}
+
+a:visited {
+  color: var(--lavender);
+}
+
+/* text selection */
+::selection, ::-moz-selection {
+  background: var(--blue);
+  color: var(--yellow);
+}
+
+/* header navigation */
+header {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  transition: transform var(--slow-motion) ease-in-out;
+  will-change: transform;
+  background-color: var(--light);
+  box-shadow: 0 var(--hairline) var(--outline) var(--shadow);
+}
+
+header.hidden {
+  transform: translateY(-100%);
+}
+
+nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space) var(--more-space);
+  padding: var(--more-space) var(--space) var(--space) var(--space);
+  border-bottom: var(--hairline) solid var(--black);
+}
+
+nav a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+}
+
+/* navigation icons */
+.nav-icon {
+  width: 32px;
+  height: 32px;
+  vertical-align: middle;
+  transition: transform var(--blink) ease-in-out, filter var(--blink) ease-in-out;
+}
+
+.nav-icon:hover {
+  filter: drop-shadow(0 0 var(--outline) var(--shadow));
+  transform: scale(1.1);
+}
+
+.nav-icon:active {
+  filter: invert(1) drop-shadow(0 0 var(--outline) var(--shadow));
+  transform: scale(1.2);
+}
+
+/* main */
+main {
+  display: flex;
+  flex-direction: column;
+  padding: var(--space) var(--more-space);
+  min-height: 100vh;
+}
+
+p {
+  text-align: justify;
+}
+
+/* footer */
+footer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: var(--space) var(--more-space);
+  padding: var(--more-space) var(--space) var(--space);
+  background: linear-gradient(to bottom, var(--white), var(--snow-white));
+}
+
+/* responsive navigation */
+@media (max-width: 1080px) {
+  /* TODO! */
 }
