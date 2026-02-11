@@ -4,8 +4,10 @@
 --hairline: 1px;
 --outline: 3px;
 --default-font-size: 16px;
+--icon-size: 32px;
 --space: 1rem;
 --more-space: 2rem;
+--sidebar-width: 10vw;
 
 /* animation times */
 --blink: 0.1s;
@@ -110,6 +112,7 @@ body {
 
 h1, h2, h3, h4, h5, h6 {
   font-family: 'Local-Header-Font';
+  margin: var(--space) ;
 }
 
 /* remove default list styling */
@@ -179,7 +182,6 @@ header {
   transition: transform var(--slow-motion) ease-in-out;
   will-change: transform;
   background-color: var(--light);
-  box-shadow: 0 var(--hairline) var(--outline) var(--shadow);
 }
 
 header.hidden {
@@ -192,7 +194,8 @@ nav {
   justify-content: center;
   gap: var(--space) var(--more-space);
   padding: var(--more-space) var(--space) var(--space) var(--space);
-  border-bottom: var(--hairline) solid var(--black);
+  /* border-bottom: var(--hairline) solid var(--black); */
+  box-shadow: 0 var(--hairline) var(--outline) var(--shadow);
 }
 
 nav a {
@@ -204,8 +207,8 @@ nav a {
 
 /* navigation icons */
 .nav-icon {
-  width: 32px;
-  height: 32px;
+  width: var(--icon-size);
+  height: var(--icon-size);
   vertical-align: middle;
   transition: transform var(--blink) ease-in-out, filter var(--blink) ease-in-out;
 }
@@ -220,16 +223,23 @@ nav a {
   transform: scale(1.2);
 }
 
+nav a.active .nav-icon {
+  filter: invert(1) drop-shadow(0 0 var(--outline) var(--shadow));
+  transform: scale(1.2);
+}
+
+
 /* main */
 main {
   display: flex;
   flex-direction: column;
-  padding: var(--space) var(--more-space);
+  padding: var(--space) calc(var(--sidebar-width) + var(--more-space));
   min-height: 100vh;
 }
 
 p {
   text-align: justify;
+  margin: var(--space) ;
 }
 
 /* footer */
@@ -243,6 +253,26 @@ footer {
 }
 
 /* responsive navigation */
-@media (max-width: 1080px) {
-  /* TODO! */
+@media (min-width: 1024px), (orientation: landscape) and (min-width: 768px) {
+  header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    min-width: var(--sidebar-width);
+  }
+  
+  header.hidden {
+    transform: translateX(-0%); /* Hide to the left instead of up */
+  }
+  
+  nav {
+    flex-direction: column;
+    justify-content: flex-start;
+    height: 100%;
+    gap: var(--more-space) var(--space);
+    padding: var(--more-space) var(--space) var(--more-space) var(--more-space);
+    border-bottom: none;
+    /* border-right: var(--hairline) solid var(--black); */
+  }
 }
