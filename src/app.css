@@ -4,10 +4,10 @@
 --hairline: 1px;
 --outline: 3px;
 --default-font-size: 16px;
---icon-size: 32px;
+--icon-size: 48px;
 --space: 1rem;
 --more-space: 2rem;
---sidebar-width: 10vw;
+--sidebar-width: 15vw;
 
 /* animation times */
 --blink: 0.1s;
@@ -108,6 +108,7 @@ html {
 body {
   min-height: 100vh;
   font-family: 'Local-Main-Font';
+  background: linear-gradient(to bottom, var(--white), var(--snow-white));
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -193,9 +194,9 @@ nav {
   align-items: center;
   justify-content: center;
   gap: var(--space) var(--more-space);
-  padding: var(--more-space) var(--space) var(--space) var(--space);
-  /* border-bottom: var(--hairline) solid var(--black); */
+  padding: var(--more-space);
   box-shadow: 0 var(--hairline) var(--outline) var(--shadow);
+  margin-top: var(--space);
 }
 
 nav a {
@@ -233,7 +234,7 @@ nav a.active .nav-icon {
 main {
   display: flex;
   flex-direction: column;
-  padding: var(--space) calc(var(--sidebar-width) + var(--more-space));
+  padding: var(--space);
   min-height: 100vh;
 }
 
@@ -248,12 +249,11 @@ footer {
   justify-content: center;
   align-items: center;
   gap: var(--space) var(--more-space);
-  padding: var(--more-space) var(--space) var(--space);
-  background: linear-gradient(to bottom, var(--white), var(--snow-white));
+  padding: var(--more-space);
 }
 
 /* responsive navigation */
-@media (min-width: 1024px), (orientation: landscape) and (min-width: 768px) {
+@media (min-width: 768px) and (orientation: landscape) {
   header {
     position: fixed;
     top: 0;
@@ -271,8 +271,10 @@ footer {
     justify-content: flex-start;
     height: 100%;
     gap: var(--more-space) var(--space);
-    padding: var(--more-space) var(--space) var(--more-space) var(--more-space);
-    border-bottom: none;
-    /* border-right: var(--hairline) solid var(--black); */
+    margin-top: 0;
+  }
+
+  main {
+    margin-left: var(--sidebar-width);
   }
 }
