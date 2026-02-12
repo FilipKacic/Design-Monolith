@@ -1,8 +1,54 @@
+<script lang="ts">
+  import { FREQUENCIES } from '$lib/modes';
+</script>
+
 <h1>About This Project</h1>
+
+<h2>Musical Theory</h2>
+<p><i>The truth is so simple a child can grasp it, yet so complex that the most advanced machine algorithm cannot calculate it.</i></p>
+<ul>
+  {#each FREQUENCIES as { note, frequency }, i}
+    <li>3<sup>{i}</sup> = {frequency} Hz ({note})</li>
+  {/each}
+</ul>
+
+<h2>Conclusions</h2>
+
+<h3>The First Note</h3>
 <p>
-    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam ultricies rhoncus ex in rhoncus. Duis id turpis venenatis, dictum nisi non, finibus justo. Etiam ornare nunc ac metus congue facilisis. Vivamus ex neque, mollis ut tincidunt id, suscipit congue turpis. Ut sit amet risus venenatis, viverra mauris nec, facilisis odio. Sed vulputate lacinia ex eu hendrerit. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Integer lobortis ex id dolor iaculis, nec facilisis augue rutrum. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec vitae imperdiet libero. Nam ac eleifend augue, vitae maximus elit. In tincidunt auctor ex, imperdiet fermentum ex luctus ut. Vivamus id velit at velit viverra fringilla et in urna. Maecenas cursus consequat mi nec bibendum. Ut eget orci tellus. Vestibulum finibus luctus enim eu facilisis.
-    Nulla a odio ornare, interdum metus sit amet, finibus purus. Nullam id justo molestie turpis vestibulum lobortis in non libero. Proin pretium tortor quis dolor fringilla rhoncus a non ex. Proin bibendum, ex eu lacinia iaculis, libero turpis pulvinar elit, sed tempor lacus nulla vel lacus. Phasellus rhoncus lacinia arcu sit amet eleifend. Quisque vel felis tortor. Nullam at libero tristique mauris aliquam scelerisque. Vestibulum at rutrum arcu, eu fringilla purus. Nulla mattis vehicula augue, non congue felis porttitor sed.
-    Mauris consectetur ex et nunc ultrices laoreet. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Sed nec eros et neque malesuada ultricies. Cras eu gravida nunc. Nunc a quam pellentesque, vulputate odio sit amet, consequat dui. Sed aliquet odio id magna laoreet congue. Ut auctor molestie placerat. Donec ut leo vitae est facilisis pretium ac sit amet ex. Sed cursus, libero in tempus cursus, neque nisl consequat purus, sed commodo nibh est id est. Vivamus et congue nibh. Donec nisl elit, consectetur sit amet imperdiet at, luctus eu sem. Aenean porta nisl aliquam tincidunt vestibulum. Praesent ac bibendum sem. Cras pulvinar in est sed laoreet.
-    Nulla urna justo, hendrerit at vulputate vel, convallis non tortor. Interdum et malesuada fames ac ante ipsum primis in faucibus. Aliquam pretium in augue et ullamcorper. Integer ornare accumsan eros, vel faucibus massa ullamcorper sed. Suspendisse potenti. Aenean eget convallis purus, in vehicula nisi. Curabitur lobortis elit ac dolor elementum, sed semper mauris venenatis. Vivamus ut auctor leo, rutrum cursus lectus. Cras porta ornare eros et pulvinar. Aenean imperdiet, est vel eleifend blandit, ipsum leo tincidunt quam, ut sagittis odio diam non quam.
-    Aenean vestibulum at erat quis condimentum. Aliquam vel felis at lorem lacinia tempor eget id tortor. Nulla facilisi. Quisque ultricies, erat pretium iaculis placerat, lorem libero commodo risus, non dignissim metus sapien vitae diam. In aliquam sem nibh, nec ornare ex tincidunt ut. Sed at dui eget dolor tempor pellentesque eget euismod augue. Sed tempus, ligula vel tincidunt luctus, ante est accumsan enim, vel commodo magna elit at leo. Sed pretium dapibus odio eu commodo. Curabitur ut auctor tellus. Cras elementum enim ac ipsum pulvinar bibendum. Proin erat magna, placerat eu semper ac, dapibus non lacus. 
+    The C note is the note with the frequency of:
+    3<sup>0</sup> = 1 Hz (Hertz [one heartbeat])
+    which is the foundation of the tuning system.
+    Therefore, the C note <i>should</i> be called the A note in correspondece with the alphabet.
+</p>
+<h3>The Seventh And The Twelvth Note</h3>
+<p>
+    Starting from the first note, going up the powers of the number 3, we get to the seventh note with the frequency of:
+    3<sup>6</sup> = 729 Hz (F#).
+    The note 'F#' should not be a sharp, nor a black key on a keyboard.
+    By that fashion, the note 'F' should be a sharp and a black key on a keyboard.
+</p>
+<h3>Musical Note Names Overhaul</h3>
+<p>To conclude:</p>
+<ul>
+    <li>C should be called A</li>
+    <li>C# should be called A#</li>
+    <li>D should be called B</li>
+    <li>D# should be called B#</li>
+    <li>E should be called C</li>
+    <li>F should be called C#</li>
+    <li>F# should be called D</li>
+    <li>G should be called E</li>
+    <li>G# should be called E#</li>
+    <li>A should be called F</li>
+    <li>A# should be called F#</li>
+    <li>B should be called G</li>
+</ul>
+
+
+<h2>Post Scriptum</h2>
+<p>
+    I have not discovered anything new under the Sun, but I have filtered the chaos of infomations into a fragment of truth about our sonic reality and connected it with colors and celestial patterns as best as I could.
+    Thank God and forgive me if I had made mistakes!
+    My hopes are that this monolith of knowledge is used by the good man in audio and/or visual design to create more beauty.
 </p>
