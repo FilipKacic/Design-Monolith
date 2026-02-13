@@ -8,18 +8,33 @@ export type ModeName =
   | "Dorian"
   | "Phrygian";
 
-const notesGenesis = [
-  "C",  "G",  "D",  "A",  "E",  "B", "F#",
-  "C#", "G#", "D#", "A#", "F"
+export type NewModeName =
+  | "Lunar"
+  | "Mercurial"
+  | "Aeolian"
+  | "Solar"
+  | "Martial"
+  | "Jovial"
+  | "Saturnine";
+
+export const notesGenesis = [
+  "C",  "G",  "D",  "A",  "E",  "B", "F#", "C#", "G#", "D#", "A#", "F"
+];
+
+export const newNotesGenesis = [
+  "A",  "E",  "B",  "F",  "C",  "G", "D", "A#", "E#", "B#", "F#", "C#"
 ];
 
 export const notesRevelation = [
   "C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"
 ];
 
+export const newNotesRevelation = [
+  "A", "A#", "B", "B#", "C", "C#", "D", "E", "E#", "F", "F#", "G", 
+];
 
-// Base Lydian pattern
-const basePattern = [2, 2, 2, 1, 2, 2, 1];
+// Base Lydian / Lunar pattern
+const basePattern = [2, 2, 2, 1, 2, 2, 1]; // W-W-W-H-W-W-H
 
 // Mode names in rotation order starting from Lydian
 const modeNames: ModeName[] = [
@@ -31,6 +46,18 @@ const modeNames: ModeName[] = [
   "Dorian",
   "Phrygian"
 ];
+
+// Map the cosmological names to the canonical modal system
+export const modeAlias: Record<NewModeName, ModeName> = {
+  Lunar: "Lydian",
+  Mercurial: "Mixolydian",
+  Aeolian: "Aeolian",
+  Solar: "Locrian",
+  Martial: "Ionian",
+  Jovial: "Dorian",
+  Saturnine: "Phrygian"
+};
+
 
 // Rotate array utility
 function rotateArray(arr: number[], positions: number): number[] {
@@ -59,6 +86,13 @@ export function getScale(root: string, mode: ModeName) {
   
   return scale; // Returns 7 notes
 }
+
+// Generate a scale using the cosmological (planetary) names
+export function getNewScale(root: string, mode: NewModeName) {
+  const canonicalMode = modeAlias[mode];
+  return getScale(root, canonicalMode);
+}
+
 
 // Note frequencies based on powers of 3, starting from C at 1 Hz
 export const FREQUENCIES: { note: string; frequency: number }[] = notesGenesis.map((note, i) => ({

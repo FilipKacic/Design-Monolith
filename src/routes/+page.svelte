@@ -45,70 +45,60 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 2rem;
-    margin: 2rem 0;
+    gap: var(--more-space);
+    margin: var(--more-space) 0;
   }
   
   .input-group {
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
-  }
-  
-  label {
-    font-weight: 600;
-    font-size: 0.9rem;
+    gap: var(--space);
   }
   
   select {
-    padding: 0.5rem 1rem;
+    padding: var(--less-space) var(--space);
     font-size: 1rem;
-    border: 2px solid #ccc;
-    border-radius: 4px;
-    background: white;
+    border: var(--hairline) solid var(--light-gray);
     cursor: pointer;
+    background-color: var(--white);
+    transition: border-color var(--blink) ease-in-out;
   }
   
   select:hover {
-    border-color: #888;
+    border-color: var(--black);
+    
   }
   
   .scale-output {
-    margin-top: 3rem;
-  }
-  
-  .scale-output h2 {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-bottom: 1rem;
-    color: #333;
+    margin-top: var(--more-space);
   }
   
   .notes {
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 1rem;
     flex-wrap: wrap;
+    gap: var(--space);
   }
   
   .note {
-    padding: 1rem 1.5rem;
-    background: #f0f0f0;
-    border-radius: 8px;
-    font-size: 1.2rem;
-    font-weight: 600;
-    transition: all 0.2s;
+    padding: var(--space) var(--more-space);
+    background: var(--white);
+    transition: all var(--blink) ease-in-out;
   }
   
   .note.root {
-    background: #4a90e2;
-    color: white;
+    font-weight: bold;
+  }
+
+  .note:hover {
+    transform: scale(1.1);
+    box-shadow: 0 var(--hairline) var(--outline) var(--shadow);
   }
   
-  .note:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-  }
+  .note:active {
+  transform: scale(0.9);
+  color: var(--white);
+  background: var(--black);
+}
 </style>

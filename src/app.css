@@ -5,6 +5,7 @@
   --outline: 3px;
   --default-font-size: 16px;
   --icon-size: 48px; /* minimum interactive area */
+  --less-space: 0.5rem;
   --space: 1rem;
   --more-space: 2rem;
   --sidebar-width: 15vw;
