@@ -5,6 +5,7 @@
 <h1>About This Project</h1>
 
 <h2>Conclusions</h2>
+
 <h3>Why Twelve Notes In Music</h3>
 <p>
   The 1 : 2 ratio gives us the same note in a higher octave (the 2:1 ratio gives us the same note in a lower octave).
