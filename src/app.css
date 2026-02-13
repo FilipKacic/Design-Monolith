@@ -222,22 +222,23 @@
     width: var(--icon-size);
     height: var(--icon-size);
     vertical-align: middle;
+    filter: invert(1) drop-shadow(0 0 var(--outline) var(--shadow));
     transition: transform var(--blink) ease-in-out, filter var(--blink) ease-in-out;
   }
 
   .nav-icon:hover {
-    filter: drop-shadow(0 0 var(--outline) var(--shadow));
-    transform: scale(1.1);
+    filter: invert(1) drop-shadow(0 0 var(--outline) var(--shadow));
+    transform: scale(1.2);
   }
 
   .nav-icon:active {
-    filter: invert(1) drop-shadow(0 0 var(--outline) var(--shadow));
-    transform: scale(1.2);
+    filter: invert(0) drop-shadow(0 0 var(--outline) var(--shadow));
+    transform: scale(0.9);
   }
 
   nav a.active .nav-icon {
-    filter: invert(1) drop-shadow(0 0 var(--outline) var(--shadow));
-    transform: scale(1.2);
+    filter: invert(0) drop-shadow(0 0 var(--outline) var(--shadow));
+    transform: scale(0.9);
   }
 
 

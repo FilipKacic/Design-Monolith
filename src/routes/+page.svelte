@@ -92,7 +92,7 @@
   }
 
   .note:hover {
-    transform: scale(1.1);
+    transform: scale(1.2);
     box-shadow: 0 var(--hairline) var(--outline) var(--shadow);
   }
   
