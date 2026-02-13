@@ -1,101 +1,129 @@
 // src/lib/modes.ts
-export type ModeName =
-  | "Lydian"
-  | "Mixolydian"
-  | "Aeolian"
-  | "Locrian"
-  | "Ionian"
-  | "Dorian"
-  | "Phrygian";
-
-export type NewModeName =
-  | "Lunar"
-  | "Mercurial"
-  | "Aeolian"
-  | "Solar"
-  | "Martial"
-  | "Jovial"
-  | "Saturnine";
-
-export const notesGenesis = [
-  "C",  "G",  "D",  "A",  "E",  "B", "F#", "C#", "G#", "D#", "A#", "F"
+export const NOTES_1 = [
+  "C1", "G1", "D1", "A1", "E1", "B1", "F#1"
+  /*
+  "A1", "E1", "B1", "F1", "C1", "G1", "D1"
+  */
 ];
 
-export const newNotesGenesis = [
-  "A",  "E",  "B",  "F",  "C",  "G", "D", "A#", "E#", "B#", "F#", "C#"
+export const NOTES_1_SHARP = [
+  "C1#", "G1#", "D1#", "A1#", "F1"
+  /*
+  "A1#", "E1#", "B1#", "F1#", "C1#"
+  */
 ];
 
-export const notesRevelation = [
-  "C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"
+export const NOTES_1_ALL = [
+  ...NOTES_1, ...NOTES_1_SHARP
+]
+
+export const NOTES_2 = [
+  "C2", "G2", "D2", "A2", "E2", "B2"
+  /*
+  "A2", "E2", "B2", "F2", "C2", "G2"
+  */
 ];
 
-export const newNotesRevelation = [
-  "A", "A#", "B", "B#", "C", "C#", "D", "E", "E#", "F", "F#", "G", 
-];
+export const NOTES_ALL = [
+  ...NOTES_1, ...NOTES_1_SHARP, ...NOTES_2
+]
 
-// Base Lydian / Lunar pattern
-const basePattern = [2, 2, 2, 1, 2, 2, 1]; // W-W-W-H-W-W-H
-
-// Mode names in rotation order starting from Lydian
-const modeNames: ModeName[] = [
-  "Lydian",
-  "Mixolydian",
-  "Aeolian",
-  "Locrian",
-  "Ionian",
-  "Dorian",
-  "Phrygian"
-];
-
-// Map the cosmological names to the canonical modal system
-export const modeAlias: Record<NewModeName, ModeName> = {
-  Lunar: "Lydian",
-  Mercurial: "Mixolydian",
-  Aeolian: "Aeolian",
-  Solar: "Locrian",
-  Martial: "Ionian",
-  Jovial: "Dorian",
-  Saturnine: "Phrygian"
-};
-
-
-// Rotate array utility
-function rotateArray(arr: number[], positions: number): number[] {
-  return arr.slice(positions).concat(arr.slice(0, positions));
-}
-
-// Generate all modes by rotating the base pattern
-export const modes: Record<ModeName, number[]> = {} as Record<ModeName, number[]>;
-modeNames.forEach((mode, i) => {
-  modes[mode] = rotateArray(basePattern, i);
-});
-
-// Generate a scale from root note and mode
-export function getScale(root: string, mode: ModeName) {
-  const startIndex = notesRevelation.indexOf(root);
-  if (startIndex === -1) throw new Error("Invalid root note");
-  
-  const intervals = modes[mode];
-  const scale: string[] = [root];
-  let currentIndex = startIndex;
-  
-  for (const step of intervals.slice(0, -1)) { // Iterate only 6 times
-    currentIndex = (currentIndex + step) % notesRevelation.length;
-    scale.push(notesRevelation[currentIndex]);
-  }
-  
-  return scale; // Returns 7 notes
-}
-
-// Generate a scale using the cosmological (planetary) names
-export function getNewScale(root: string, mode: NewModeName) {
-  const canonicalMode = modeAlias[mode];
-  return getScale(root, canonicalMode);
-}
-
-
-// Note frequencies based on powers of 3, starting from C at 1 Hz
-export const FREQUENCIES: { note: string; frequency: number }[] = notesGenesis.map((note, i) => ({
+export const FREQUENCIES: { note: string; frequency: number }[] = NOTES_ALL.map((note, i) => ({
   note,
   frequency: 3 ** i
 }));
+
+export const MODES = [
+  "Lunar",
+  "Mercurial",
+  "Venerean",
+  "Solar",
+  "Martial",
+  "Jovial",
+  "Saturnine"
+] as const;
+
+export type Mode = typeof MODES[number];
+
+// Starting offsets for each mode pattern
+const MODE_OFFSETS = [0, -2, -4, -6, -1, -3, -5];
+
+// Generate a 7-note pattern starting from the given offset
+function getPattern(offset: number): number[] {
+  return Array.from({ length: 7 }, (_, i) => offset + i);
+}
+
+// Maps patterns to all modes dynamically
+export const MODE_PATTERNS: { mode: Mode; pattern: number[] }[] = MODES.map((mode, i) => ({
+  mode,
+  pattern: getPattern(MODE_OFFSETS[i])
+}));
+
+export function sortNotesAlphabetically(noteArray: string[]): { note: string; frequency: number }[] {
+  const noteSet = new Set(noteArray);
+  return FREQUENCIES
+    .filter(f => noteSet.has(f.note))
+    .sort((a, b) => a.note.localeCompare(b.note));
+}
+
+export const NOTES_1_ALL_SORTED = sortNotesAlphabetically(NOTES_1_ALL);
+
+/**
+ * Generates a scale based on a root note and mode
+ * @param rootNote - The root note from NOTES_1
+ * @param mode - The mode to use for the scale pattern
+ * @returns Array of 7 notes with their frequencies forming the scale
+ */
+/**
+ * Generates a scale based on a root note and mode
+ * @param rootNote - The root note from NOTES_1
+ * @param mode - The mode to use for the scale pattern
+ * @returns Array of 7 notes with their frequencies forming the scale
+ */
+export function getScale(rootNote: string, mode: Mode, sorted: boolean = false): { note: string; frequency: number }[] {
+  // Find the root note's index in FREQUENCIES
+  const rootIndex = FREQUENCIES.findIndex(f => f.note === rootNote);
+  
+  if (rootIndex === -1) {
+    throw new Error(`Root note ${rootNote} not found in FREQUENCIES`);
+  }
+  
+  // Get the pattern for this mode
+  const modePattern = MODE_PATTERNS.find(mp => mp.mode === mode);
+  
+  if (!modePattern) {
+    throw new Error(`Mode ${mode} not found`);
+  }
+  
+  // Build the scale by applying pattern offsets to root index
+  const scale: { note: string; frequency: number }[] = [];
+  const arrayLength = NOTES_1_ALL.length; // Dynamically get length from NOTES_1_ALL
+  
+  for (const offset of modePattern.pattern) {
+    let noteIndex;
+    
+    if (offset < 0) {
+      // For negative offsets, wrap around within NOTES_1_ALL (first 12 notes)
+      noteIndex = ((rootIndex + offset) % arrayLength + arrayLength) % arrayLength;
+    } else {
+      // For positive offsets, use the full FREQUENCIES array
+      noteIndex = rootIndex + offset;
+  }
+  
+  scale.push(FREQUENCIES[noteIndex]);
+}
+  
+  // Sort alphabetically starting from root note if requested
+  if (sorted) {
+    // First sort alphabetically
+    const sortedScale = [...scale].sort((a, b) => a.note.localeCompare(b.note));
+    
+    // Find the root note position in the sorted array
+    const rootPosition = sortedScale.findIndex(n => n.note === rootNote);
+    
+    // Rotate array so root note is first
+    return [...sortedScale.slice(rootPosition), ...sortedScale.slice(0, rootPosition)];
+  }
+  
+  return scale;
+}
