@@ -4,36 +4,53 @@
     NEW_FREQUENCIES,
     NOTES_ALL,
     NEW_NOTES_ALL,
+    getScale,
+    MODES,
+    NEW_MODES,
+    type Mode,
+    type newMode,
   } from '$lib/modes';
   
   // Toggle between naming systems
   let useNewNaming = false;
   
-  // Standard tuning notes (using traditional naming by default)
-  const standardTuningOld = ['E1', 'A1', 'D1', 'G1', 'B1', 'E1'];
+  // Exponent values for each string - MODIFY THESE VALUES to adjust frequencies by 2^x
+  // String 1: 2^0 = ×1
+  // String 2: 2^2 = ×4
+  // String 3: 2^4 = ×16
+  // String 4: 2^6 = ×64
+  // String 5: 2^0 = ×1
+  // String 6: 2^2 = ×4
+  const stringExponents = [0, 2, 4, 6, 0, 2];
   
-  // Function to convert old note names to new note names based on index position
-  function convertToNewNaming(oldNotes: string[]): string[] {
-    return oldNotes.map(oldNote => {
-      // Find the index of the old note in NOTES_ALL
-      const oldIndex = NOTES_ALL.indexOf(oldNote);
-      if (oldIndex === -1) return oldNote; // fallback if not found
-      
-      // Get the new note at the same index position
-      return NEW_NOTES_ALL[oldIndex] || oldNote;
-    });
-  }
+  // Standard guitar tuning is always E-A-D-G-B-E (from low to high: 6th to 1st string)
+  // These note names will automatically change when switching naming systems
+  // because we're looking them up in the appropriate FREQUENCIES array
+  const standardTuningNotes = ['E1', 'A1', 'D1', 'G1', 'B1', 'E1'];
   
-  // Dynamically derive the new tuning from the old tuning
-  const standardTuningNew = convertToNewNaming(standardTuningOld);
+  // Get the equivalent note names in the current naming system
+  $: standardTuning = standardTuningNotes.map(oldNote => {
+    // Find the frequency of this note in the old system
+    const oldFreq = FREQUENCIES.find(f => f.note === oldNote);
+    if (!oldFreq) return oldNote;
+    
+    // Find the note with the same frequency in the current system
+    const currentFreq = frequencies.find(f => f.frequency === oldFreq.frequency);
+    return currentFreq ? currentFreq.note : oldNote;
+  });
   
-  $: standardTuning = useNewNaming ? standardTuningNew : standardTuningOld;
   $: frequencies = useNewNaming ? NEW_FREQUENCIES : FREQUENCIES;
   
   // Get frequency for a note
   function getFrequency(note: string): number {
     const freq = frequencies.find(f => f.note === note);
     return freq ? freq.frequency : 0;
+  }
+  
+  // Get adjusted frequency for a string
+  function getAdjustedFrequency(note: string, exponent: number): number {
+    const baseFreq = getFrequency(note);
+    return baseFreq * Math.pow(2, exponent);
   }
   
   // Color mapping for the 12 notes
@@ -68,24 +85,24 @@
   // Copy frequency to clipboard
   async function copyToClipboard(frequency: number, note: string) {
     try {
-      await navigator.clipboard.writeText(frequency.toString());
+      await navigator.clipboard.writeText(frequency.toFixed(2));
       
-      toastMessage = `Copied ${note}: ${frequency}Hz`;
+      toastMessage = `Copied ${note}: ${frequency.toFixed(2)}Hz`;
       showToast = true;
       
       if (toastTimeout) clearTimeout(toastTimeout);
       
       toastTimeout = setTimeout(() => {
         showToast = false;
-      }, 1500);
+      }, 2000);
       
-      console.log(`Copied ${note}: ${frequency}Hz to clipboard`);
+      console.log(`Copied ${note}: ${frequency.toFixed(2)}Hz to clipboard`);
     } catch (err) {
       toastMessage = 'Failed to copy';
       showToast = true;
       setTimeout(() => {
         showToast = false;
-      }, 1500);
+      }, 2000);
       console.error('Failed to copy to clipboard:', err);
     }
   }
@@ -108,23 +125,28 @@
   </label>
 </div>
 
-<h2>Standard Tuning</h2>
+<h2>Standard Guitar Tuning</h2>
+
 <ul class="tuning-list">
   {#each standardTuning as note, i}
-    {@const frequency = getFrequency(note)}
+    {@const baseFrequency = getFrequency(note)}
+    {@const adjustedFrequency = getAdjustedFrequency(note, stringExponents[i])}
+    {@const multiplier = Math.pow(2, stringExponents[i])}
     <li>
-      <span class="string-number">String {1 + i}:</span>
-      <span 
-        class="note"
-        style="background-color: {getNoteColor(frequency)};"
-        on:click={() => copyToClipboard(frequency, note)}
-        on:keydown={(e) => e.key === 'Enter' && copyToClipboard(frequency, note)}
-        role="button"
-        tabindex="0"
-      >
-        {note}
-        <span class="frequency">({frequency}Hz)</span>
-      </span>
+      <div class="string-row">
+        <span class="string-number">String {1 + i}:</span>
+        <span 
+          class="note"
+          style="background-color: {getNoteColor(baseFrequency)};"
+          on:click={() => copyToClipboard(adjustedFrequency, note)}
+          on:keydown={(e) => e.key === 'Enter' && copyToClipboard(adjustedFrequency, note)}
+          role="button"
+          tabindex="0"
+        >
+          {note}
+          <span class="frequency">({adjustedFrequency.toFixed(2)}Hz)</span>
+        </span>
+      </div>
     </li>
   {/each}
 </ul>
@@ -139,7 +161,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: var(--space);
+    gap: var(--more-space);
     list-style: none;
     margin: var(--more-space) 0;
     padding: 0;
@@ -152,9 +174,13 @@
     margin: 0;
   }
   
+  .string-row {
+    display: flex;
+    align-items: center;
+    gap: var(--space);
+  }
+  
   .string-number {
-    font-weight: bold;
-    min-width: 5rem;
     text-align: right;
   }
   
@@ -163,9 +189,8 @@
     background: var(--white);
     transition: all var(--blink) ease-in-out;
     cursor: pointer;
-    border: var(--hairline) solid var(--light-gray);
-    min-width: 8rem;
     text-align: center;
+    position: relative;
   }
   
   .note:hover {
