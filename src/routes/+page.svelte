@@ -9,101 +9,44 @@
     type Mode,
     type newMode
   } from '$lib/modes';
+  import Toast from '$lib/components/Toast.svelte';
+  import { copyFrequency } from '$lib/utils/clipboard';
+  import { getNoteColor } from '$lib/utils/colors';
   
   // Toggle between naming systems
   let useNewNaming = false;
+  
+  // Track by INDEX instead of value
+  let selectedNoteIndex = 0;
+  let selectedModeIndex = 0;
   
   // Reactive variables that switch based on naming system
   $: currentNotes = useNewNaming ? NEW_NOTES_1_ALL : NOTES_1_ALL;
   $: currentModes = useNewNaming ? NEW_MODES : MODES;
   
-  // Selected values
-  let selectedNote = NOTES_1_ALL[0];
-  let selectedMode: Mode | newMode = MODES[0];
-  
-  // Update selected values when switching naming systems
-  $: if (useNewNaming) {
-    selectedNote = NEW_NOTES_1_ALL[0];
-    selectedMode = NEW_MODES[0];
-  } else {
-    selectedNote = NOTES_1_ALL[0];
-    selectedMode = MODES[0];
-  }
+  // Derive the actual note/mode from the index
+  $: selectedNote = currentNotes[selectedNoteIndex];
+  $: selectedMode = currentModes[selectedModeIndex];
   
   // Generate scale with the useNew parameter
   $: scale = getScale(selectedNote, selectedMode, true, useNewNaming);
-  
-  console.log('All frequencies:', FREQUENCIES);
 
   // Toast notification state
   let showToast = false;
   let toastMessage = '';
-  let toastTimeout: ReturnType<typeof setTimeout>; // Fixed type
-
-  // Color mapping for the 12 notes
-  const noteColors: { [key: number]: string } = {
-    0: 'var(--light-mulberry)',
-    1: 'var(--light-red)',
-    2: 'var(--light-mushmula)',
-    3: 'var(--light-yellow)',
-    4: 'var(--light-olive)',
-    5: 'var(--light-green)',
-    6: 'var(--light-teal)',
-    7: 'var(--light-azure)',
-    8: 'var(--light-indigo)',
-    9: 'var(--light-blue)',
-    10: 'var(--light-lavender)',
-    11: 'var(--light-cyclamen)',
-  };
-  
-  // Function to get color based on frequency index
-  function getNoteColor(frequency: number): string {
-    // Find the index in FREQUENCIES array
-    const index = FREQUENCIES.findIndex(f => f.frequency === frequency);
-    if (index === -1) return 'var(--white)';
-    
-    // Map to color (cycle through 12 colors)
-    const colorIndex = index % 12;
-    return noteColors[colorIndex] || 'var(--white)';
-  }
 
   // Copy frequency to clipboard
-  async function copyToClipboard(frequency: number, note: string) {
-    try {
-      await navigator.clipboard.writeText(frequency.toString());
-      
-      // Show toast notification
-      toastMessage = `Copied to clipboard!`;
-      showToast = true;
-      
-      // Clear existing timeout
-      if (toastTimeout) clearTimeout(toastTimeout);
-      
-      // Hide toast after 2 seconds
-      toastTimeout = setTimeout(() => {
-        showToast = false;
-      }, 2000);
-      
-      console.log(`Copied to clipboard!`);
-    } catch (err) {
-      toastMessage = 'Failed to copy...';
-      showToast = true;
-      setTimeout(() => {
-        showToast = false;
-      }, 2000);
-      console.error('Failed to copy to clipboard:', err);
-    }
+  async function handleCopy(frequency: number, note: string) {
+    const result = await copyFrequency(frequency);
+    toastMessage = result.message;
+    showToast = true;
   }
 </script>
 
 <h1>Design Monolith</h1>
 
 <!-- Toast Notification -->
-{#if showToast}
-  <div class="toast">
-    {toastMessage}
-  </div>
-{/if}
+<Toast bind:show={showToast} message={toastMessage} />
 
 <!-- Add the toggle checkbox -->
 <div class="naming-toggle">
@@ -116,18 +59,18 @@
 <div class="scale-selector">
   <div class="input-group">
     <label for="note">Root Note:</label>
-    <select id="note" bind:value={selectedNote}>
-      {#each currentNotes as note}
-        <option value={note}>{note}</option>
+    <select id="note" bind:value={selectedNoteIndex}>
+      {#each currentNotes as note, i}
+        <option value={i}>{note}</option>
       {/each}
     </select>
   </div>
   
   <div class="input-group">
     <label for="mode">Mode:</label>
-    <select id="mode" bind:value={selectedMode}>
-      {#each currentModes as mode}
-        <option value={mode}>{mode}</option>
+    <select id="mode" bind:value={selectedModeIndex}>
+      {#each currentModes as mode, i}
+        <option value={i}>{mode}</option>
       {/each}
     </select>
   </div>
@@ -141,10 +84,11 @@
         class="note" 
         class:root={i === 0}
         style="background-color: {getNoteColor(frequency)};"
-        on:click={() => copyToClipboard(frequency, note)}
-        on:keydown={(e) => e.key === 'Enter' && copyToClipboard(frequency, note)}
+        on:click={() => handleCopy(frequency, note)}
+        on:keydown={(e) => e.key === 'Enter' && handleCopy(frequency, note)}
         role="button"
         tabindex="0"
+        aria-label="Copy {note} ({frequency}Hz) to clipboard"
       >
         {note}
         <span class="frequency">({frequency}Hz)</span>
@@ -220,32 +164,6 @@
     color: var(--gray);
   }
 
-  /* Toast Notification */
-  .toast {
-    position: fixed;
-    bottom: var(--more-space);
-    left: 50%;
-    transform: translateX(-50%);
-    background-color: var(--black);
-    color: var(--white);
-    padding: var(--space) var(--more-space);
-    border-radius: var(--space);
-    box-shadow: 0 var(--outline) var(--more-space) var(--shadow);
-    animation: slideUp var(--slow-motion) ease-out;
-    z-index: 1000;
-  }
-
-  @keyframes slideUp {
-    from {
-      opacity: 0;
-      transform: translateX(-50%) translateY(var(--more-space));
-    }
-    to {
-      opacity: 1;
-      transform: translateX(-50%) translateY(0);
-    }
-  }
-
   /* Checkbox Style */
   .naming-toggle {
     display: flex;
@@ -296,6 +214,6 @@
   }
 
   .naming-toggle input[type="checkbox"]:hover {
-    opacity: 0.8;
+    opacity: 0.75;
   } 
 </style>
