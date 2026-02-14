@@ -40,6 +40,9 @@
 		<a href="/" class:active={isActive('/')}>
 			<img src="/icons/home.svg" alt="Home" class="nav-icon" />
 		</a>
+		<a href="/guitar" class:active={isActive('/guitar')}>
+			<img src="/icons/guitar.svg" alt="Guitar" class="nav-icon" />
+		</a>
 		<a href="/about" class:active={isActive('/about')}>
 			<img src="/icons/info.svg" alt="Info" class="nav-icon" />
 		</a>
