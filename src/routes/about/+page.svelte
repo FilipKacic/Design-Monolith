@@ -1,5 +1,30 @@
 <script lang="ts">
-  import { FREQUENCIES } from '$lib/modes';
+  import { FREQUENCIES, NOTES_ALL, NEW_NOTES_ALL } from '$lib/modes';
+
+  /**
+   * Precompute frequency display list (no work in template).
+   */
+  const frequencyList = FREQUENCIES.map((entry, index) => ({
+    note: entry.note,
+    frequency: entry.frequency,
+    power: index
+  }));
+
+  /**
+   * Direct index-based translation:
+   * NOTES_ALL[i] -> NEW_NOTES_ALL[i]
+   *
+   * We strip octave numbers because the article refers
+   * only to pitch classes (C, C#, D, ...).
+   * Then we remove duplicates caused by multiple octaves.
+   */
+  const renamedNotes = NOTES_ALL.map((oldNote, i) => ({
+    oldName: oldNote.replace(/\d+$/, ''),
+    newName: NEW_NOTES_ALL[i].replace(/\d+$/, '')
+  })).filter(
+    (item, index, arr) =>
+      arr.findIndex(x => x.oldName === item.oldName) === index
+  );
 </script>
 
 <h1>About This Project</h1>
@@ -14,6 +39,7 @@
   The equation 2<sup>x</sup>≠3<sup>y</sup>, when x and y are positive integers confirms that.
   (The next number of notes in a scale that would be possible is 53, which is simply not practical.)
 </p>
+
 <h3>The Correct Frequencies of the Notes</h3>
 <p>
   Modern music uses the equal temperament tuning system, which divides the octave into twelve equal parts, resulting in slightly adjusted frequencies for each note.
@@ -21,20 +47,24 @@
   The correct frequencies of the notes should be based on the powers of 3, starting from the lowest positive integer.
   1 Hz should reciprocal to the beat of a healthy human heartbeat (SI base unit: 1/s).
 </p>
+
 <ul>
-  {#each FREQUENCIES as { note, frequency }, i}
-    <li>3<sup>{i}</sup> = {frequency} Hz ({note})</li>
+  {#each frequencyList as f}
+    <li>3<sup>{f.power}</sup> = {f.frequency} Hz ({f.note})</li>
   {/each}
 </ul>
+
 <h3>Why Seven Notes In A Scale</h3>
 <p>
   The eight note in a scale would make a wolfish interval. Seven notes in a scale is the maximum number of notes that can be used in a scale.
 </p>
+
 <h3>The First Mode</h3>
 <p>
   When discovering the twelve notes with the circle of fifths, we get a pattern of the first seven notes which is ecliptic with the so-called Lydian mode.
   That is why Lydia mode should be the first mode in the list of modes, and not the Ionian one.
 </p>
+
 <h3>The First Note</h3>
 <p>
     The C note is the note with the frequency of:
@@ -42,6 +72,7 @@
     which is the foundation of the tuning system.
     Therefore, the C note <i>should</i> be called the A note in correspondece with the alphabet.
 </p>
+
 <h3>The Seventh And The Twelvth Note</h3>
 <p>
     Starting from the first note, going up the powers of the number 3, we get to the seventh note with the frequency of:
@@ -61,19 +92,11 @@
   <li>The Dorian Mode should be called the Sixth Mode or the Jovial Mode</li>
   <li>The Phrygian Mode should be called the Seventh Mode or the Saturnine Mode</li>
 </ul>
+
 <ul>
-    <li>C should be called A</li>
-    <li>C# should be called A#</li>
-    <li>D should be called B</li>
-    <li>D# should be called B#</li>
-    <li>E should be called C</li>
-    <li>F should be called C#</li>
-    <li>F# should be called D</li>
-    <li>G should be called E</li>
-    <li>G# should be called E#</li>
-    <li>A should be called F</li>
-    <li>A# should be called F#</li>
-    <li>B should be called G</li>
+  {#each renamedNotes as n}
+    <li>{n.oldName} should be called {n.newName}</li>
+  {/each}
 </ul>
 
 <h2>Post Scriptum</h2>

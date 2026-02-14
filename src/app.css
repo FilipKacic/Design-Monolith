@@ -1,6 +1,9 @@
-  /* ROOT VARIABLES */
-  :root {
-  /* sizes */
+/* ============================================================================
+   ROOT VARIABLES
+   ============================================================================ */
+
+:root {
+  /* Sizes */
   --hairline: 1px;
   --outline: 3px;
   --default-font-size: 16px;
@@ -13,15 +16,13 @@
   --maximum-space: 3rem;
   --sidebar-width: 15vw;
 
-  /* animation times */
+  /* Animation Times */
   --blink: 0.1s;
   --slow-motion: 0.3s;
   --heartbeat: 1s;
   --waltz: 3s;
 
-  /* COLOR PALLETE */
-
-  /* chromatic wheel */
+  /* Color Palette - Chromatic Wheel */
   --mulberry: hsl(330, 50%, 50%);
   --red: hsl(0, 50%, 50%);
   --mushmula: hsl(30, 50%, 50%);
@@ -35,7 +36,7 @@
   --lavender: hsl(270, 50%, 50%);
   --cyclamen: hsl(300, 50%, 50%);
 
-  /* dark wheel */
+  /* Color Palette - Dark Wheel */
   --dark-mulberry: hsl(330, 50%, 25%);
   --dark-red: hsl(0, 50%, 25%);
   --dark-mushmula: hsl(30, 50%, 25%);
@@ -49,7 +50,7 @@
   --dark-lavender: hsl(270, 50%, 25%);
   --dark-cyclamen: hsl(300, 50%, 25%);
 
-  /* light wheel */
+  /* Color Palette - Light Wheel */
   --light-mulberry: hsl(330, 50%, 75%);
   --light-red: hsl(0, 50%, 75%);
   --light-mushmula: hsl(30, 50%, 75%);
@@ -63,234 +64,369 @@
   --light-lavender: hsl(270, 50%, 75%);
   --light-cyclamen: hsl(300, 50%, 75%);
 
-  /* achromatic scale */
+  /* Color Palette - Achromatic Scale */
   --black: hsl(0, 0%, 0%);
-  --pitch-black: hsl(240, 00%, 13%);
+  --pitch-black: hsl(240, 0%, 13%);
   --dark-gray: hsl(0, 0%, 25%);
   --gray: hsl(0, 0%, 50%);
   --light-gray: hsl(0, 0%, 75%);
   --snow-white: hsl(0, 0%, 87%);
   --white: hsl(0, 0%, 100%);
 
-  /* anti colors */
+  /* Color Palette - Utility Colors */
   --transparent: hsla(0, 0%, 0%, 0);
   --shadow: hsla(0, 0%, 0%, 0.25);
   --light: hsla(0, 0%, 100%, 0.95);
-  }
+}
 
-  /* fonts */
-  @font-face {
-    font-family: 'Local-Header-Font';
-    /* TODO: src: url('/fonts/...woff2') format('woff2'); */
-    src: url('/fonts/Major_Mono_Display/MajorMonoDisplay-Regular.ttf');
-    font-display: swap; 
-  }
+/* ============================================================================
+   FONTS
+   ============================================================================ */
 
-  @font-face {
-    font-family: 'Local-Main-Font';
-    /* TODO: src: url('/fonts/...woff2') format('woff2'); */
-    src: url('/fonts/Atkinson_Hyperlegible_Mono/AtkinsonHyperlegibleMono-VariableFont_wght.ttf');
-    font-display: swap;
-  }
+@font-face {
+  font-family: 'Local-Header-Font';
+  src: url('/fonts/Major_Mono_Display/MajorMonoDisplay-Regular.ttf');
+  font-display: swap;
+  /* TODO: Convert to woff2 for better performance */
+}
 
-  /* BLANK CANVAS */
+@font-face {
+  font-family: 'Local-Main-Font';
+  src: url('/fonts/Atkinson_Hyperlegible_Mono/AtkinsonHyperlegibleMono-VariableFont_wght.ttf');
+  font-display: swap;
+  /* TODO: Convert to woff2 for better performance */
+}
 
-  /* remove default spacing and use border-box sizing on all elements */
-  *, *::before, *::after {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
+/* ============================================================================
+   CSS RESET / BASE STYLES
+   ============================================================================ */
 
-  /* set document-wide typography */
-  html {
-    font-family: monospace;
-    font-size: var(--default-font-size);
-    line-height: 1.5;
-  }
+/* Box Sizing */
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
-  body {
-    min-height: 100vh;
-    font-family: 'Local-Main-Font';
-    background: linear-gradient(to bottom, var(--white), var(--snow-white));
-  }
+/* Document Typography */
+html {
+  font-family: monospace;
+  font-size: var(--default-font-size);
+  line-height: 1.5;
+}
 
-  h1, h2, h3, h4, h5, h6 {
-    font-family: 'Local-Header-Font';
-    margin: var(--space) var(--space) var(--more-space);
-    text-align: center;
-  }
+body {
+  min-height: 100vh;
+  font-family: 'Local-Main-Font';
+  background: linear-gradient(to bottom, var(--white), var(--snow-white));
+}
 
-  /* remove default list styling */
-  ul, ol {
-    list-style: none;
-  }
+/* Headings */
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Local-Header-Font';
+  margin: var(--space) var(--space) var(--more-space);
+  text-align: center;
+}
 
-  /* keyboard navigation focus outline */
-  :focus-visible {
-    outline: var(--outline) solid var(--yellow);
-    outline-offset: var(--outline);
-  }
+/* Paragraphs */
+p {
+  text-align: justify;
+  margin: var(--space);
+}
 
-  table {
-    border-collapse: collapse;
-  }
+/* Lists */
+ul, ol {
+  list-style: none;
+  margin: var(--less-space) var(--space);
+}
 
-  /* normalize form elements */
-  input, button, select, textarea {
-    font: inherit;
-    color: inherit;
-    background: var(--transparent);
-    border: 0;
-  }
+ul {
+  list-style: square;
+}
 
-  button, [type="button"], [type="submit"] {
-    cursor: pointer;
-  }
+li {
+  margin: var(--less-space) var(--less-space) var(--less-space) var(--more-space);
+}
 
-  /* responsive media elements */
-  img, picture, video, canvas, svg {
-    display: block;
-    max-width: 100%;
-  }
+/* Tables */
+table {
+  border-collapse: collapse;
+}
 
-  /* PAINTED CANVAS */
+/* Form Elements */
+input, button, select, textarea {
+  font: inherit;
+  color: inherit;
+  background: var(--transparent);
+  border: 0;
+}
 
-  /* link states */
-  a {
-    color: var(--azure);
-    text-decoration: inherit;
-  }
+button, [type="button"], [type="submit"] {
+  cursor: pointer;
+}
 
-  a:hover {
-    text-decoration: underline;
-  }
+/* Media Elements */
+img, picture, video, canvas, svg {
+  display: block;
+  max-width: 100%;
+}
 
-  a:active {
-    color: var(--red);
-  }
+/* Focus Outline */
+:focus-visible {
+  outline: var(--outline) solid var(--yellow);
+  outline-offset: var(--outline);
+}
 
-  a:visited {
-    color: var(--lavender);
-  }
+/* Text Selection */
+::selection, ::-moz-selection {
+  background: var(--blue);
+  color: var(--yellow);
+}
 
-  /* text selection */
-  ::selection, ::-moz-selection {
-    background: var(--blue);
-    color: var(--yellow);
-  }
+/* ============================================================================
+   LINKS
+   ============================================================================ */
 
-  /* lists */
-  ul {
-    list-style: square;
-  }
+a {
+  color: var(--azure);
+  text-decoration: inherit;
+}
 
-  li {
-    margin: var(--space) var(--space) var(--space) var(--more-space) ;
-  }
+a:hover {
+  text-decoration: underline;
+}
 
-  /* header navigation */
+a:active {
+  color: var(--red);
+}
+
+a:visited {
+  color: var(--lavender);
+}
+
+/* ============================================================================
+   LAYOUT - HEADER
+   ============================================================================ */
+
+header {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  transition: transform var(--slow-motion) ease-in-out;
+  will-change: transform;
+  background-color: var(--light);
+}
+
+header.hidden {
+  transform: translateY(-100%);
+}
+
+/* ============================================================================
+   LAYOUT - NAVIGATION
+   ============================================================================ */
+
+nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--icon-size);
+  padding: var(--more-space);
+  box-shadow: 0 var(--hairline) var(--outline) var(--shadow);
+  margin-top: var(--space);
+}
+
+nav a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+}
+
+/* Navigation Icons */
+.nav-icon {
+  width: var(--icon-size);
+  height: var(--icon-size);
+  vertical-align: middle;
+  filter: invert(1) drop-shadow(0 0 var(--outline) var(--shadow));
+  transition: transform var(--blink) ease-in-out, filter var(--blink) ease-in-out;
+}
+
+.nav-icon:hover {
+  filter: invert(1) drop-shadow(0 0 var(--outline) var(--shadow));
+  transform: scale(1.2);
+}
+
+.nav-icon:active {
+  filter: invert(0) drop-shadow(0 0 var(--outline) var(--shadow));
+  transform: scale(0.9);
+}
+
+nav a.active .nav-icon {
+  filter: invert(0) drop-shadow(0 0 var(--outline) var(--shadow));
+  transform: scale(0.9);
+}
+
+/* ============================================================================
+   LAYOUT - MAIN
+   ============================================================================ */
+
+main {
+  display: flex;
+  flex-direction: column;
+  padding: var(--space);
+  min-height: 100vh;
+}
+
+/* ============================================================================
+   LAYOUT - FOOTER
+   ============================================================================ */
+
+footer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: var(--space) var(--more-space);
+  padding: var(--more-space);
+  margin-bottom: var(--space);
+}
+
+/* ============================================================================
+   COMPONENTS - SCALE SELECTOR
+   ============================================================================ */
+
+.scale-selector {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: var(--space);
+  margin: var(--space);
+}
+
+.input-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space);
+}
+
+.scale-selector select {
+  padding: var(--less-space) var(--space);
+  font-size: 1rem;
+  border: var(--hairline) solid var(--light-gray);
+  cursor: pointer;
+  background-color: var(--white);
+  transition: border-color var(--blink) ease-in-out;
+}
+
+.scale-selector select:hover {
+  border-color: var(--black);
+}
+
+/* ============================================================================
+   COMPONENTS - SCALE OUTPUT
+   ============================================================================ */
+
+.scale-output {
+  margin: var(--space);
+}
+
+.notes {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--space);
+}
+
+.note {
+  padding: var(--space) var(--more-space);
+  background: var(--white);
+  transition: all var(--blink) ease-in-out;
+  cursor: pointer;
+  text-align: center;
+  position: relative;
+}
+
+.note.root {
+  font-weight: bold;
+}
+
+.note:hover {
+  transform: scale(1.1);
+  box-shadow: 0 var(--hairline) var(--outline) var(--shadow);
+}
+
+.note:active {
+  transform: scale(0.9);
+  box-shadow: none;
+  font-weight: bold;
+}
+
+.note .frequency {
+  font-size: 0.9rem;
+  color: var(--gray);
+}
+
+/* ============================================================================
+   COMPONENTS - GUITAR TUNING
+   ============================================================================ */
+
+.tuning-list {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--more-space);
+  list-style: none;
+  margin: var(--more-space) 0;
+  padding: 0;
+}
+
+.tuning-list li {
+  display: flex;
+  align-items: center;
+  gap: var(--space);
+  margin: 0;
+}
+
+.string-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space);
+}
+
+.string-number {
+  text-align: right;
+  min-width: 5rem;
+}
+
+/* ============================================================================
+   RESPONSIVE - TABLET & DESKTOP
+   ============================================================================ */
+
+@media (min-width: 768px) and (orientation: landscape) {
+  /* Header - Sidebar Layout */
   header {
-    position: sticky;
+    position: fixed;
     top: 0;
-    z-index: 1000;
-    transition: transform var(--slow-motion) ease-in-out;
-    will-change: transform;
-    background-color: var(--light);
+    left: 0;
+    height: 100vh;
+    max-width: var(--sidebar-width);
   }
-
+  
   header.hidden {
-    transform: translateY(-100%);
+    transform: translateX(0);
   }
-
+  
+  /* Navigation - Vertical Layout */
   nav {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: var(--icon-size);
-    padding: var(--more-space);
-    box-shadow: 0 var(--hairline) var(--outline) var(--shadow);
-    margin-top: var(--space);
-  }
-
-  nav a {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    text-decoration: none;
-  }
-
-  /* navigation icons */
-  .nav-icon {
-    width: var(--icon-size);
-    height: var(--icon-size);
-    vertical-align: middle;
-    filter: invert(1) drop-shadow(0 0 var(--outline) var(--shadow));
-    transition: transform var(--blink) ease-in-out, filter var(--blink) ease-in-out;
-  }
-
-  .nav-icon:hover {
-    filter: invert(1) drop-shadow(0 0 var(--outline) var(--shadow));
-    transform: scale(1.2);
-  }
-
-  .nav-icon:active {
-    filter: invert(0) drop-shadow(0 0 var(--outline) var(--shadow));
-    transform: scale(0.9);
-  }
-
-  nav a.active .nav-icon {
-    filter: invert(0) drop-shadow(0 0 var(--outline) var(--shadow));
-    transform: scale(0.9);
-  }
-
-
-  /* main */
-  main {
-    display: flex;
     flex-direction: column;
-    padding: var(--space);
-    min-height: 100vh;
+    justify-content: flex-start;
+    height: 100%;
+    gap: var(--icon-size);
+    margin-top: 0;
   }
 
-  p {
-    text-align: justify;
-    margin: var(--space) ;
+  /* Main - Offset for Sidebar */
+  main {
+    margin: 0 var(--sidebar-width);
   }
-
-  /* footer */
-  footer {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: var(--space) var(--more-space);
-    padding: var(--more-space);
-    margin-bottom: var(--space);
-  }
-
-  /* responsive navigation */
-  @media (min-width: 768px) and (orientation: landscape) {
-    header {
-      position: fixed;
-      top: 0;
-      left: 0;
-      height: 100vh;
-      max-width: var(--sidebar-width);
-    }
-    
-    header.hidden {
-      transform: translateX(-0%); /* Hide to the left instead of up */
-    }
-    
-    nav {
-      flex-direction: column;
-      justify-content: flex-start;
-      height: 100%;
-      gap: var(--icon-size);
-      margin-top: 0;
-    }
-
-    main {
-      margin: 0 var(--sidebar-width);
-    }
-  }
+}
