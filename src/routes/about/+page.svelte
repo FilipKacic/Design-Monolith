@@ -49,6 +49,7 @@
     The note 'F#' should not be a sharp, nor a black key on a keyboard.
     By that fashion, the note 'F' should be a sharp and a black key on a keyboard.
 </p>
+
 <h3>Musical Mode & Note Names Overhaul</h3>
 <p>To conclude:</p>
 <ul>
@@ -74,6 +75,7 @@
     <li>A# should be called F#</li>
     <li>B should be called G</li>
 </ul>
+
 <h2>Post Scriptum</h2>
 <p>
     I have not discovered anything new under the Sun, but I have filtered the chaos of infomations into a fragment of truth about our sonic reality and connected it with colors and celestial patterns as best as I could.

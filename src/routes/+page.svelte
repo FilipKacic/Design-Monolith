@@ -1,17 +1,14 @@
 <script lang="ts">
   import { NOTES_1_ALL, FREQUENCIES, getScale, MODES, type Mode } from '$lib/modes';
   
-  let selectedNote = NOTES_1_ALL[0]; // Default to first note (A1)
-  let selectedMode: Mode = "Lunar";
+  let selectedNote = NOTES_1_ALL[0]; // Default to first note
+  let selectedMode: Mode = MODES[0]; // Default to first mode
   
   $: scale = getScale(selectedNote, selectedMode, true);
   
   // Console log all NOTE frequencies on component mount
   console.log('All NOTES_ALL frequencies:', FREQUENCIES);
-  
-  function formatFrequency(freq: number): string {
-    return freq.toLocaleString();
-  }
+
 </script>
 
 <h1>Design Monolith</h1>
@@ -42,7 +39,7 @@
     {#each scale as { note, frequency }, i}
       <span class="note" class:root={i === 0}>
         {note}
-        <span class="frequency">({formatFrequency(frequency)} Hz)</span>
+        <span class="frequency">({frequency} Hz)</span>
       </span>
     {/each}
   </div>

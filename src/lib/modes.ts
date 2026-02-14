@@ -6,6 +6,10 @@ export const NOTES_1 = [
   */
 ];
 
+export const NEW_NOTES_1 = [
+  "A1", "E1", "B1", "F1", "C1", "G1", "D1"
+];
+
 export const NOTES_1_SHARP = [
   "C1#", "G1#", "D1#", "A1#", "F1"
   /*
@@ -13,8 +17,16 @@ export const NOTES_1_SHARP = [
   */
 ];
 
+export const NEW_NOTES_1_SHARP = [
+  "A1#", "E1#", "B1#", "F1#", "C1#"
+];
+
 export const NOTES_1_ALL = [
   ...NOTES_1, ...NOTES_1_SHARP
+]
+
+export const NEW_NOTES_1_ALL = [
+  ...NEW_NOTES_1, ...NEW_NOTES_1_SHARP
 ]
 
 export const NOTES_2 = [
@@ -24,8 +36,16 @@ export const NOTES_2 = [
   */
 ];
 
+export const NEW_NOTES_2 = [
+  "A2", "E2", "B2", "F2", "C2", "G2"
+];
+
 export const NOTES_ALL = [
   ...NOTES_1, ...NOTES_1_SHARP, ...NOTES_2
+]
+
+export const NEW_NOTES_ALL = [
+  ...NEW_NOTES_1, ...NEW_NOTES_1_SHARP, ...NEW_NOTES_2
 ]
 
 export const FREQUENCIES: { note: string; frequency: number }[] = NOTES_ALL.map((note, i) => ({
@@ -33,7 +53,31 @@ export const FREQUENCIES: { note: string; frequency: number }[] = NOTES_ALL.map(
   frequency: 3 ** i
 }));
 
+export const NEW_FREQUENCIES: { note: string; frequency: number }[] = NEW_NOTES_ALL.map((note, i) => ({
+  note,
+  frequency: 3 ** i
+}));
+
 export const MODES = [
+  "Lydian",
+  "Mixolydian",
+  "Aeolian",
+  "Locrian",
+  "Ionian",
+  "Dorian",
+  "Phrygian"
+  /*
+  "Lunar",
+  "Mercurial",
+  "Venerean",
+  "Solar",
+  "Martial",
+  "Jovial",
+  "Saturnine"
+  */
+] as const;
+
+export const NEW_MODES = [
   "Lunar",
   "Mercurial",
   "Venerean",
@@ -44,6 +88,8 @@ export const MODES = [
 ] as const;
 
 export type Mode = typeof MODES[number];
+
+export type newMode = typeof NEW_MODES[number];
 
 // Starting offsets for each mode pattern
 const MODE_OFFSETS = [0, -2, -4, -6, -1, -3, -5];
@@ -102,7 +148,7 @@ export function getScale(rootNote: string, mode: Mode, sorted: boolean = false):
   for (const offset of modePattern.pattern) {
     let noteIndex;
     
-    if (offset < 0) {
+    if (offset < 0) { 
       // For negative offsets, wrap around within NOTES_1_ALL (first 12 notes)
       noteIndex = ((rootIndex + offset) % arrayLength + arrayLength) % arrayLength;
     } else {
