@@ -1,19 +1,31 @@
 <script lang="ts">
   import { 
-    NOTES_1_ALL, 
-    NEW_NOTES_1_ALL,
     FREQUENCIES,
     NEW_FREQUENCIES,
-    type Mode,
-    type newMode
+    NOTES_ALL,
+    NEW_NOTES_ALL,
   } from '$lib/modes';
   
   // Toggle between naming systems
   let useNewNaming = false;
   
   // Standard tuning notes (using traditional naming by default)
-  const standardTuningOld = ['E2', 'A2', 'D2', 'G2', 'B2', 'E2'];
-  const standardTuningNew = ['F2', 'A2', 'D1', 'G2', 'B2', 'F2']; // Adjust these to match your NEW naming system
+  const standardTuningOld = ['E1', 'A1', 'D1', 'G1', 'B1', 'E1'];
+  
+  // Function to convert old note names to new note names based on index position
+  function convertToNewNaming(oldNotes: string[]): string[] {
+    return oldNotes.map(oldNote => {
+      // Find the index of the old note in NOTES_ALL
+      const oldIndex = NOTES_ALL.indexOf(oldNote);
+      if (oldIndex === -1) return oldNote; // fallback if not found
+      
+      // Get the new note at the same index position
+      return NEW_NOTES_ALL[oldIndex] || oldNote;
+    });
+  }
+  
+  // Dynamically derive the new tuning from the old tuning
+  const standardTuningNew = convertToNewNaming(standardTuningOld);
   
   $: standardTuning = useNewNaming ? standardTuningNew : standardTuningOld;
   $: frequencies = useNewNaming ? NEW_FREQUENCIES : FREQUENCIES;
