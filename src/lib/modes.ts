@@ -1,9 +1,6 @@
 // src/lib/modes.ts
 export const NOTES_1 = [
   "C1", "G1", "D1", "A1", "E1", "B1", "F#1"
-  /*
-  "A1", "E1", "B1", "F1", "C1", "G1", "D1"
-  */
 ];
 
 export const NEW_NOTES_1 = [
@@ -12,9 +9,6 @@ export const NEW_NOTES_1 = [
 
 export const NOTES_1_SHARP = [
   "C1#", "G1#", "D1#", "A1#", "F1"
-  /*
-  "A1#", "E1#", "B1#", "F1#", "C1#"
-  */
 ];
 
 export const NEW_NOTES_1_SHARP = [
@@ -31,9 +25,6 @@ export const NEW_NOTES_1_ALL = [
 
 export const NOTES_2 = [
   "C2", "G2", "D2", "A2", "E2", "B2"
-  /*
-  "A2", "E2", "B2", "F2", "C2", "G2"
-  */
 ];
 
 export const NEW_NOTES_2 = [
@@ -66,15 +57,6 @@ export const MODES = [
   "Ionian",
   "Dorian",
   "Phrygian"
-  /*
-  "Lunar",
-  "Mercurial",
-  "Venerean",
-  "Solar",
-  "Martial",
-  "Jovial",
-  "Saturnine"
-  */
 ] as const;
 
 export const NEW_MODES = [
@@ -120,56 +102,53 @@ export const NOTES_1_ALL_SORTED = sortNotesAlphabetically(NOTES_1_ALL);
  * @param mode - The mode to use for the scale pattern
  * @returns Array of 7 notes with their frequencies forming the scale
  */
-/**
- * Generates a scale based on a root note and mode
- * @param rootNote - The root note from NOTES_1
- * @param mode - The mode to use for the scale pattern
- * @returns Array of 7 notes with their frequencies forming the scale
- */
-export function getScale(rootNote: string, mode: Mode, sorted: boolean = false): { note: string; frequency: number }[] {
-  // Find the root note's index in FREQUENCIES
-  const rootIndex = FREQUENCIES.findIndex(f => f.note === rootNote);
-  
-  if (rootIndex === -1) {
-    throw new Error(`Root note ${rootNote} not found in FREQUENCIES`);
-  }
-  
-  // Get the pattern for this mode
-  const modePattern = MODE_PATTERNS.find(mp => mp.mode === mode);
-  
-  if (!modePattern) {
-    throw new Error(`Mode ${mode} not found`);
-  }
-  
-  // Build the scale by applying pattern offsets to root index
-  const scale: { note: string; frequency: number }[] = [];
-  const arrayLength = NOTES_1_ALL.length; // Dynamically get length from NOTES_1_ALL
-  
-  for (const offset of modePattern.pattern) {
-    let noteIndex;
-    
-    if (offset < 0) { 
-      // For negative offsets, wrap around within NOTES_1_ALL (first 12 notes)
-      noteIndex = ((rootIndex + offset) % arrayLength + arrayLength) % arrayLength;
-    } else {
-      // For positive offsets, use the full FREQUENCIES array
-      noteIndex = rootIndex + offset;
-  }
-  
-  scale.push(FREQUENCIES[noteIndex]);
-}
-  
-  // Sort alphabetically starting from root note if requested
-  if (sorted) {
-    // First sort alphabetically
-    const sortedScale = [...scale].sort((a, b) => a.note.localeCompare(b.note));
-    
-    // Find the root note position in the sorted array
-    const rootPosition = sortedScale.findIndex(n => n.note === rootNote);
-    
-    // Rotate array so root note is first
-    return [...sortedScale.slice(rootPosition), ...sortedScale.slice(0, rootPosition)];
-  }
-  
-  return scale;
+export function getScale(
+	rootNote: string, 
+	mode: Mode | newMode, 
+	sorted: boolean = false,
+	useNew: boolean = false
+): { note: string; frequency: number }[] {
+	const freqArray = useNew ? NEW_FREQUENCIES : FREQUENCIES;
+	const notesArray = useNew ? NEW_NOTES_1_ALL : NOTES_1_ALL;
+	
+	const rootIndex = freqArray.findIndex(f => f.note === rootNote);
+	if (rootIndex === -1) {
+		throw new Error(`Root note ${rootNote} not found`);
+	}
+
+	// Find the mode index (works for both MODES and NEW_MODES since they map 1:1)
+	const modeIndex = useNew 
+		? NEW_MODES.indexOf(mode as newMode)
+		: MODES.indexOf(mode as Mode);
+	
+	if (modeIndex === -1) {
+		throw new Error(`Mode ${mode} not found`);
+	}
+
+	// Use the mode index to get the corresponding pattern
+	const modePattern = MODE_PATTERNS[modeIndex];
+	if (!modePattern) {
+		throw new Error(`Pattern for mode ${mode} not found`);
+	}
+
+	const scale: { note: string; frequency: number }[] = [];
+	const arrayLength = notesArray.length;
+
+	for (const offset of modePattern.pattern) {
+		let noteIndex;
+		if (offset < 0) {
+			noteIndex = ((rootIndex + offset) % arrayLength + arrayLength) % arrayLength;
+		} else {
+			noteIndex = rootIndex + offset;
+		}
+		scale.push(freqArray[noteIndex]);
+	}
+
+	if (sorted) {
+		const sortedScale = [...scale].sort((a, b) => a.note.localeCompare(b.note));
+		const rootPosition = sortedScale.findIndex(n => n.note === rootNote);
+		return [...sortedScale.slice(rootPosition), ...sortedScale.slice(0, rootPosition)];
+	}
+
+	return scale;
 }

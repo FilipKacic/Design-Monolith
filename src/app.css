@@ -5,9 +5,12 @@
   --outline: 3px;
   --default-font-size: 16px;
   --icon-size: 48px; /* minimum interactive area */
+  --minimum-space: 0.1rem;
   --less-space: 0.5rem;
   --space: 1rem;
+  --extra-space: 1.5rem;
   --more-space: 2rem;
+  --maximum-space: 3rem;
   --sidebar-width: 15vw;
 
   /* animation times */
@@ -114,7 +117,7 @@
 
   h1, h2, h3, h4, h5, h6 {
     font-family: 'Local-Header-Font';
-    margin: var(--space) ;
+    margin: var(--space) var(--space) var(--more-space);
     text-align: center;
   }
 
