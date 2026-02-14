@@ -10,26 +10,21 @@
     type newMode
   } from '$lib/modes';
   import Toast from '$lib/components/Toast.svelte';
+  import NamingToggle from '$lib/components/NamingToggle.svelte';
   import { copyFrequency } from '$lib/utils/clipboard';
   import { getNoteColor } from '$lib/utils/colors';
-  
-  // Toggle between naming systems
-  let useNewNaming = false;
-  
-  // Track by INDEX instead of value
-  let selectedNoteIndex = 0;
-  let selectedModeIndex = 0;
+  import { useNewNaming, selectedNoteIndex, selectedModeIndex } from '$lib/stores/naming';
   
   // Reactive variables that switch based on naming system
-  $: currentNotes = useNewNaming ? NEW_NOTES_1_ALL : NOTES_1_ALL;
-  $: currentModes = useNewNaming ? NEW_MODES : MODES;
+  $: currentNotes = $useNewNaming ? NEW_NOTES_1_ALL : NOTES_1_ALL;
+  $: currentModes = $useNewNaming ? NEW_MODES : MODES;
   
   // Derive the actual note/mode from the index
-  $: selectedNote = currentNotes[selectedNoteIndex];
-  $: selectedMode = currentModes[selectedModeIndex];
+  $: selectedNote = currentNotes[$selectedNoteIndex];
+  $: selectedMode = currentModes[$selectedModeIndex];
   
   // Generate scale with the useNew parameter
-  $: scale = getScale(selectedNote, selectedMode, true, useNewNaming);
+  $: scale = getScale(selectedNote, selectedMode, true, $useNewNaming);
 
   // Toast notification state
   let showToast = false;
@@ -48,18 +43,13 @@
 <!-- Toast Notification -->
 <Toast bind:show={showToast} message={toastMessage} />
 
-<!-- Add the toggle checkbox -->
-<div class="naming-toggle">
-  <label>
-    Use Proposed New Names:
-    <input type="checkbox" bind:checked={useNewNaming} />
-  </label>
-</div>
+<!-- Naming toggle -->
+<NamingToggle />
 
 <div class="scale-selector">
   <div class="input-group">
     <label for="note">Root Note:</label>
-    <select id="note" bind:value={selectedNoteIndex}>
+    <select id="note" bind:value={$selectedNoteIndex}>
       {#each currentNotes as note, i}
         <option value={i}>{note}</option>
       {/each}
@@ -68,7 +58,7 @@
   
   <div class="input-group">
     <label for="mode">Mode:</label>
-    <select id="mode" bind:value={selectedModeIndex}>
+    <select id="mode" bind:value={$selectedModeIndex}>
       {#each currentModes as mode, i}
         <option value={i}>{mode}</option>
       {/each}
@@ -163,57 +153,4 @@
     font-size: 0.9rem;
     color: var(--gray);
   }
-
-  /* Checkbox Style */
-  .naming-toggle {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: var(--space);
-  }
-
-  .naming-toggle label {
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    gap: var(--space);
-  }
-
-  .naming-toggle input[type="checkbox"] {
-    appearance: none;
-    -webkit-appearance: none;
-    width: var(--maximum-space);
-    height: var(--extra-space);
-    cursor: pointer;
-    position: relative;
-    background-color: var(--light-gray);
-    transition: all var(--slow-motion) ease-in-out;
-  }
-
-  /* Toggle square */
-  .naming-toggle input[type="checkbox"]::before {
-    content: '';
-    position: absolute;
-    width: calc(var(--extra-space) - var(--minimum-space) * 2);
-    height: calc(var(--extra-space) - var(--minimum-space) * 2);
-    background-color: var(--white);
-    top: var(--minimum-space);
-    left: var(--minimum-space);
-    transition: all var(--blink) ease-in-out;
-    box-shadow: 0 var(--hairline) var(--outline) var(--shadow);
-  }
-
-  /* Checked state */
-  .naming-toggle input[type="checkbox"]:checked {
-    background-color: var(--black);
-  }
-
-  /* Move square when checked */
-  .naming-toggle input[type="checkbox"]:checked::before {
-    left: calc(var(--extra-space) + var(--minimum-space));
-  }
-
-  .naming-toggle input[type="checkbox"]:hover {
-    opacity: 0.75;
-  } 
 </style>

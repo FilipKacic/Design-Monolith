@@ -4,11 +4,10 @@
     NEW_FREQUENCIES,
   } from '$lib/modes';
   import Toast from '$lib/components/Toast.svelte';
+  import NamingToggle from '$lib/components/NamingToggle.svelte';
   import { copyFrequency } from '$lib/utils/clipboard';
   import { getNoteColor } from '$lib/utils/colors';
-  
-  // Toggle between naming systems
-  let useNewNaming = false;
+  import { useNewNaming } from '$lib/stores/naming';
   
   // Exponent values for each string - MODIFY THESE VALUES to adjust frequencies by 2^x
   // String 1: 2^0 = ×1
@@ -35,7 +34,7 @@
     return currentFreq ? currentFreq.note : oldNote;
   });
   
-  $: frequencies = useNewNaming ? NEW_FREQUENCIES : FREQUENCIES;
+  $: frequencies = $useNewNaming ? NEW_FREQUENCIES : FREQUENCIES;
   
   // Get frequency for a note
   function getFrequency(note: string): number {
@@ -66,15 +65,10 @@
 <!-- Toast Notification -->
 <Toast bind:show={showToast} message={toastMessage} />
 
-<!-- Toggle checkbox -->
-<div class="naming-toggle">
-  <label>
-    Use Proposed New Names:
-    <input type="checkbox" bind:checked={useNewNaming} />
-  </label>
-</div>
+<!-- Naming toggle -->
+<NamingToggle />
 
-<h2>Standard</h2>
+<h2>Standard Guitar Tuning</h2>
 
 <ul class="tuning-list">
   {#each standardTuning as note, i}
@@ -155,58 +149,5 @@
   .frequency {
     font-size: 0.9rem;
     color: var(--gray);
-  }
-  
-  /* Checkbox Style */
-  .naming-toggle {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: var(--space);
-  }
-  
-  .naming-toggle label {
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    gap: var(--space);
-  }
-  
-  .naming-toggle input[type="checkbox"] {
-    appearance: none;
-    -webkit-appearance: none;
-    width: var(--maximum-space);
-    height: var(--extra-space);
-    cursor: pointer;
-    position: relative;
-    background-color: var(--light-gray);
-    transition: all var(--slow-motion) ease-in-out;
-  }
-  
-  /* Toggle square */
-  .naming-toggle input[type="checkbox"]::before {
-    content: '';
-    position: absolute;
-    width: calc(var(--extra-space) - var(--minimum-space) * 2);
-    height: calc(var(--extra-space) - var(--minimum-space) * 2);
-    background-color: var(--white);
-    top: var(--minimum-space);
-    left: var(--minimum-space);
-    transition: all var(--blink) ease-in-out;
-    box-shadow: 0 var(--hairline) var(--outline) var(--shadow);
-  }
-  
-  /* Checked state */
-  .naming-toggle input[type="checkbox"]:checked {
-    background-color: var(--black);
-  }
-  
-  /* Move square when checked */
-  .naming-toggle input[type="checkbox"]:checked::before {
-    left: calc(var(--extra-space) + var(--minimum-space));
-  }
-  
-  .naming-toggle input[type="checkbox"]:hover {
-    opacity: 0.75;
   }
 </style>
