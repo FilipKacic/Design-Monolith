@@ -2,12 +2,17 @@
   import { 
     FREQUENCIES,
     NEW_FREQUENCIES,
+    NOTES_1_ALL, 
+    NEW_NOTES_1_ALL,
+    getScale, 
+    MODES,
+    NEW_MODES,
   } from '$lib/modes';
   import Toast from '$lib/components/Toast.svelte';
   import NamingToggle from '$lib/components/NamingToggle.svelte';
   import { copyFrequency } from '$lib/utils/clipboard';
   import { getNoteColor } from '$lib/utils/colors';
-  import { useNewNaming } from '$lib/stores/naming';
+  import { useNewNaming, selectedNoteIndex, selectedModeIndex } from '$lib/stores/naming';
   
   // Exponent values for each string - MODIFY THESE VALUES to adjust frequencies by 2^x
   // String 1: 2^0 = ×1
@@ -35,6 +40,17 @@
   });
   
   $: frequencies = $useNewNaming ? NEW_FREQUENCIES : FREQUENCIES;
+  
+  // Reactive variables that switch based on naming system (for scale selection)
+  $: currentNotes = $useNewNaming ? NEW_NOTES_1_ALL : NOTES_1_ALL;
+  $: currentModes = $useNewNaming ? NEW_MODES : MODES;
+  
+  // Derive the actual note/mode from the index
+  $: selectedNote = currentNotes[$selectedNoteIndex];
+  $: selectedMode = currentModes[$selectedModeIndex];
+  
+  // Generate scale with the useNew parameter
+  $: scale = getScale(selectedNote, selectedMode, true, $useNewNaming);
   
   // Get frequency for a note
   function getFrequency(note: string): number {
@@ -68,6 +84,27 @@
 <!-- Naming toggle -->
 <NamingToggle />
 
+<!-- Scale selector (same as home page) -->
+<div class="scale-selector">
+  <div class="input-group">
+    <label for="note">Root Note:</label>
+    <select id="note" bind:value={$selectedNoteIndex}>
+      {#each currentNotes as note, i}
+        <option value={i}>{note}</option>
+      {/each}
+    </select>
+  </div>
+  
+  <div class="input-group">
+    <label for="mode">Mode:</label>
+    <select id="mode" bind:value={$selectedModeIndex}>
+      {#each currentModes as mode, i}
+        <option value={i}>{mode}</option>
+      {/each}
+    </select>
+  </div>
+</div>
+
 <h2>Standard Guitar Tuning</h2>
 
 <ul class="tuning-list">
@@ -99,6 +136,33 @@
     margin: var(--space);
   }
   
+  .scale-selector {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: var(--space);
+    margin: var(--space);
+  }
+  
+  .input-group {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space);
+  }
+  
+  select {
+    padding: var(--less-space) var(--space);
+    font-size: 1rem;
+    border: var(--hairline) solid var(--light-gray);
+    cursor: pointer;
+    background-color: var(--white);
+    transition: border-color var(--blink) ease-in-out;
+  }
+  
+  select:hover {
+    border-color: var(--black);
+  }
+  
   .tuning-list {
     display: flex;
     flex-direction: column;
@@ -127,7 +191,7 @@
   }
   
   .note {
-    padding: var(--space) var(--more-space);
+    padding: var(--space) va  r(--more-space);
     background: var(--white);
     transition: all var(--blink) ease-in-out;
     cursor: pointer;

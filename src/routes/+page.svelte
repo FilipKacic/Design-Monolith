@@ -67,7 +67,7 @@
 </div>
 
 <div class="scale-output">
-  <h2>{selectedNote} {selectedMode}</h2>
+  <h2>Notes in the {selectedNote} {selectedMode} Scale:</h2>
   <div class="notes">
     {#each scale as { note, frequency }, i}
       <span 
