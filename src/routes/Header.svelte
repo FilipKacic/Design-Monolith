@@ -43,6 +43,9 @@
 		<a href="/guitar" class:active={isActive('/guitar')}>
 			<img src="/icons/guitar_strings.svg" alt="Guitar Strings" class="nav-icon" />
 		</a>
+		<a href="/pallete" class:active={isActive('/pallete')}>
+			<img src="/icons/color_pallete.svg" alt="Color Pallete" class="nav-icon" />
+		</a>
 		<a href="/about" class:active={isActive('/about')}>
 			<img src="/icons/info.svg" alt="Info" class="nav-icon" />
 		</a>
