@@ -36,30 +36,3 @@
     {message}
   </div>
 {/if}
-
-<style>
-  .toast {
-    position: fixed;
-    bottom: var(--more-space);
-    left: 50%;
-    transform: translateX(-50%);
-    background-color: var(--black);
-    color: var(--white);
-    padding: var(--space) var(--more-space);
-    border-radius: var(--space);
-    box-shadow: 0 var(--outline) var(--more-space) var(--shadow);
-    animation: slideUp var(--slow-motion) ease-in-out;
-    z-index: 1000;
-  }
-
-  @keyframes slideUp {
-    from {
-      opacity: 0;
-      transform: translateX(-50%) translateY(var(--more-space));
-    }
-    to {
-      opacity: 1;
-      transform: translateX(-50%) translateY(0);
-    }
-  }
-</style>

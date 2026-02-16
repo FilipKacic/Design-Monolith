@@ -3,18 +3,26 @@
    ============================================================================ */
 
 :root {
-  /* Sizes */
+  /* Pixel Sizes */
   --hairline: 1px;
   --outline: 3px;
   --default-font-size: 16px;
   --icon-size: 48px; /* minimum interactive area */
-  --minimum-space: 0.1rem;
-  --less-space: 0.5rem;
+
+  /* Relative Sizes */
+  --minimum-space: 0.25rem;
+  --less-space: 0.75rem;
   --space: 1rem;
-  --extra-space: 1.5rem;
   --more-space: 2rem;
   --maximum-space: 3rem;
+
+   /* View Sizes */
   --sidebar-width: 15vw;
+  --toast-width: 85vw;
+
+  /* Scaling Size */
+  --smaller: 0.9;
+  --larger: 1.2;
 
   /* Animation Times */
   --blink: 0.1s;
@@ -22,8 +30,26 @@
   --heartbeat: 1s;
   --waltz: 3s;
 
-  /* Color Palette - Chromatic Wheel */
-  --mulberry: hsl(330, 50%, 50%);
+  /* Opacity */
+  --invisibile: 0;
+  --ghost: 0.3;
+  --tinted-glass: 0.5;
+
+  /* Utility Colors */
+  --transparent: hsla(0, 0%, 0%, var(--invisibile));
+  --shadow: hsla(0, 0%, 0%, var(--ghost));
+  --light: hsla(0, 0%, 100%, var(--tinted-glass));
+
+  /* Scale of Seven Shades */
+  --black: hsl(0, 0%, 0%);
+  --pitch-black: hsl(0, 0%, 25%);
+  --dark-gray: hsl(0, 0%, 36%);
+  --gray: hsl(0, 0%, 50%);
+  --light-gray: hsl(0, 0%, 63%);
+  --snow-white: hsl(0, 0%, 75%);
+  --white: hsl(0, 0%, 100%);
+
+  /* Twelve Color Wheel */
   --red: hsl(0, 50%, 50%);
   --mushmula: hsl(30, 50%, 50%);
   --yellow: hsl(60, 50%, 50%);
@@ -35,12 +61,12 @@
   --blue: hsl(240, 50%, 50%);
   --lavender: hsl(270, 50%, 50%);
   --cyclamen: hsl(300, 50%, 50%);
+  --mulberry: hsl(330, 50%, 50%);
 
-  /* Color Palette - Dark Wheel */
-  --dark-mulberry: hsl(330, 50%, 25%);
+  /* Twelve Color Wheel of Darkness */
   --dark-red: hsl(0, 50%, 25%);
   --dark-mushmula: hsl(30, 50%, 25%);
-  --dark-yellow: hsl(60, 50%, 25%);
+  --very-dark-yellow: hsl(60, 49%, 25%);
   --dark-olive: hsl(90, 50%, 25%);
   --dark-green: hsl(120, 50%, 25%);
   --dark-teal: hsl(150, 50%, 25%);
@@ -49,9 +75,9 @@
   --dark-blue: hsl(240, 50%, 25%);
   --dark-lavender: hsl(270, 50%, 25%);
   --dark-cyclamen: hsl(300, 50%, 25%);
-
-  /* Color Palette - Light Wheel */
-  --light-mulberry: hsl(330, 50%, 75%);
+  --dark-mulberry: hsl(330, 50%, 25%);
+  
+  /* Twelve Color Wheel of Light */
   --light-red: hsl(0, 50%, 75%);
   --light-mushmula: hsl(30, 50%, 75%);
   --light-yellow: hsl(60, 50%, 75%);
@@ -60,23 +86,10 @@
   --light-teal: hsl(150, 50%, 75%);
   --light-azure: hsl(180, 50%, 75%);
   --light-indigo: hsl(210, 50%, 75%);
-  --light-blue: hsl(240, 50%, 75%);
+  --very-light-blue: hsl(240, 51%, 75%);
   --light-lavender: hsl(270, 50%, 75%);
   --light-cyclamen: hsl(300, 50%, 75%);
-
-  /* Color Palette - Achromatic Scale */
-  --black: hsl(0, 0%, 0%);
-  --pitch-black: hsl(240, 0%, 13%);
-  --dark-gray: hsl(0, 0%, 25%);
-  --gray: hsl(0, 0%, 50%);
-  --light-gray: hsl(0, 0%, 75%);
-  --snow-white: hsl(0, 0%, 87%);
-  --white: hsl(0, 0%, 100%);
-
-  /* Color Palette - Utility Colors */
-  --transparent: hsla(0, 0%, 0%, 0);
-  --shadow: hsla(0, 0%, 0%, 0.25);
-  --light: hsla(0, 0%, 100%, 0.95);
+  --light-mulberry: hsl(330, 50%, 75%);
 }
 
 /* ============================================================================
@@ -98,17 +111,19 @@
 }
 
 /* ============================================================================
-   CSS RESET / BASE STYLES
+   CSS RESET
    ============================================================================ */
 
-/* Box Sizing */
 *, *::before, *::after {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-/* Document Typography */
+/* ============================================================================
+   BASE STYLES - DOCUMENT
+   ============================================================================ */
+
 html {
   font-family: monospace;
   font-size: var(--default-font-size);
@@ -116,44 +131,62 @@ html {
 }
 
 body {
-  min-height: 100vh;
-  font-family: 'Local-Main-Font';
-  background: linear-gradient(to bottom, var(--white), var(--snow-white));
+	min-height: 100vh;
+	font-family: 'Local-Main-Font';
+	color: var(--black);
+	background: linear-gradient(to bottom, var(--white), var(--snow-white));
+	transition: all var(--slow-motion) ease-in-out;
 }
 
-/* Headings */
+body.night {
+	color: var(--white);
+	background: linear-gradient(to bottom, var(--pitch-black), var(--black));
+}
+
+/* ============================================================================
+   BASE STYLES - TYPOGRAPHY
+   ============================================================================ */
+
 h1, h2, h3, h4, h5, h6 {
   font-family: 'Local-Header-Font';
-  margin: var(--space) var(--space) var(--more-space);
+  margin: var(--space);
   text-align: center;
 }
 
-/* Paragraphs */
 p {
   text-align: justify;
   margin: var(--space);
 }
 
-/* Lists */
+/* ============================================================================
+   BASE STYLES - LISTS
+   ============================================================================ */
+
 ul, ol {
   list-style: none;
-  margin: var(--less-space) var(--space);
 }
 
 ul {
   list-style: square;
+  margin: var(--space);
 }
 
 li {
-  margin: var(--less-space) var(--less-space) var(--less-space) var(--more-space);
+  margin-left: var(--more-space);
 }
 
-/* Tables */
+/* ============================================================================
+   BASE STYLES - TABLES
+   ============================================================================ */
+
 table {
   border-collapse: collapse;
 }
 
-/* Form Elements */
+/* ============================================================================
+   BASE STYLES - FORM ELEMENTS
+   ============================================================================ */
+
 input, button, select, textarea {
   font: inherit;
   color: inherit;
@@ -165,26 +198,31 @@ button, [type="button"], [type="submit"] {
   cursor: pointer;
 }
 
-/* Media Elements */
+/* ============================================================================
+   BASE STYLES - MEDIA ELEMENTS
+   ============================================================================ */
+
 img, picture, video, canvas, svg {
   display: block;
   max-width: 100%;
 }
 
-/* Focus Outline */
+/* ============================================================================
+   BASE STYLES - INTERACTION STATES
+   ============================================================================ */
+
 :focus-visible {
   outline: var(--outline) solid var(--yellow);
   outline-offset: var(--outline);
 }
 
-/* Text Selection */
 ::selection, ::-moz-selection {
   background: var(--blue);
   color: var(--yellow);
 }
 
 /* ============================================================================
-   LINKS
+   BASE STYLES - LINKS
    ============================================================================ */
 
 a {
@@ -228,9 +266,9 @@ header.hidden {
 nav {
   display: flex;
   align-items: center;
-  justify-content: center;
-  gap: var(--icon-size);
-  padding: var(--more-space);
+  justify-content: space-evenly;
+  gap: var(--more-space);
+  padding: var(--space);
   box-shadow: 0 var(--hairline) var(--outline) var(--shadow);
   margin-top: var(--space);
 }
@@ -242,7 +280,6 @@ nav a {
   text-decoration: none;
 }
 
-/* Navigation Icons */
 .nav-icon {
   width: var(--icon-size);
   height: var(--icon-size);
@@ -253,17 +290,17 @@ nav a {
 
 .nav-icon:hover {
   filter: invert(1) drop-shadow(0 0 var(--outline) var(--shadow));
-  transform: scale(1.2);
+  transform: scale(var(--larger));
 }
 
 .nav-icon:active {
   filter: invert(0) drop-shadow(0 0 var(--outline) var(--shadow));
-  transform: scale(0.9);
+  transform: scale(var(--smaller));
 }
 
 nav a.active .nav-icon {
   filter: invert(0) drop-shadow(0 0 var(--outline) var(--shadow));
-  transform: scale(0.9);
+  transform: scale(var(--smaller));
 }
 
 /* ============================================================================
@@ -286,9 +323,62 @@ footer {
   justify-content: center;
   align-items: center;
   gap: var(--space) var(--more-space);
-  padding: var(--more-space);
+  padding: var(--space);
   margin-bottom: var(--space);
   color: var(--gray);
+}
+
+/* ============================================================================
+   COMPONENTS - NAMING TOGGLE
+   ============================================================================ */
+
+.naming-toggle {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: var(--space);
+}
+
+.naming-toggle label {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: var(--space);
+}
+
+.naming-toggle input[type="checkbox"] {
+  appearance: none;
+  -webkit-appearance: none;
+  width: calc(var(--maximum-space) + var(--space));
+  height: var(--more-space);
+  cursor: pointer;
+  position: relative;
+  background-color: var(--light-gray);
+  transition: all var(--slow-motion) ease-in-out;
+}
+
+.naming-toggle input[type="checkbox"]::before {
+  content: '';
+  position: absolute;
+  width: calc(var(--more-space) - var(--minimum-space) * 2);
+  height: calc(var(--more-space) - var(--minimum-space) * 2);
+  background-color: var(--white);
+  top: var(--minimum-space);
+  left: var(--minimum-space);
+  transition: all var(--blink) ease-in-out;
+  box-shadow: 0 var(--hairline) var(--outline) var(--shadow);
+}
+
+.naming-toggle input[type="checkbox"]:checked {
+  background-color: var(--black);
+}
+
+.naming-toggle input[type="checkbox"]:checked::before {
+  left: calc(var(--more-space) + var(--minimum-space));
+}
+
+.naming-toggle input[type="checkbox"]:hover {
+  opacity: var(--ghost);
 }
 
 /* ============================================================================
@@ -314,6 +404,7 @@ footer {
   font-size: 1rem;
   border: var(--hairline) solid var(--light-gray);
   cursor: pointer;
+  color: var(--black);
   background-color: var(--white);
   transition: border-color var(--blink) ease-in-out;
 }
@@ -335,11 +426,13 @@ footer {
   justify-content: center;
   align-items: center;
   flex-wrap: wrap;
-  gap: var(--space);
+  gap: var(--more-space);
+  margin: var(--space);
 }
 
 .note {
   padding: var(--space) var(--more-space);
+  color: var(--black);
   background: var(--white);
   transition: all var(--blink) ease-in-out;
   cursor: pointer;
@@ -352,18 +445,18 @@ footer {
 }
 
 .note:hover {
-  transform: scale(1.1);
+  transform: scale(var(--larger));
   box-shadow: 0 var(--hairline) var(--outline) var(--shadow);
 }
 
 .note:active {
-  transform: scale(0.9);
+  transform: scale(var(--smaller));
   box-shadow: none;
   font-weight: bold;
 }
 
 .note .frequency {
-  font-size: 0.9rem;
+  font-size: var(--less-space);
   color: var(--dark-gray);
 }
 
@@ -375,9 +468,9 @@ footer {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: var(--more-space);
+  gap: var(--space);
   list-style: none;
-  margin: var(--more-space) 0;
+  margin: var(--space) 0;
   padding: 0;
 }
 
@@ -400,11 +493,84 @@ footer {
 }
 
 /* ============================================================================
+   COMPONENTS - DOWNLOAD BUTTONS
+   ============================================================================ */
+
+.download-buttons {
+  display: flex;
+  justify-content: center;
+  gap: var(--more-space);
+  margin: var(--space);
+}
+
+.download-buttons button {
+  padding: var(--less-space) var(--space);
+  border: var(--hairline) solid var(--light-gray);
+  border-radius: var(--space);
+  cursor: pointer;
+  transition: transform var(--blink) ease-in-out, filter var(--waltz) ease-in-out;
+}
+
+/* ✨ Hover = hue spin */
+.download-buttons button:hover {
+  border: none;
+  background: linear-gradient(
+    var(--light-red),
+    var(--light-yellow),
+    var(--light-green),
+    var(--light-azure),
+    var(--very-light-blue),
+    var(--light-lavender),
+    var(--light-cyclamen)
+  );
+  transform: scale(var(--larger));
+  filter: hue-rotate(360deg);
+}
+
+/* Click feedback */
+.download-buttons button:active {
+  transform: scale(var(--smaller));
+  filter: hue-rotate(0deg);
+}
+
+
+/* ============================================================================
+   COMPONENTS - TOAST
+   ============================================================================ */
+
+.toast {
+  position: fixed;
+  bottom: var(--more-space);
+  left: 50%;
+  transform: translateX(-50%);
+  padding: var(--space) var(--more-space);
+  background-color: var(--black);
+  color: var(--white);
+  border-radius: var(--space);
+  box-shadow: 0 var(--outline) var(--space) var(--shadow);
+  z-index: 2000;
+  animation: toast-slide-up var(--slow-motion) ease-in-out;
+  max-width: var(--toast-width);
+  text-align: center;
+  opacity: var(--blur);
+}
+
+@keyframes toast-slide-up {
+  from {
+    bottom: 0;
+    opacity: var(--invisibile);
+  }
+  to {
+    bottom: var(--more-space);
+    opacity: var(--blur);
+  }
+}
+
+/* ============================================================================
    RESPONSIVE - TABLET & DESKTOP
    ============================================================================ */
 
-@media (min-width: 768px) and (orientation: landscape) {
-  /* Header - Sidebar Layout */
+@media (min-width: 759px) and (orientation: landscape) {
   header {
     position: fixed;
     top: 0;
@@ -417,16 +583,13 @@ footer {
     transform: translateX(0);
   }
   
-  /* Navigation - Vertical Layout */
   nav {
     flex-direction: column;
-    justify-content: flex-start;
     height: 100%;
-    gap: var(--icon-size);
+    gap: var(--more-space);
     margin-top: 0;
   }
 
-  /* Main - Offset for Sidebar */
   main {
     margin: 0 var(--sidebar-width);
   }

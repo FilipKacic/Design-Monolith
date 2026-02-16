@@ -1,88 +1,117 @@
 <script lang="ts">
-  import { 
-    NOTES_1_ALL, 
-    NEW_NOTES_1_ALL,
-    FREQUENCIES,
-    getScale, 
-    MODES,
-    NEW_MODES,
-    type Mode,
-    type newMode
-  } from '$lib/modes';
-  import Toast from '$lib/components/Toast.svelte';
-  import NamingToggle from '$lib/components/NamingToggle.svelte';
-  import { copyFrequency } from '$lib/utils/clipboard';
-  import { getNoteColor } from '$lib/utils/colors';
-  import { useNewNaming, selectedNoteIndex, selectedModeIndex } from '$lib/stores/naming';
-  
-  // Reactive variables that switch based on naming system
-  $: currentNotes = $useNewNaming ? NEW_NOTES_1_ALL : NOTES_1_ALL;
-  $: currentModes = $useNewNaming ? NEW_MODES : MODES;
-  
-  // Derive the actual note/mode from the index
-  $: selectedNote = currentNotes[$selectedNoteIndex];
-  $: selectedMode = currentModes[$selectedModeIndex];
-  
-  // Generate scale with the useNew parameter
-  $: scale = getScale(selectedNote, selectedMode, true, $useNewNaming);
+  import { FREQUENCIES, NOTES_ALL, NEW_NOTES_ALL, MODES, NEW_MODES } from '$lib/utils/modes';
 
-  // Toast notification state
-  let showToast = false;
-  let toastMessage = '';
+  // Precompute frequency list for display
+  const frequencyList = FREQUENCIES.map((f, i) => ({
+    note: f.note,
+    frequency: f.frequency,
+    power: i
+  }));
 
-  // Copy frequency to clipboard
-  async function handleCopy(frequency: number, note: string) {
-    const result = await copyFrequency(frequency);
-    toastMessage = result.message;
-    showToast = true;
-  }
+  // Map old notes → new notes (strip octave numbers, remove duplicates)
+  const renamedNotes = NOTES_ALL
+    .map((oldNote, i) => ({
+      oldName: oldNote.replace(/\d+$/, ''),
+      newName: NEW_NOTES_ALL[i].replace(/\d+$/, '')
+    }))
+    .filter((item, index, arr) =>
+      arr.findIndex(x => x.oldName === item.oldName) === index
+    );
+
+  // Map old modes → new modes
+  const renamedModes = MODES.map((oldMode, i) => ({
+    oldName: oldMode,
+    newName: NEW_MODES[i]
+  }));
 </script>
 
 <h1>Design Monolith</h1>
 
-<!-- Toast Notification -->
-<Toast bind:show={showToast} message={toastMessage} />
+<section>
+  <h2>Music Theory</h2>
 
-<!-- Naming toggle -->
-<NamingToggle />
+  <article>
+    <h3>Why Twelve Notes In Music</h3>
+    <p>
+      The 1:2 ratio produces the same note in a higher octave.
+      <br>
+      The 2:3 ratio generates new notes.
+      <br>
+      Twelve is the minimum number that nearly evenly divides a circle with the 2:3 ratio.
+      The equation 2<sup>x</sup> ≠ 3<sup>y</sup> (for positive integers x and y) proves this.
+      (The next possible number of notes is 53 and it is simply impractical.)
+    </p>
+  </article>
 
-<div class="scale-selector">
-  <div class="input-group">
-    <label for="note">Root Note:</label>
-    <select id="note" bind:value={$selectedNoteIndex}>
-      {#each currentNotes as note, i}
-        <option value={i}>{note}</option>
+  <article>
+    <h3>The First Note & The Frequencies Of All The Notes</h3>
+    <p>
+      One Hertz is equal to one heartbeat cycle of a healthy human.
+      <br>
+      Using the powers of 3 (the 3:2 ratio) starting from 1 Hz we get:
+    </p>
+    <ul>
+      {#each frequencyList as f}
+        <li>3<sup>{f.power}</sup> = {f.frequency} Hz ({f.note})</li>
       {/each}
-    </select>
-  </div>
-  
-  <div class="input-group">
-    <label for="mode">Mode:</label>
-    <select id="mode" bind:value={$selectedModeIndex}>
-      {#each currentModes as mode, i}
-        <option value={i}>{mode}</option>
-      {/each}
-    </select>
-  </div>
-</div>
+    </ul>
+    <p>
+      Modern equal-tempered tuning slightly adjusts frequencies.
+      That conserves equidistance, but breaks natural harmonic relationships.
+    </p>
+  </article>
 
-<div class="scale-output">
-  <h2>Notes in the {selectedNote} {selectedMode} Scale:</h2>
-  <div class="notes">
-    {#each scale as { note, frequency }, i}
-      <span 
-        class="note" 
-        class:root={i === 0}
-        style="background-color: {getNoteColor(frequency)};"
-        on:click={() => handleCopy(frequency, note)}
-        on:keydown={(e) => e.key === 'Enter' && handleCopy(frequency, note)}
-        role="button"
-        tabindex="0"
-        aria-label="Copy {note} ({frequency}Hz) to clipboard"
-      >
-        {note}
-        <span class="frequency">({frequency}Hz)</span>
-      </span>
-    {/each}
-  </div>
-</div>
+  <article>
+    <h3>Why Seven Notes In A Mode And A Scale</h3>
+    <p>
+      Adding an eighth note to a scale produces a <i>wolfish</i> interval.
+    </p>
+  </article>
+
+  <article>
+    <h3>The First Mode</h3>
+    <p>
+      From the twelve-note circle of fifths, the first seven-note pattern forms the the Lydian mode pattern.
+      That is why the Lydian mode is the first mode of this system.
+    </p>
+  </article>
+
+  <article>
+    <h3>The Seventh And Twelfth Note Problematic Taxonomy</h3>
+    <p>
+      Powers of 3 produce the seventh note at 3<sup>6</sup> = 729 Hz (F#).
+      Because of that, F should be called E#, and F# should be called F.
+      It has no sense after getting 6 new notes, to call the seventh note a sharp, and consider the twelfth note a new note.  
+    </p>
+  </article>
+
+  <article>
+    <h3>Musical Note & Mode Names Overhaul</h3>
+    <p>
+      This is a proposition of musical note, mode and, ultimately, scale name change.
+      It is based on natural harmonic relationships, logic, alchemical knowlegde and optimism.
+    </p>
+    <p>Note renaming:</p>
+    <ul>
+      {#each renamedNotes as n}
+        <li>{n.oldName} → {n.newName}</li>
+      {/each}
+    </ul>
+    <p>Mode renaming:</p>
+    <ul>
+      {#each renamedModes as mode}
+        <li>{mode.oldName} → {mode.newName}</li>
+      {/each}
+    </ul>
+  </article>
+
+  <article>
+    <h2>Post Scriptum</h2>
+    <p>
+      I have not discovered anything new under the Sun, but only filtered the chaos of information into a fragment of truth about our sonic reality and connected it with colors and celestial lights.
+      Thank God and forgive me if I had made any mistakes.
+      My hopes are that this monolith of knowledge helps designers create more beauty in this world.
+      Amen.
+    </p>
+  </article>
+</section>

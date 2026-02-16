@@ -10,6 +10,10 @@
 </script>
 
 <svelte:head>
+	<title>
+		Design Monolith
+	</title>
+
 	<meta charset="utf-8" />
 	<meta name="application-name" content="Audio Visual Design Monolith" />
 	<meta name="author" content="Filip Kačić">
@@ -17,6 +21,15 @@
 	<meta name="keywords" content="audio, visual, design">
 	<meta name="generator" content="SvelteKit">
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+	<meta property="og:type" content="website" />
+	<meta property="og:title" content="Design Monolith" />
+	<meta property="og:description" content="A collection of audio-visual design tools." />
+	<meta property="og:url" content="https://mydomain.com/" />
+	<meta property="og:image" content="https://mydomain.com/og-image.png" />
+	<meta property="og:site_name" content="Design Monolith" />
+	<meta property="og:locale" content="en_US" />
+	
 	<link rel="icon" href={favicon} />
 </svelte:head>
 

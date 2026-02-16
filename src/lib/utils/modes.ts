@@ -148,35 +148,6 @@ export function getScale(
 }
 
 /**
- * Reduces a frequency to the nearest octave at or above a minimum frequency
- * @param frequency - The input frequency to reduce
- * @param minFrequency - The minimum allowed frequency (won't go below this)
- * @returns The octave-reduced frequency >= minFrequency
- */
-export function reduceToOctave(
-  frequency: number,
-  minFrequency: number
-): number {
-  if (frequency <= 0 || minFrequency <= 0) {
-    throw new Error('Frequencies must be positive');
-  }
-
-  let reduced = frequency;
-
-  // Reduce down while we're above minFrequency * 2
-  while (reduced >= minFrequency * 2) {
-    reduced /= 2;
-  }
-
-  // If we went below minimum, bring back up one octave
-  if (reduced < minFrequency) {
-    reduced *= 2;
-  }
-
-  return reduced;
-}
-
-/**
  * Get frequency for a note (O(1) lookup)
  * @param note - The note name
  * @param useNew - Whether to use new naming system
@@ -184,4 +155,35 @@ export function reduceToOctave(
  */
 export function getFrequency(note: string, useNew: boolean = false): number | undefined {
   return useNew ? NEW_FREQUENCY_MAP.get(note) : FREQUENCY_MAP.get(note);
+}
+
+export function reduceToOctave(
+  frequencyToReduce: number,
+  frequencyToMatch: number
+): number {
+  if (frequencyToReduce <= 0 || frequencyToMatch <= 0) {
+    throw new Error('Frequencies must be positive');
+  }
+
+  let reduced = frequencyToReduce;
+
+  // Reduce down while we're too high
+  while (reduced >= frequencyToMatch * 2) {
+    reduced /= 2;
+  }
+
+  // Bring up while we're too low
+  while (reduced < frequencyToMatch / 2) {
+    reduced *= 2;
+  }
+
+  // Now check if going one octave lower gets us closer to the target
+  const distanceCurrent = Math.abs(reduced - frequencyToMatch);
+  const distanceLower = Math.abs(reduced / 2 - frequencyToMatch);
+
+  if (distanceLower < distanceCurrent) {
+    reduced /= 2;
+  }
+
+  return reduced;
 }
