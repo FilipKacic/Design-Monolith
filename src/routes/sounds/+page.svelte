@@ -8,7 +8,7 @@
     NEW_MODES,
     getScale, 
     reduceToOctave,
-  } from '$lib/utils/modes';
+  } from '$lib/utils/sounds';
   import Toast from '$lib/components/Toast.svelte';
   import ScaleControls from '$lib/components/ScaleControl.svelte';
   import { copyFrequency } from '$lib/utils/clipboard';

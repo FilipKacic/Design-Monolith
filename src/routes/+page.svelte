@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { FREQUENCIES, NOTES_ALL, NEW_NOTES_ALL, MODES, NEW_MODES } from '$lib/utils/modes';
+  import { FREQUENCIES, NOTES_ALL, NEW_NOTES_ALL, MODES, NEW_MODES } from '$lib/utils/sounds';
   
   // Precompute frequency list for display
   const frequencyList = FREQUENCIES.map((f, i) => ({
@@ -104,7 +104,35 @@
       {/each}
     </ul>
   </article>
-  
+</section>
+
+<section>
+  <h2>Color Theory</h2>
+  <article>
+    <h3>The Color Wheel</h3>
+  </article>
+  <article>
+    <h3>The Dark Color Wheel</h3>
+  </article>
+  <article>
+    <h3>The Light Color Wheel</h3>
+  </article>
+  <article>
+    <h3>The Scale of Shades</h3>
+  </article>
+</section>
+
+<section>
+  <h2>Celestial Theory</h2>
+  <article>
+    <h3>The Wandering Stars</h3>
+  </article>
+  <article>
+    <h3>The Firmament</h3>
+  </article>
+</section>
+
+<section>
   <article>
     <h2>Post Scriptum</h2>
     <p>

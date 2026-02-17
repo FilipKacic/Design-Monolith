@@ -5,7 +5,7 @@
     NEW_NOTES_1_ALL,
     MODES,
     NEW_MODES,
-  } from '$lib/utils/modes';
+  } from '$lib/utils/sounds';
   import { useNewNaming, selectedNoteIndex, selectedModeIndex } from '$lib/stores/naming';
   
   // Reactive variables that switch based on naming system

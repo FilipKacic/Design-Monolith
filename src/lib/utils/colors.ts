@@ -1,5 +1,5 @@
 // src/lib/utils/colors.ts
-import { FREQUENCIES } from '$lib/utils/modes';
+import { FREQUENCIES } from '$lib/utils/sounds';
 
 /**
  * Determines if a CSS variable needs white text based on naming pattern

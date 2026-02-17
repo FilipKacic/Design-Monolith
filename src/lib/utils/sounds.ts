@@ -70,6 +70,19 @@ export const NEW_MODES = [
 export type Mode = typeof MODES[number];
 export type newMode = typeof NEW_MODES[number];
 
+// Scale degree names (I–VII)
+export const SCALE_DEGREE_NAMES = [
+  "Tonic",
+  "Supertonic",
+  "Mediant",
+  "Subdominant",
+  "Dominant",
+  "Submediant",
+  "Subtonic",
+] as const;
+
+export type ScaleDegree = typeof SCALE_DEGREE_NAMES[number];
+
 // Mode pattern offsets
 const MODE_OFFSETS = [0, -2, -4, -6, -1, -3, -5] as const;
 
@@ -101,14 +114,14 @@ export const NOTES_1_ALL_SORTED = sortNotesAlphabetically([...NOTES_1_ALL]);
  * @param mode - The mode to use for the scale pattern
  * @param sorted - Whether to sort the scale alphabetically starting from root
  * @param useNew - Whether to use new naming system
- * @returns Array of 7 notes with their frequencies forming the scale
+ * @returns Array of 7 notes with their frequencies and scale degrees forming the scale
  */
 export function getScale(
   rootNote: string, 
   mode: Mode | newMode, 
   sorted: boolean = false,
   useNew: boolean = false
-): { note: string; frequency: number }[] {
+): { note: string; frequency: number; degree: number; degreeName: ScaleDegree }[] {
   const freqArray = useNew ? NEW_FREQUENCIES : FREQUENCIES;
   const notesArray = useNew ? NEW_NOTES_1_ALL : NOTES_1_ALL;
   
@@ -131,11 +144,15 @@ export function getScale(
   const arrayLength = notesArray.length;
 
   // Build scale using pattern
-  const scale = pattern.map(offset => {
+  const scale = pattern.map((offset, i) => {
     const noteIndex = offset < 0 
       ? ((rootIndex + offset) % arrayLength + arrayLength) % arrayLength
       : rootIndex + offset;
-    return freqArray[noteIndex];
+    return {
+      ...freqArray[noteIndex],
+      degree: i + 1,
+      degreeName: SCALE_DEGREE_NAMES[i],
+    };
   });
 
   if (sorted) {
