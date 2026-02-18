@@ -4,7 +4,7 @@
   import { COLOR_PALETTES } from '$lib/utils/colors';
   import { NEW_NOTES_1_ALL, SCALE_DEGREE_KEYS } from '$lib/utils/sounds';
 
-  const colors = COLOR_PALETTES.twelve_color_wheel_of_light.map(c => `var(${c.variable})`);
+  const colors = COLOR_PALETTES.wheel_of_light.map(c => `var(${c.variable})`);
   const MODE_OFFSETS = [0, -2, -4, -6, -1, -3, -5] as const;
   const wandererColors = MODE_OFFSETS.map(offset => colors[((offset % 12) + 12) % 12]);
 </script>

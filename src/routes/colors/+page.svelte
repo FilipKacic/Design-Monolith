@@ -9,17 +9,18 @@
   let showToast = false;
   let toastMessage = '';
 
-  // Map your display keys to COLOR_PALETTES keys
+  // MUST match keys defined in colors.ts
   const PALETTE_KEY_MAP = {
-    scale_of_seven_shades: 'scale_of_seven_shades',
-    twelve_color_wheel: 'twelve_color_wheel',
-    twelve_color_wheel_of_darkness: 'twelve_color_wheel_of_darkness',
-    twelve_color_wheel_of_light: 'twelve_color_wheel_of_light',
+    scale: 'scale_of_shades',
+    wheel: 'color_wheel',
+    wheel_of_darkness: 'color_wheel_of_darkness',
+    wheel_of_ghost: 'color_wheel_of_ghost',
+    wheel_of_light: 'color_wheel_of_light',
   } as const;
 
   type PaletteKey = keyof typeof PALETTE_KEY_MAP;
 
-  // Convert palette to new ColorEntry[] format
+  // Convert palette to export-friendly structure
   function getPaletteEntries(palette: typeof COLOR_PALETTES[keyof typeof COLOR_PALETTES]) {
     return palette.map(c => ({
       name: c.name,
@@ -36,29 +37,31 @@
 
   function handleDownloadAll(format: ExportFormat) {
     const allColors = {
-      scale_of_seven_shades: getPaletteEntries(COLOR_PALETTES[PALETTE_KEY_MAP.scale_of_seven_shades]),
-      twelve_color_wheel: getPaletteEntries(COLOR_PALETTES[PALETTE_KEY_MAP.twelve_color_wheel]),
-      twelve_color_wheel_of_darkness: getPaletteEntries(COLOR_PALETTES[PALETTE_KEY_MAP.twelve_color_wheel_of_darkness]),
-      twelve_color_wheel_of_light: getPaletteEntries(COLOR_PALETTES[PALETTE_KEY_MAP.twelve_color_wheel_of_light]),
+      scale: getPaletteEntries(COLOR_PALETTES.scale),
+      wheel: getPaletteEntries(COLOR_PALETTES.wheel),
+      wheel_of_darkness: getPaletteEntries(COLOR_PALETTES.wheel_of_darkness),
+      wheel_of_ghost: getPaletteEntries(COLOR_PALETTES.wheel_of_ghost),
+      wheel_of_light: getPaletteEntries(COLOR_PALETTES.wheel_of_light),
     };
-    
+
     const result = exportAllPalettes(allColors, format);
     toastMessage = result.message;
     showToast = true;
   }
 
   function handleDownloadPalette(paletteName: string, paletteKey: PaletteKey, format: ExportFormat) {
-    const colorEntries = getPaletteEntries(COLOR_PALETTES[PALETTE_KEY_MAP[paletteKey]]);
+    const colorEntries = getPaletteEntries(COLOR_PALETTES[paletteKey]);
     const result = exportPalette(paletteName, colorEntries, format);
     toastMessage = result.message;
     showToast = true;
   }
 
   const palettes: { name: string; key: PaletteKey }[] = [
-    { name: 'Scale of Seven Shades', key: 'scale_of_seven_shades' },
-    { name: 'Twelve Color Wheel', key: 'twelve_color_wheel' },
-    { name: 'Twelve Color Wheel of Darkness', key: 'twelve_color_wheel_of_darkness' },
-    { name: 'Twelve Color Wheel of Light', key: 'twelve_color_wheel_of_light' },
+    { name: 'Scale of Shades', key: 'scale' },
+    { name: 'Color Wheel', key: 'wheel' },
+    { name: 'Color Wheel of Darkness', key: 'wheel_of_darkness' },
+    { name: 'Color Wheel of Ghost', key: 'wheel_of_ghost' },
+    { name: 'Color Wheel of Light', key: 'wheel_of_light' },
   ];
 </script>
 
@@ -66,14 +69,16 @@
 
 <Toast bind:show={showToast} message={toastMessage} />
 
+<!-- Download all palettes -->
 <PaletteDownloadButtons onDownload={handleDownloadAll} />
 
 {#each palettes as { name, key }}
   <h2>{name}</h2>
+
   <div class="notes">
-    {#each COLOR_PALETTES[PALETTE_KEY_MAP[key]] as { name: colorName, variable, needsWhiteText }}
-      <span 
-        class="note" 
+    {#each COLOR_PALETTES[key] as { name: colorName, variable, needsWhiteText }}
+      <span
+        class="note"
         style="background-color: var({variable}); {needsWhiteText ? 'color: var(--white);' : ''}"
         on:click={() => handleCopy(variable, colorName)}
         on:keydown={(e) => e.key === 'Enter' && handleCopy(variable, colorName)}
@@ -85,7 +90,8 @@
       </span>
     {/each}
   </div>
-  <PaletteDownloadButtons 
-    onDownload={(format) => handleDownloadPalette(name, key, format)} 
+
+  <PaletteDownloadButtons
+    onDownload={(format) => handleDownloadPalette(name, key, format)}
   />
 {/each}

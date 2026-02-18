@@ -40,56 +40,72 @@
   --shadow: hsla(0, 0%, 0%, var(--ghost));
   --light: hsla(0, 0%, 100%, var(--tinted-glass));
 
-  /* Scale of Seven Shades */
+  /* Scale */
   --black: hsl(0, 0%, 0%);
-  --pitch-black: hsl(0, 0%, 13%);
-  --dark-gray: hsl(0, 0%, 25%);
+  --pitch-black: hsl(0, 0%, 12%);
+  --iron-gray: hsl(0, 0%, 25%);
+  --dark-gray: hsl(0, 0%, 37%);
   --gray: hsl(0, 0%, 50%);
-  --light-gray: hsl(0, 0%, 75%);
+  --light-gray: hsl(0, 0%, 62%);
+  --silver: hsl(0, 0%, 75%);
   --snow-white: hsl(0, 0%, 88%);
   --white: hsl(0, 0%, 100%);
 
-  /* Twelve Color Wheel */
-  --red: hsl(0, 67%, 50%);
-  --mushmula: hsl(30, 67%, 50%);
-  --yellow: hsl(60, 67%, 50%);
-  --olive: hsl(90, 67%, 50%);
-  --green: hsl(120, 67%, 50%);
-  --teal: hsl(150, 67%, 50%);
-  --azure: hsl(180, 67%, 50%);
-  --indigo: hsl(210, 67%, 50%);
-  --blue: hsl(240, 67%, 50%);
-  --lavender: hsl(270, 67%, 50%);
-  --cyclamen: hsl(300, 67%, 50%);
-  --mulberry: hsl(330, 67%, 50%);
+  /* Wheel */
+  --red: hsl(0, 100%, 50%);
+  --mushmula: hsl(30, 100%, 50%);
+  --yellow: hsl(60, 100%, 50%);
+  --olive: hsl(90, 100%, 50%);
+  --green: hsl(120, 100%, 50%);
+  --teal: hsl(150, 100%, 50%);
+  --azure: hsl(180, 100%, 50%);
+  --indigo: hsl(210, 100%, 50%);
+  --blue: hsl(240, 100%, 50%);
+  --lavender: hsl(270, 100%, 50%);
+  --cyclamen: hsl(300, 100%, 50%);
+  --mulberry: hsl(330, 100%, 50%);
 
-  /* Twelve Color Wheel of Darkness */
-  --dark-red: hsl(0, 67%, 25%);
-  --dark-mushmula: hsl(30, 67%, 25%);
-  --very-dark-yellow: hsl(60, 66%, 25%);
-  --dark-olive: hsl(90, 67%, 25%);
-  --dark-green: hsl(120, 67%, 25%);
-  --dark-teal: hsl(150, 67%, 25%);
-  --dark-azure: hsl(180, 67%, 25%);
-  --dark-indigo: hsl(210, 67%, 25%);
-  --dark-blue: hsl(240, 67%, 25%);
-  --dark-lavender: hsl(270, 67%, 25%);
-  --dark-cyclamen: hsl(300, 67%, 25%);
-  --dark-mulberry: hsl(330, 67%, 25%);
+  /* Darkness */
+  --dark-red: hsl(0, 50%, 25%);
+  --dark-mushmula: hsl(30, 50%, 25%);
+  --dark-yellow: hsl(60, 50%, 25%);
+  --dark-olive: hsl(90, 50%, 25%);
+  --dark-green: hsl(120, 50%, 25%);
+  --dark-teal: hsl(150, 50%, 25%);
+  --dark-azure: hsl(180, 50%, 25%);
+  --dark-indigo: hsl(210, 50%, 25%);
+  --dark-blue: hsl(240, 50%, 25%);
+  --dark-lavender: hsl(270, 50%, 25%);
+  --dark-cyclamen: hsl(300, 50%, 25%);
+  --dark-mulberry: hsl(330, 50%, 25%);
+
+  /* Ghost */
+  --ghost-red: hsl(0, 50%, 50%);
+  --ghost-mushmula: hsl(30, 50%, 50%);
+  --ghost-yellow: hsl(60, 50%, 50%);
+  --ghost-olive: hsl(90, 50%, 50%);
+  --ghost-green: hsl(120, 50%, 50%);
+  --ghost-teal: hsl(150, 50%, 50%);
+  --ghost-azure: hsl(180, 50%, 50%);
+  --ghost-indigo: hsl(210, 50%, 50%);
+  --ghost-blue: hsl(240, 50%, 50%);
+  --ghost-lavender: hsl(270, 50%, 50%);
+  --ghost-cyclamen: hsl(300, 50%, 50%);
+  --ghost-mulberry: hsl(330, 50%, 50%);
   
-  /* Twelve Color Wheel of Light */
-  --light-red: hsl(0, 29%, 75%);
-  --light-mushmula: hsl(30, 29%, 75%);
-  --light-yellow: hsl(60, 29%, 75%);
-  --light-olive: hsl(90, 29%, 75%);
-  --light-green: hsl(120, 29%, 75%);
-  --light-teal: hsl(150, 29%, 75%);
-  --light-azure: hsl(180, 29%, 75%);
-  --light-indigo: hsl(210, 29%, 75%);
-  --very-light-blue: hsl(240, 34%, 79%);
-  --light-lavender: hsl(270, 29%, 75%);
-  --light-cyclamen: hsl(300, 29%, 75%);
-  --light-mulberry: hsl(330, 29%, 75%);
+  /* Light */
+  --light-red: hsl(0, 50%, 75%);
+  --light-mushmula: hsl(30, 50%, 75%);
+  --light-yellow: hsl(60, 50%, 75%);
+  --light-olive: hsl(90, 50%, 75%);
+  --light-green: hsl(120, 50%, 75%);
+  --light-teal: hsl(150, 50%, 75%);
+  --light-azure: hsl(180, 50%, 75%);
+  --light-indigo: hsl(210, 50%, 75%);
+  --light-blue: hsl(240, 50%, 75%);
+  --light-lavender: hsl(270, 50%, 75%);
+  --light-cyclamen: hsl(300, 50%, 75%);
+  --light-mulberry: hsl(330, 50%, 75%);
 }
 
 /* ============================================================================

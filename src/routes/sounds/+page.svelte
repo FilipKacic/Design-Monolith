@@ -7,8 +7,7 @@
     MODES,
     NEW_MODES,
     getScale, 
-    reduceToOctave,
-	SCALE_DEGREE_KEYS,
+    reduceToOctave
   } from '$lib/utils/sounds';
   import Toast from '$lib/components/Toast.svelte';
   import ScaleControls from '$lib/components/ScaleControl.svelte';
@@ -75,7 +74,6 @@
 </script>
 
 <h1>Sounds</h1>
-
 <Toast bind:show={showToast} message={toastMessage} />
 <ScaleControls />
 
@@ -102,9 +100,8 @@
   </div>
 </div>
 
-<h2>Scale-Based Guitar Tuning</h2>
-
 <ul class="tuning-list">
+  <h2>Scale-Based Guitar Tuning</h2>
   {#each tuning as { note, frequency }, i}
     <li>
       <div class="string-row">

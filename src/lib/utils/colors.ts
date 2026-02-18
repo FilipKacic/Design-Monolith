@@ -3,54 +3,57 @@ import { FREQUENCIES } from '$lib/utils/sounds';
 
 /**
  * Determines if a CSS variable needs white text based on naming pattern
- * @param variable - CSS variable name like "--mushmula"
- * @returns true if white text is needed, false if black text is fine
  */
 export function needsWhiteText(variable: string): boolean {
-  // Dark colors and achromatic colors <= gray need white text
-  const darkAchromatic = ['--black', '--pitch-black', '--dark-gray', '--gray'];
+  const darkAchromatic = ['--black', '--pitch-black', '--iron-gray', '--dark-gray', '--gray'];
   const darkChromatic = ['--red', '--indigo', '--blue', '--lavender', '--cyclamen', '--mulberry'];
+  const ghostChromatic = ['--ghost-red', '--ghost-indigo', '--ghost-blue', '--ghost-lavender', '--ghost-cyclamen', '--ghost-mulberry'];
   const hasDarkToken = /(^|-)dark(-|$)/.test(variable);
 
-
   return (
-    darkAchromatic.includes(variable) || 
-    darkChromatic.includes(variable)|| 
+    darkAchromatic.includes(variable) ||
+    darkChromatic.includes(variable) ||
+    ghostChromatic.includes(variable) ||
     hasDarkToken
   );
 }
 
-// Color palette definitions with computed needsWhiteText
+// ============================================================================
+// COLOR PALETTES
+// ============================================================================
+
 export const COLOR_PALETTES = {
-  scale_of_seven_shades: [
+  scale: [
     { name: 'Black', variable: '--black' },
     { name: 'Pitch Black', variable: '--pitch-black' },
+    { name: 'Iron Gray', variable: '--iron-gray' },
     { name: 'Dark Gray', variable: '--dark-gray' },
     { name: 'Gray', variable: '--gray' },
     { name: 'Light Gray', variable: '--light-gray' },
+    { name: 'Silver', variable: '--silver' },
     { name: 'Snow White', variable: '--snow-white' },
     { name: 'White', variable: '--white' },
   ].map(color => ({ ...color, needsWhiteText: needsWhiteText(color.variable) })),
-  
-  twelve_color_wheel: [
-    { name: 'Red', variable: '--red' },
-    { name: 'Mushmula', variable: '--mushmula' },
-    { name: 'Yellow', variable: '--yellow' },
-    { name: 'Olive', variable: '--olive' },
-    { name: 'Green', variable: '--green' },
-    { name: 'Teal', variable: '--teal' },
-    { name: 'Azure', variable: '--azure' },
-    { name: 'Indigo', variable: '--indigo' },
-    { name: 'Blue', variable: '--blue' },
-    { name: 'Lavender', variable: '--lavender' },
-    { name: 'Cyclamen', variable: '--cyclamen' },
-    { name: 'Mulberry', variable: '--mulberry' },
+
+  wheel: [
+    { name: 'Red', variable: '--red' },           // Grayscale: 76
+    { name: 'Mushmula', variable: '--mushmula' }, // Grayscale: 151
+    { name: 'Yellow', variable: '--yellow' },     // Grayscale: 226
+    { name: 'Olive', variable: '--olive' },       // Grayscale: 188
+    { name: 'Green', variable: '--green' },       // Grayscale: 150
+    { name: 'Teal', variable: '--teal' },         // Grayscale: 164
+    { name: 'Azure', variable: '--azure' },       // Grayscale: 179
+    { name: 'Indigo', variable: '--indigo' },     // Grayscale: 104
+    { name: 'Blue', variable: '--blue' },         // Grayscale: 29
+    { name: 'Lavender', variable: '--lavender' }, // Grayscale: 67
+    { name: 'Cyclamen', variable: '--cyclamen' }, // Grayscale: 105
+    { name: 'Mulberry', variable: '--mulberry' }, // Grayscale: 91
   ].map(color => ({ ...color, needsWhiteText: needsWhiteText(color.variable) })),
-  
-  twelve_color_wheel_of_darkness: [
+
+  wheel_of_darkness: [
     { name: 'Dark Red', variable: '--dark-red' },
     { name: 'Dark Mushmula', variable: '--dark-mushmula' },
-    { name: 'Very Dark Yellow', variable: '--very-dark-yellow' },
+    { name: 'Dark Yellow', variable: '--dark-yellow' },
     { name: 'Dark Olive', variable: '--dark-olive' },
     { name: 'Dark Green', variable: '--dark-green' },
     { name: 'Dark Teal', variable: '--dark-teal' },
@@ -61,8 +64,23 @@ export const COLOR_PALETTES = {
     { name: 'Dark Cyclamen', variable: '--dark-cyclamen' },
     { name: 'Dark Mulberry', variable: '--dark-mulberry' },
   ].map(color => ({ ...color, needsWhiteText: needsWhiteText(color.variable) })),
-  
-  twelve_color_wheel_of_light: [
+
+  wheel_of_ghost: [
+    { name: 'Ghost Red', variable: '--ghost-red' },
+    { name: 'Ghost Mushmula', variable: '--ghost-mushmula' },
+    { name: 'Ghost Yellow', variable: '--ghost-yellow' },
+    { name: 'Ghost Olive', variable: '--ghost-olive' },
+    { name: 'Ghost Green', variable: '--ghost-green' },
+    { name: 'Ghost Teal', variable: '--ghost-teal' },
+    { name: 'Ghost Azure', variable: '--ghost-azure' },
+    { name: 'Ghost Indigo', variable: '--ghost-indigo' },
+    { name: 'Ghost Blue', variable: '--ghost-blue' },
+    { name: 'Ghost Lavender', variable: '--ghost-lavender' },
+    { name: 'Ghost Cyclamen', variable: '--ghost-cyclamen' },
+    { name: 'Ghost Mulberry', variable: '--ghost-mulberry' },
+  ].map(color => ({ ...color, needsWhiteText: needsWhiteText(color.variable) })),
+
+  wheel_of_light: [
     { name: 'Light Red', variable: '--light-red' },
     { name: 'Light Mushmula', variable: '--light-mushmula' },
     { name: 'Light Yellow', variable: '--light-yellow' },
@@ -71,32 +89,26 @@ export const COLOR_PALETTES = {
     { name: 'Light Teal', variable: '--light-teal' },
     { name: 'Light Azure', variable: '--light-azure' },
     { name: 'Light Indigo', variable: '--light-indigo' },
-    { name: 'Very Light Blue', variable: '--very-light-blue' },
+    { name: 'Light Blue', variable: '--light-blue' },
     { name: 'Light Lavender', variable: '--light-lavender' },
     { name: 'Light Cyclamen', variable: '--light-cyclamen' },
     { name: 'Light Mulberry', variable: '--light-mulberry' },
   ].map(color => ({ ...color, needsWhiteText: needsWhiteText(color.variable) })),
 } as const;
 
-// Color mapping for the 12 notes (used for frequency-based coloring)
-export const noteColors: readonly string[] = COLOR_PALETTES.twelve_color_wheel_of_light.map(
-  color => `var(${color.variable})`
-);
+// ============================================================================
+// NOTE COLOR MAPPING
+// ============================================================================
 
-// Memoize frequency-to-index map for O(1) lookups
+export const noteColors: readonly string[] =
+  COLOR_PALETTES.wheel_of_light.map(color => `var(${color.variable})`);
+
 const frequencyIndexMap = new Map(
   FREQUENCIES.map((f, i) => [f.frequency, i])
 );
 
-/**
- * Get color for a note based on its frequency
- * @param frequency - The frequency in Hz
- * @returns CSS color variable string
- */
 export function getNoteColor(frequency: number): string {
   const index = frequencyIndexMap.get(frequency);
   if (index === undefined) return 'var(--white)';
-  
-  // Map to color (cycle through 12 colors)
   return noteColors[index % 12];
 }

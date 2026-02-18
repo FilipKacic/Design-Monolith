@@ -132,7 +132,7 @@ export function exportAllPalettes(
   palettes: PaletteData,
   format: ExportFormat
 ): { success: boolean; message: string } {
-  const filename = 'Jesus-take-the-36-color-gyroscope-and-the-scale-of-7-shades-palette';
+  const filename = 'Jesus-take-the-color-gyroscope-palette';
 
   let content: string;
   switch (format) {
