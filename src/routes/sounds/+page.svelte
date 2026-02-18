@@ -8,6 +8,7 @@
     NEW_MODES,
     getScale, 
     reduceToOctave,
+	SCALE_DEGREE_KEYS,
   } from '$lib/utils/sounds';
   import Toast from '$lib/components/Toast.svelte';
   import ScaleControls from '$lib/components/ScaleControl.svelte';
@@ -81,7 +82,7 @@
 <div class="scale-output">
   <h2>Notes in Scale:</h2>
   <div class="notes">
-    {#each scale as { note, frequency }, i}
+    {#each scale as { note, frequency, degreeName, numeral }, i}
       <span 
         class="note" 
         class:root={i === 0}
@@ -94,6 +95,8 @@
       >
         {note}
         <span class="frequency">({frequency.toFixed(2)}Hz)</span>
+        <br>
+        <span class="degree"><i>{degreeName} ({numeral})</i></span>
       </span>
     {/each}
   </div>
