@@ -53,21 +53,31 @@ function formatPalettes(
   return lines.join('\n');
 }
 
-/** XML format: single root, comments for sections */
-function formatAllAsXML(palettes: PaletteData, fileName = 'Palette'): string {
-  const lines: string[] = [`<palette name="${fileName}">`];
+/** XML format: normalized RGB tints 0–1, no name attribute, rounded to 6 decimals */
+function formatAllAsXMLNormalized(
+  palettes: PaletteData,
+  fileName = 'Palette'
+): string {
+  const guid = crypto.randomUUID();
+  const lines: string[] = [
+    `<?xml version="1.0"?>`,
+    `<palette guid="${guid}" name="${fileName}">`,
+    `  <colors>`,
+    `    <page>`
+  ];
 
   for (const [paletteName, colors] of Object.entries(palettes)) {
-    lines.push(`  <!-- ${paletteName} -->`);
+    lines.push(`      <!-- ${paletteName} -->`);
     colors.forEach(c => {
-      const [r, g, b] = hexToRgb(c.hex);
-      lines.push(`  <color r="${r}" g="${g}" b="${b}" name="${c.name}"/>`);
+      const [r, g, b] = hexToRgb(c.hex).map(v => (v / 255).toFixed(6));
+      lines.push(`      <color cs="RGB" tints="${r},${g},${b}"/>`);
     });
   }
 
-  lines.push(`</palette>`);
+  lines.push(`    </page>`, `  </colors>`, `</palette>`);
   return lines.join('\n');
 }
+
 
 /** GPL format: single header, sections via comments */
 function formatAllAsGPL(palettes: PaletteData, fileName = 'Palette'): string {
@@ -114,7 +124,7 @@ export function exportPalette(
   let content: string;
   switch (format) {
     case 'xml':
-      content = formatAllAsXML(paletteObj, paletteName);
+      content = formatAllAsXMLNormalized(paletteObj, paletteName);
       break;
     case 'gpl':
       content = formatAllAsGPL(paletteObj, paletteName);
@@ -124,7 +134,7 @@ export function exportPalette(
       break;
   }
 
-  downloadFile(content, `${filename}.${format}`);
+  downloadFile(content, `${filename}.${format}`, format === 'xml' ? 'application/xml' : DEFAULT_MIME);
   return { success: true, message: `${filename}.${format} downloaded!` };
 }
 
@@ -137,16 +147,16 @@ export function exportAllPalettes(
   let content: string;
   switch (format) {
     case 'xml':
-      content = formatAllAsXML(palettes);
+      content = formatAllAsXMLNormalized(palettes, 'Jesus Take The Color Gyroscope');
       break;
     case 'gpl':
-      content = formatAllAsGPL(palettes);
+      content = formatAllAsGPL(palettes, 'Jesus Take The Color Gyroscope');
       break;
     case 'txt':
       content = formatAllAsTXT(palettes);
       break;
   }
 
-  downloadFile(content, `${filename}.${format}`);
+  downloadFile(content, `${filename}.${format}`, format === 'xml' ? 'application/xml' : DEFAULT_MIME);
   return { success: true, message: `${filename}.${format} downloaded!` };
 }

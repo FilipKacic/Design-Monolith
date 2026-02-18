@@ -530,7 +530,6 @@ footer {
   transition: transform var(--blink) ease-in-out, filter var(--waltz) ease-in-out;
 }
 
-/* ✨ Hover = hue spin */
 .download-buttons button:hover {
   border: none;
   background: linear-gradient(
@@ -538,7 +537,7 @@ footer {
     var(--light-yellow),
     var(--light-green),
     var(--light-azure),
-    var(--very-light-blue),
+    var(--light-blue),
     var(--light-lavender),
     var(--light-cyclamen)
   );
