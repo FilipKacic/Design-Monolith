@@ -169,9 +169,9 @@
     <p>
       I have not discovered anything new under the Sun,
       but only filtered the chaos of information into a fragment of truth.
-      These illuminate the nature of sound, its relationship to color, and its reflection in celestial patterns.
-      May this knowledge be a designers' tool for creating more beauty in the world.  
-      Thank God, and forgive me for any errors.
+      These illuminate the nature of sound and its relationship to color.
+      My hope is that this knowledge is used to create more beauty in the world.
+      Godspeed!
     </p>
   </article>
 </section>
