@@ -17,7 +17,7 @@
 	<meta charset="utf-8" />
 	<meta name="application-name" content="Audio Visual Design Monolith" />
 	<meta name="author" content="Filip Kačić">
-	<meta name="description" content="A collection of audio-visual design tools on a monolithic web application.">
+	<meta name="description" content="A collection of audio-visual design tools.">
 	<meta name="keywords" content="audio, visual, design">
 	<meta name="generator" content="SvelteKit">
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
