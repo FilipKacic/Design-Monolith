@@ -100,6 +100,23 @@
   </div>
 </div>
 
+<!-- TODO
+<div class="chord-output">
+  <h2>Chords in Scale:</h2>
+  <div class="chords">
+    
+    {#each chord as { root_note, structure }, i}
+      <span 
+      
+      >
+        {chord.name}
+      </span>
+    {/each}
+    
+  </div>
+</div>
+-->
+
 <ul class="tuning-list">
   <h2>Scale-Based Guitar Tuning</h2>
   {#each tuning as { note, frequency }, i}

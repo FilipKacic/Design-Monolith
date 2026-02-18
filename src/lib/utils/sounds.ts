@@ -151,3 +151,7 @@ export function reduceToOctave(frequencyToReduce: number, frequencyToMatch: numb
 
   return Math.abs(r / 2 - frequencyToMatch) < Math.abs(r - frequencyToMatch) ? r / 2 : r;
 }
+
+// ── SonicPatern ────────────────────────────────────────────────────────────
+
+export const SONIC_PATTERN = [0, 2, 4, 6, 7, 9, 11] as const;
