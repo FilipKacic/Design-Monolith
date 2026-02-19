@@ -482,6 +482,80 @@ footer {
 }
 
 /* ============================================================================
+   COMPONENTS - CHORDS IN SCALE
+   ============================================================================ */
+
+.size-selector {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space);
+  margin-bottom: var(--space);
+}
+
+button {
+  cursor: pointer;
+  border: var(--hairline) solid var(--black);
+  background: var(--silver);
+  color: black;
+  padding: var(--less-space); 
+  transition:
+    background var(--blink) ease-in-out,
+    scale var(--blink) ease-in-out;
+}
+
+button.selected, button:active {
+  background-color: var(--light-gray);
+}
+
+button:hover {
+  scale: var(--larger);
+}
+
+button:active, button.selected {
+  scale: var(--smaller);
+}
+
+.chords {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: var(--less-space);
+}
+
+.chord-card {
+  padding: var(--less-space);
+  border: var(--hairline) solid var(--black);
+  background: white;
+}
+
+.chord-notes {
+  display: flex;
+  gap: var(--less-space);
+  flex-wrap: wrap;
+  margin-top: var(--less-space);
+}
+
+.intervals {
+  margin-top: var(--less-space);
+  font-size: var(--less-space);
+  color: var(--iron-gray);
+}
+
+.tuning-list {
+  list-style: none;
+  padding: 0;
+}
+
+.string-row {
+  display: flex;
+  align-items: center;
+  gap: var(--less-space);
+  margin-bottom: var(--less-space);
+}
+
+/* ============================================================================
    COMPONENTS - GUITAR TUNING
    ============================================================================ */
 
@@ -574,7 +648,7 @@ footer {
   animation: toast-slide-up var(--slow-motion) ease-in-out;
   max-width: var(--toast-width);
   text-align: center;
-  opacity: var(--blur);
+  opacity: var(--tinted-glass);
 }
 
 @keyframes toast-slide-up {
@@ -584,7 +658,7 @@ footer {
   }
   to {
     bottom: var(--more-space);
-    opacity: var(--blur);
+    opacity: var(--tinted-glass);
   }
 }
 

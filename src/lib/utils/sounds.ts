@@ -2,17 +2,17 @@
 
 // ── Notes ────────────────────────────────────────────────────────────────────
 
-export const NOTES_1 = ["C1", "G1", "D1", "A1", "E1", "B1", "F#1"] as const;
-export const NEW_NOTES_1 = ["A1", "E1", "B1", "F1", "C1", "G1", "D1"] as const;
+export const NOTES_1 = ["C", "G", "D", "A", "E", "B", "F#"] as const;
+export const NEW_NOTES_1 = ["A", "E", "B", "F", "C", "G", "D"] as const;
 
-export const NOTES_1_SHARP = ["C1#", "G1#", "D1#", "A1#", "F1"] as const;
-export const NEW_NOTES_1_SHARP = ["A1#", "E1#", "B1#", "F1#", "C1#"] as const;
+export const NOTES_1_SHARP = ["C#", "G#", "D#", "A#", "F"] as const;
+export const NEW_NOTES_1_SHARP = ["A#", "E#", "B#", "F#", "C#"] as const;
 
 export const NOTES_1_ALL = [...NOTES_1, ...NOTES_1_SHARP] as const;
 export const NEW_NOTES_1_ALL = [...NEW_NOTES_1, ...NEW_NOTES_1_SHARP] as const;
 
-export const NOTES_2 = ["C2", "G2", "D2", "A2", "E2", "B2"] as const;
-export const NEW_NOTES_2 = ["A2", "E2", "B2", "F2", "C2", "G2"] as const;
+export const NOTES_2 = ["C+", "G+", "D+", "A+", "E+", "B+"] as const;
+export const NEW_NOTES_2 = ["A+", "E+", "B+", "F+", "C+", "G+"] as const;
 
 export const NOTES_ALL = [...NOTES_1, ...NOTES_1_SHARP, ...NOTES_2] as const;
 export const NEW_NOTES_ALL = [...NEW_NOTES_1, ...NEW_NOTES_1_SHARP, ...NEW_NOTES_2] as const;
