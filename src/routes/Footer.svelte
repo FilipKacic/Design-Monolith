@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { assetBase } from '$lib/utils/paths';
+
   const currentYear = new Date().getFullYear();
 </script>
 
@@ -6,6 +8,6 @@
   <span>&copy;{currentYear}</span>
   <span>Filip Kačić</span>
   <a href="mailto:filipkacic@protonmail.com">
-    <img src="/icons/email.svg" alt="Email" class="nav-icon">
+    <img src="{assetBase}/icons/email.svg" alt="Email" class="nav-icon">
   </a>
 </footer>

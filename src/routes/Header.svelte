@@ -1,9 +1,7 @@
 <script lang="ts">
     import { resolve } from '$app/paths';
     import { page } from '$app/state';
-
-    // Strip trailing slash to get bare base prefix for assets
-    const assetBase = resolve('/').replace(/\/$/, '');
+	import { assetBase } from '$lib/utils/paths';
 
     let hidden = $state(false);
     let lastY = 0;
