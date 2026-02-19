@@ -25,8 +25,8 @@
 	<meta property="og:type" content="website" />
 	<meta property="og:title" content="Design Monolith" />
 	<meta property="og:description" content="A collection of audio-visual design tools." />
-	<meta property="og:url" content="https://mydomain.com/" />
-	<meta property="og:image" content="https://mydomain.com/og-image.png" />
+	<meta property="og:url" content="https://filipkacic.github.io/Design-Monolith/" />
+	<meta property="og:image" content="https://filipkacic.github.io/Design-Monolith/og-image.png" />
 	<meta property="og:site_name" content="Design Monolith" />
 	<meta property="og:locale" content="en_US" />
 	

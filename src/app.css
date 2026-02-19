@@ -147,16 +147,18 @@ html {
 }
 
 body {
-	min-height: 100vh;
-	font-family: 'Local-Main-Font';
-	color: var(--black);
-	background: linear-gradient(to bottom, var(--white), var(--snow-white));
-	transition: all var(--slow-motion) ease-in-out;
+  min-height: 100vh;
+  font-family: 'Local-Main-Font';
+  color: var(--black);
+  background: linear-gradient(to bottom, var(--white), var(--snow-white));
+  transition:
+    color var(--slow-motion) ease-in-out,
+    background var(--slow-motion) ease-in-out;
 }
 
 body.night {
-	color: var(--white);
-	background: linear-gradient(to bottom, var(--pitch-black), var(--black));
+  color: var(--white);
+  background: linear-gradient(to bottom, var(--pitch-black), var(--black));
 }
 
 /* ============================================================================
@@ -300,19 +302,17 @@ nav a {
   height: var(--icon-size);
   vertical-align: middle;
   filter: invert(1) drop-shadow(0 0 var(--outline) var(--shadow));
-  transition: transform var(--blink) ease-in-out, filter var(--blink) ease-in-out;
+  transition:
+    transform var(--blink) ease-in-out,
+    filter var(--blink) ease-in-out;
 }
 
 .nav-icon:hover {
-  filter: invert(1) drop-shadow(0 0 var(--outline) var(--shadow));
   transform: scale(var(--larger));
 }
 
-.nav-icon:active {
-  filter: invert(0) drop-shadow(0 0 var(--outline) var(--shadow));
-  transform: scale(var(--smaller));
-}
-
+/* Merged: identical rules for click and active link */
+.nav-icon:active,
 nav a.active .nav-icon {
   filter: invert(0) drop-shadow(0 0 var(--outline) var(--shadow));
   transform: scale(var(--smaller));
@@ -369,7 +369,7 @@ footer {
   cursor: pointer;
   position: relative;
   background-color: var(--light-gray);
-  transition: all var(--slow-motion) ease-in-out;
+  transition: background-color var(--slow-motion) ease-in-out;
 }
 
 .naming-toggle input[type="checkbox"]::before {
@@ -380,7 +380,7 @@ footer {
   background-color: var(--white);
   top: var(--minimum-space);
   left: var(--minimum-space);
-  transition: all var(--blink) ease-in-out;
+  transition: left var(--blink) ease-in-out;
   box-shadow: 0 var(--hairline) var(--outline) var(--shadow);
 }
 
@@ -449,7 +449,9 @@ footer {
   padding: var(--space) var(--more-space);
   color: var(--black);
   background: var(--white);
-  transition: all var(--blink) ease-in-out;
+  transition:
+    transform var(--blink) ease-in-out,
+    box-shadow var(--blink) ease-in-out;
   cursor: pointer;
   text-align: center;
   position: relative;
@@ -517,6 +519,8 @@ footer {
 
 .download-buttons {
   display: flex;
+  flex-direction: column;
+  align-items: center;
   justify-content: center;
   gap: var(--more-space);
   margin: var(--space);
@@ -527,7 +531,9 @@ footer {
   border: var(--hairline) solid var(--light-gray);
   border-radius: var(--space);
   cursor: pointer;
-  transition: transform var(--blink) ease-in-out, filter var(--waltz) ease-in-out;
+  transition:
+    transform var(--blink) ease-in-out,
+    filter var(--waltz) ease-in-out;
 }
 
 .download-buttons button:hover {
@@ -545,12 +551,10 @@ footer {
   filter: hue-rotate(360deg);
 }
 
-/* Click feedback */
 .download-buttons button:active {
   transform: scale(var(--smaller));
   filter: hue-rotate(0deg);
 }
-
 
 /* ============================================================================
    COMPONENTS - TOAST
@@ -596,11 +600,11 @@ footer {
     height: 100vh;
     max-width: var(--sidebar-width);
   }
-  
+
   header.hidden {
     transform: translateX(0);
   }
-  
+
   nav {
     flex-direction: column;
     height: 100%;
@@ -610,5 +614,9 @@ footer {
 
   main {
     margin: 0 var(--sidebar-width);
+  }
+
+  .download-buttons {
+    flex-direction: row;
   }
 }

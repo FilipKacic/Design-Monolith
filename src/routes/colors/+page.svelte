@@ -6,10 +6,9 @@
   import Toast from '$lib/components/Toast.svelte';
   import PaletteDownloadButtons from '$lib/components/PaletteDownloadButtons.svelte';
 
-  let showToast = false;
-  let toastMessage = '';
+  let showToast = $state(false);
+  let toastMessage = $state('');
 
-  // MUST match keys defined in colors.ts
   const PALETTE_KEY_MAP = {
     scale: 'scale_of_shades',
     wheel: 'color_wheel',
@@ -20,7 +19,6 @@
 
   type PaletteKey = keyof typeof PALETTE_KEY_MAP;
 
-  // Convert palette to export-friendly structure
   function getPaletteEntries(palette: typeof COLOR_PALETTES[keyof typeof COLOR_PALETTES]) {
     return palette.map(c => ({
       name: c.name,
@@ -43,15 +41,7 @@
       wheel_of_ghost: getPaletteEntries(COLOR_PALETTES.wheel_of_ghost),
       wheel_of_light: getPaletteEntries(COLOR_PALETTES.wheel_of_light),
     };
-
     const result = exportAllPalettes(allColors, format);
-    toastMessage = result.message;
-    showToast = true;
-  }
-
-  function handleDownloadPalette(paletteName: string, paletteKey: PaletteKey, format: ExportFormat) {
-    const colorEntries = getPaletteEntries(COLOR_PALETTES[paletteKey]);
-    const result = exportPalette(paletteName, colorEntries, format);
     toastMessage = result.message;
     showToast = true;
   }
@@ -66,22 +56,18 @@
 </script>
 
 <h1>Colors</h1>
-
 <Toast bind:show={showToast} message={toastMessage} />
-
-<!-- Download all palettes -->
 <PaletteDownloadButtons onDownload={handleDownloadAll} />
 
 {#each palettes as { name, key }}
   <h2>{name}</h2>
-
   <div class="notes">
     {#each COLOR_PALETTES[key] as { name: colorName, variable, needsWhiteText }}
       <span
         class="note"
         style="background-color: var({variable}); {needsWhiteText ? 'color: var(--white);' : ''}"
-        on:click={() => handleCopy(variable, colorName)}
-        on:keydown={(e) => e.key === 'Enter' && handleCopy(variable, colorName)}
+        onclick={() => handleCopy(variable, colorName)}
+        onkeydown={(e) => e.key === 'Enter' && handleCopy(variable, colorName)}
         role="button"
         tabindex="0"
         aria-label="Copy {colorName} hex value to clipboard"
@@ -90,8 +76,4 @@
       </span>
     {/each}
   </div>
-
-  <PaletteDownloadButtons
-    onDownload={(format) => handleDownloadPalette(name, key, format)}
-  />
 {/each}
