@@ -1,70 +1,52 @@
 <script lang="ts">
-	import { page } from '$app/stores';
-	import { browser } from '$app/environment';
+    import { resolve } from '$app/paths';
+    import { page } from '$app/state';
 
-	let hidden = false;
-	let lastY = 0;
-	let ticking = false;
+    // Strip trailing slash to get bare base prefix for assets
+    const assetBase = resolve('/').replace(/\/$/, '');
 
-	/* -------------------------------------------
-	   Reactive Route State (auto-subscribed)
-	------------------------------------------- */
-	$: pathname = $page.url.pathname;
+    let hidden = $state(false);
+    let lastY = 0;
+    let ticking = false;
 
-	/* -------------------------------------------
-	   Theme — purely reactive (no lifecycle)
-	------------------------------------------- */
-	$: if (browser) {
-		document.body.classList.toggle('night', pathname === '/stars');
-	}
+    const pathname = $derived(page.url.pathname);
 
-	/* -------------------------------------------
-	   Scroll Handling (rAF throttled)
-	------------------------------------------- */
-	function handleScroll() {
-		if (!browser) return;
+    $effect(() => {
+        document.body.classList.toggle('night', pathname === resolve('/stars'));
+    });
 
-		const y = window.scrollY;
-		const delta = y - lastY;
+    function onScroll() {
+        if (ticking) return;
+        ticking = true;
+        requestAnimationFrame(() => {
+            const y = window.scrollY;
+            const delta = y - lastY;
+            if (Math.abs(delta) >= 5) {
+                hidden = delta > 0 && y > 60;
+                lastY = y;
+            }
+            ticking = false;
+        });
+    }
 
-		if (Math.abs(delta) < 5) return;
-
-		hidden = delta > 0 && y > 60;
-		lastY = y;
-	}
-
-	function onScroll() {
-		/* requestAnimationFrame = free performance win */
-		if (!ticking) {
-			requestAnimationFrame(() => {
-				handleScroll();
-				ticking = false;
-			});
-			ticking = true;
-		}
-	}
-
-	const isActive = (href: string) => pathname === href;
+    const isActive = (href: string) => pathname === href;
 </script>
 
-<svelte:window on:scroll={onScroll} />
+<svelte:window onscroll={onScroll} />
 
-<header class:hidden={hidden}>
-	<nav>
-		<a href="/" class:active={isActive('/')}>
-			<img src="/icons/home.svg" alt="Home" class="nav-icon" />
-		</a>
-
-		<a href="/sounds" class:active={isActive('/sounds')}>
-			<img src="/icons/guitar_strings.svg" alt="Guitar Strings" class="nav-icon" />
-		</a>
-
-		<a href="/colors" class:active={isActive('/colors')}>
-			<img src="/icons/color_pallete.svg" alt="Color Pallete" class="nav-icon" />
-		</a>
-
-		<a href="/stars" class:active={isActive('/stars')}>
-			<img src="/icons/stars.svg" alt="Stars" class="nav-icon" />
-		</a>
-	</nav>
+<header class:hidden>
+    <nav>
+        <a href={resolve('/')} class:active={isActive(resolve('/'))}>
+            <img src="{assetBase}/icons/home.svg" alt="Home" class="nav-icon" />
+        </a>
+        <a href={resolve('/sounds')} class:active={isActive(resolve('/sounds'))}>
+            <img src="{assetBase}/icons/guitar_strings.svg" alt="Guitar Strings" class="nav-icon" />
+        </a>
+        <a href={resolve('/colors')} class:active={isActive(resolve('/colors'))}>
+            <img src="{assetBase}/icons/color_pallete.svg" alt="Color Palette" class="nav-icon" />
+        </a>
+        <a href={resolve('/stars')} class:active={isActive(resolve('/stars'))}>
+            <img src="{assetBase}/icons/stars.svg" alt="Stars" class="nav-icon" />
+        </a>
+    </nav>
 </header>
