@@ -47,7 +47,7 @@ export const COLOR_PALETTES = {
   wheel: [
     // Grayscale luminance values are noted to explain needsWhiteText decisions.
     { name: 'Red',      variable: '--red'      }, // luma: 76
-    { name: 'Mushmula', variable: '--mushmula' }, // luma: 151
+    { name: 'Medlar',   variable: '--medlar' }, // luma: 151
     { name: 'Yellow',   variable: '--yellow'   }, // luma: 226
     { name: 'Olive',    variable: '--olive'    }, // luma: 188
     { name: 'Green',    variable: '--green'    }, // luma: 150
@@ -62,7 +62,7 @@ export const COLOR_PALETTES = {
 
   wheel_of_darkness: [
     { name: 'Dark Red',      variable: '--dark-red'      },
-    { name: 'Dark Mushmula', variable: '--dark-mushmula' },
+    { name: 'Dark Medlar', variable: '--dark-medlar' },
     { name: 'Dark Yellow',   variable: '--dark-yellow'   },
     { name: 'Dark Olive',    variable: '--dark-olive'    },
     { name: 'Dark Green',    variable: '--dark-green'    },
@@ -77,7 +77,7 @@ export const COLOR_PALETTES = {
 
   wheel_of_ghost: [
     { name: 'Ghost Red',      variable: '--ghost-red'      },
-    { name: 'Ghost Mushmula', variable: '--ghost-mushmula' },
+    { name: 'Ghost Medlar', variable: '--ghost-medlar' },
     { name: 'Ghost Yellow',   variable: '--ghost-yellow'   },
     { name: 'Ghost Olive',    variable: '--ghost-olive'    },
     { name: 'Ghost Green',    variable: '--ghost-green'    },
@@ -92,7 +92,7 @@ export const COLOR_PALETTES = {
 
   wheel_of_light: [
     { name: 'Light Red',      variable: '--light-red'      },
-    { name: 'Light Mushmula', variable: '--light-mushmula' },
+    { name: 'Light Medlar', variable: '--light-medlar' },
     { name: 'Light Yellow',   variable: '--light-yellow'   },
     { name: 'Light Olive',    variable: '--light-olive'    },
     { name: 'Light Green',    variable: '--light-green'    },

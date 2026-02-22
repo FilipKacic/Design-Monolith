@@ -6,6 +6,7 @@
 
   <h1 class="title">Design Monolith</h1>
   <p class="subtitle">An Audio-Visual Design System of Order Against Chaos</p>
+  <img src="/images/Canto31_The_Saintly_Throng_in_the_Form_of_a_Rose.jpg" alt="img" />
 
   <!-- ══════════════════════════════════════ -->
   <!-- I. THE FIRST SONG                      -->
@@ -70,18 +71,20 @@
 
   <p>Such a scale is nothing new under the Sun. It is called the <em>Pythagorean scale</em>, constructed entirely from pure perfect fifths.</p>
 
+  <img src="/images/Gaffurio_Pythagoras.png" alt="img" class="miniature"/>
+
   <p>In the chromatic circle, a Pythagorean scale follows the pattern 0–2–4–6–7–9–11, or the interval sequence W–W–W–H–W–W–H, where W denotes a whole tone and H a semitone. In the circle of fifths, it is simply seven adjacent notes: 0–1–2–3–4–5–6. The zero in both patterns represents the <em>root note</em> of the scale.</p>
 
   <p>Beginning from each of the seven degrees, the seven <em>musical modes</em> arise. A mode is a class of scales sharing the same interval pattern:</p>
 
   <ul>
-    <li><strong>Mode I</strong> (from the 1st degree) — W–W–W–H–W–W–H — <em>Lydian</em></li>
-    <li><strong>Mode II</strong> (from the 2nd degree) — W–W–H–W–W–H–W — <em>Mixolydian</em></li>
-    <li><strong>Mode III</strong> (from the 3rd degree) — W–W–H–W–W–W–H — <em>Aeolian</em></li>
-    <li><strong>Mode IV</strong> (from the 4th degree) — H–W–W–H–W–W–W — <em>Locrian</em></li>
-    <li><strong>Mode V</strong> (from the 5th degree) — W–W–H–W–W–W–H — <em>Ionian</em></li>
-    <li><strong>Mode VI</strong> (from the 6th degree) — W–H–W–W–W–H–W — <em>Dorian</em></li>
-    <li><strong>Mode VII</strong> (from the 7th degree) — H–W–W–W–H–W–W — <em>Phrygian</em></li>
+    <li>Mode I (from the 1st degree) — W–W–W–H–W–W–H — <em>Lydian</em></li>
+    <li>Mode II (from the 2nd degree) — W–W–H–W–W–H–W — <em>Mixolydian</em></li>
+    <li>Mode III (from the 3rd degree) — W–W–H–W–W–W–H — <em>Aeolian</em></li>
+    <li>Mode IV (from the 4th degree) — H–W–W–H–W–W–W — <em>Locrian</em></li>
+    <li>Mode V (from the 5th degree) — W–W–H–W–W–W–H — <em>Ionian</em></li>
+    <li>Mode VI (from the 6th degree) — W–H–W–W–W–H–W — <em>Dorian</em></li>
+    <li>Mode VII (from the 7th degree) — H–W–W–W–H–W–W — <em>Phrygian</em></li>
   </ul>
 
   <p>Thus, the first scale is the Lydian mode rooted on C: C–D–E–F♯–G–A–B, or expressed through the circle of fifths: C–G–D–A–E–B–F♯.</p>
@@ -176,13 +179,13 @@
   <p>The musical modes inherit the same problem as the notes — names assigned by geography and history rather than by principle. This document establishes, in the sections that follow, that the seven modes correspond to the seven wandering stars. It is fitting, then, that they bear their names. The corrected designations are as follows:</p>
 
   <ul>
-    <li><strong>Mode I — Lunar</strong> <em>(formerly Lydian)</em></li>
-    <li><strong>Mode II — Mercurial</strong> <em>(formerly Mixolydian)</em></li>
-    <li><strong>Mode III — Venusian</strong> <em>(formerly Aeolian)</em></li>
-    <li><strong>Mode IV — Solar</strong> <em>(formerly Locrian)</em></li>
-    <li><strong>Mode V — Martial</strong> <em>(formerly Ionian)</em></li>
-    <li><strong>Mode VI — Jovial</strong> <em>(formerly Dorian)</em></li>
-    <li><strong>Mode VII — Saturnine</strong> <em>(formerly Phrygian)</em></li>
+    <li>Mode I — Lunar <em>(formerly Lydian)</em></li>
+    <li>Mode II — Mercurial <em>(formerly Mixolydian)</em></li>
+    <li>Mode III — Venusian <em>(formerly Aeolian)</em></li>
+    <li>Mode IV — Solar <em>(formerly Locrian)</em></li>
+    <li>Mode V — Martial <em>(formerly Ionian)</em></li>
+    <li>Mode VI — Jovial <em>(formerly Dorian)</em></li>
+    <li>Mode VII — Saturnine <em>(formerly Phrygian)</em></li>
   </ul>
 
   <p>The old names are retained in parentheses for reference only.</p>
@@ -196,7 +199,11 @@
 
   <p>In 1787, Ernst Chladni demonstrated that sound possesses a geometric dimension. By drawing a violin bow along the edge of a flour-dusted plate, he observed symmetrical patterns emerge — the flour migrating to the nodal lines, where the surface was still.</p>
 
-  <p>In the 20th century, Hans Jenny coined the term <em>cymatics</em> to describe such acoustic phenomena. The hidden geometry of frequency is thereby revealed: certain tones resolve into clear, coherent forms; others produce only turbulence.</p>
+  <img src="/images/bowing_chladni_plate.png" alt="img" class="miniature"/>
+
+  <p>In the 20th century, Hans Jenny coined the term <em>cymatics</em> to describe such acoustic phenomena. The hidden geometry of frequency is thereby revealed: certain tones resolve into clear, coherent forms; other... not so much.</p>
+
+  <img src="/images/432Hz_VS_440Hz.png" alt="img" class="miniature"/>
 
   <p>The note A in this system, at its fourth octave, carries a frequency of 432 Hz (3³ × 2⁴). In cymatics experiments it yields a precise and beautiful geometric figure. The Stuttgart standard pitch of 440 Hz produces no such clarity — only disorder made comfortable by long familiarity.</p>
 
@@ -221,7 +228,11 @@
 
   <p>A colour is defined by its wavelength in nanometres and its frequency in terahertz. A dispersive prism separates white light into its constituent spectral colours — the rainbow. Isaac Newton demonstrated this in the 17th century. White light is the sum of all spectral colours, or more precisely, the combination of the three primary ones.</p>
 
+  <img src="\images\Newton's_color_circle.png" alt="img" class="miniature"/>
+
   <p>Those three primaries — from which any other spectral colour can be composed, confirming once more that three is the number of creation — are spectral red, spectral green, and spectral blue. Their order is significant: red carries the lowest frequency, blue the highest.</p>
+
+  <img src="/images/dispersive_prism.png" alt="img"/>
 
   <p>Colours are described by the ratios in which they contain each primary:</p>
 
@@ -255,6 +266,8 @@
   <h2>The Scale of Shades</h2>
 
   <p>The ratio 1:1:1 yields the achromatic colours. These belong not to a circle but to a linear scale of seven degrees: black, pitch-black, iron gray, dark gray, gray, light gray, silver, and white.</p>
+
+  <img src="/images/moonbow_at_lower_Yosemite_fall.jpg" alt="img" />
 
   <hr />
 
@@ -351,13 +364,21 @@ light-mulberry   hsl(330, 50%, 75%)  → rgb(223, 159, 191)</pre>
 
   <p>The tradition called <em>musica universalis</em> — the harmony of the spheres — holds that the motions of celestial bodies are expressions of musical proportion, and that the cosmos is, at its root, a sonic order. The idea is traced to Pythagoras, who taught that the distances and velocities of the wandering stars correspond to musical intervals, producing a vast and inaudible harmony. Plato preserved it in the <em>Republic</em>, where the Sirens sing a single note upon each celestial sphere. It passed through the Neoplatonists, through the medieval quadrivium, and arrived — transformed but intact — at the desk of Johannes Kepler.</p>
 
+  <img src="/images/Ptolemaic_system.png" alt="img" class="miniature"/>
+
   <p>In his <em>Harmonices Mundi</em> (1619), Kepler calculated the angular velocity of each planet at perihelion and aphelion — its fastest and slowest points in orbit — and derived the musical interval each planet traces across the sky. Saturn spans a minor third; Jupiter, the same. Mars spans a fifth. The Earth, whose variation in speed is the most constrained of all, produces a single semitone — the interval between <em>mi</em> and <em>fa</em>, which Kepler read as <em>miseria</em>: misery. He then assigned a modal character to each wandering star.</p>
 
   <p>The present work stands in this lineage, but moves in the opposite direction. This system begins with God's simplest gift — the heartbeat, the fifth, the octave — and builds upward from first principles, from the darkness of sin toward the light of the heavenly order. The ancients heard harmony from without. This is an attempt to construct it from within.</p>
 
   <h3>Sonoluminescence</h3>
 
-  <p>Sonoluminescence is the emission of light from imploding bubbles in a liquid excited by sound — luminescence induced by acoustic energy. It was accidentally discovered in 1934 at the University of Cologne by Hermann Frenzel and H. Schultes during sonar research. The phenomenon has since been observed in nature: the pistol shrimp is the first known creature to produce light by this means, collapsing cavitation bubbles with its claw to generate a flash intense enough to stun or kill prey.</p>
+  <p>Sonoluminescence is the emission of light from imploding bubbles in a liquid excited by sound — luminescence induced by acoustic energy. It was accidentally discovered in 1934 at the University of Cologne by Hermann Frenzel and H. Schultes during sonar research.</p>
+  
+  <img src="/images/sulfuric_acid_sonoluminescence.jpg" alt="img"/>
+
+  <p>The phenomenon has since been observed in nature: the pistol shrimp is the first known creature to produce light by this means, collapsing cavitation bubbles with its claw to generate a flash intense enough to stun or kill prey.</p>
+
+  <img src="/images/pistol_shrimp.jpg" alt="img" class="miniature"/>
 
   <p>This is not a curiosity. It is evidence that light can be born from sound.</p>
 
@@ -374,7 +395,11 @@ light-mulberry   hsl(330, 50%, 75%)  → rgb(223, 159, 191)</pre>
   <blockquote>"And God said, 'Let there be a canopy in the midst of the waters, and let it separate the waters from the waters.' And God made the canopy and separated the waters that were under the expanse from the waters that were above the expanse. And it was so. And God called the expanse Heaven. And there was evening and there was morning, the second day."</blockquote>
   <p class="cite">— Genesis 1:6–8</p>
 
+  <img src="/images/NikonP1000_stars.jpg" alt="img"/>
+
   <p>It is possible that the stars are singing angels — or their reflection of some kind.</p>
+
+  <img src="/images/Ezekiel's_vision.jpg" alt="img" class="miniature"/>
 
   <blockquote>"As for the appearance of the wheels and their construction: their appearance was like the gleaming of beryl. And the four had the same likeness, their appearance and construction being as it were a wheel within a wheel."</blockquote>
   <p class="cite">— Ezekiel 1:16</p>
@@ -385,6 +410,8 @@ light-mulberry   hsl(330, 50%, 75%)  → rgb(223, 159, 191)</pre>
   <p class="cite">— Matthew 6:10</p>
 
   <p>The zodiacal plane is the path the Sun traces across the sky. Traditionally divided into twelve parts, its constellations correspond to the twelve musical notes and the twelve spectral colours alike.</p>
+
+  <img src="/images/zodiac.jpg" alt="img" class="miniature"/>
 
   <p>The zodiac opens with Aries — the spring equinox, when Christ was crucified — followed by Taurus and Gemini. Cancer marks the summer solstice, followed by Leo and Virgo. Libra falls at the autumn equinox, followed by Scorpius and Sagittarius. Capricornus holds the winter solstice, Aquarius follows, and the cycle closes with Pisces.</p>
 
@@ -427,6 +454,8 @@ light-mulberry   hsl(330, 50%, 75%)  → rgb(223, 159, 191)</pre>
 
   <h3>Twelve</h3>
 
+  <img src="/images/12_tribes_of_Israel_mosaic.jpg" alt="img" class="miniature"/>
+
   <p>Twelve is the third superior highly composite number, the third colossally abundant number, and the fifth highly composite number. It is evenly divisible by 1, 2, 3, 4, 6, and 12 — an extraordinary range for so small a quantity. It is the smallest abundant number, a semiperfect number, a refactorable number, and a Pell number. It is the lesser of the two known <em>sublime numbers</em>: those whose divisor count is perfect and whose divisors sum to a perfect number in turn.</p>
 
   <p>Its geometric character is equally remarkable. The dodecagon — twelve-sided — is the largest regular polygon that tiles the plane alongside other regular polygons. A regular dodecahedron has twelve pentagonal faces. Both the cube and the octahedron carry twelve edges; the icosahedron, twelve vertices. In three dimensions, twelve is the <em>kissing number</em> — the precise count of unit spheres that can simultaneously touch a central one. Both cubic and hexagonal close packings, the densest possible arrangements of spheres in space, place each sphere in contact with exactly twelve neighbours.</p>
@@ -437,6 +466,8 @@ light-mulberry   hsl(330, 50%, 75%)  → rgb(223, 159, 191)</pre>
   <p class="cite">— Revelation 22:2</p>
 
   <h3>Seven</h3>
+
+  <img src="\images\Lamb opening the seven seals, by Julius Schnorr von Carolsfeld, 1860.png" alt="img"/>
 
   <p>Seven is the fourth prime — and among the most singular. It is a <em>Mersenne prime</em> (2³ − 1 = 7) and a <em>double Mersenne prime</em>, its exponent 3 being Mersenne as well. It is a Newman–Shanks–Williams prime, a safe prime, a lucky prime, a happy prime — and the only number simultaneously Mersenne and safe. It is the lowest natural number that cannot be expressed as the sum of the squares of three integers. In this sense it stands irreducibly apart from all that precede it.</p>
 
@@ -465,17 +496,17 @@ light-mulberry   hsl(330, 50%, 75%)  → rgb(223, 159, 191)</pre>
     </thead>
     <tbody>
       <tr><td>1</td><td>A</td><td>Red</td><td>Aries ♈</td></tr>
-      <tr><td>2</td><td>A♯</td><td>Medlar</td><td>Taurus ♉</td></tr>
+      <tr><td>2</td><td>E</td><td>Medlar</td><td>Taurus ♉</td></tr>
       <tr><td>3</td><td>B</td><td>Yellow</td><td>Gemini ♊</td></tr>
-      <tr><td>4</td><td>B♯</td><td>Olive</td><td>Cancer ♋</td></tr>
+      <tr><td>4</td><td>F</td><td>Olive</td><td>Cancer ♋</td></tr>
       <tr><td>5</td><td>C</td><td>Green</td><td>Leo ♌</td></tr>
-      <tr><td>6</td><td>C♯</td><td>Teal</td><td>Virgo ♍</td></tr>
+      <tr><td>6</td><td>G</td><td>Teal</td><td>Virgo ♍</td></tr>
       <tr><td>7</td><td>D</td><td>Azure</td><td>Libra ♎</td></tr>
-      <tr><td>8</td><td>E</td><td>Indigo</td><td>Scorpius ♏</td></tr>
+      <tr><td>8</td><td>A#</td><td>Indigo</td><td>Scorpius ♏</td></tr>
       <tr><td>9</td><td>E♯</td><td>Blue</td><td>Sagittarius ♐</td></tr>
-      <tr><td>10</td><td>F</td><td>Lavender</td><td>Capricornus ♑</td></tr>
+      <tr><td>10</td><td>B#</td><td>Lavender</td><td>Capricornus ♑</td></tr>
       <tr><td>11</td><td>F♯</td><td>Cyclamen</td><td>Aquarius ♒</td></tr>
-      <tr><td>12</td><td>G</td><td>Mulberry</td><td>Pisces ♓</td></tr>
+      <tr><td>12</td><td>C#</td><td>Mulberry</td><td>Pisces ♓</td></tr>
     </tbody>
   </table>
 
@@ -498,6 +529,8 @@ light-mulberry   hsl(330, 50%, 75%)  → rgb(223, 159, 191)</pre>
 
   <div>
     <p>Sound, colour, and the wandering stars above are governed by the same two proportions — born from the same heartbeat, the same fifth, the same octave, the same one trinitarian God.</p>
+
+    <img src="/images/Andrey_Rublev_-_Св._Троица.jpg" alt="img"/>
 
     <p>This is not a theory about music. Nor is it a theory about colour. It is a claim about the structure of the created world: that harmony is not a matter of taste but of number; that beauty is not completely subjective but measurable, if not by man-made tools, than certainly by a holy intuition; that the same ratios governing a plucked string also govern the turning of the heavens.</p>
 

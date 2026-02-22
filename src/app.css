@@ -22,7 +22,7 @@
 
   /* ── Scaling ─────────────────────────────────────────────────────────────── */
   --smaller: 0.9;           /* active/pressed state */
-  --larger: 1.2;            /* hover state */
+  --larger: 1.1;            /* hover state */
 
   /* ── Animation ───────────────────────────────────────────────────────────── */
   --blink: 0.1s;            /* imperceptible — feels instantaneous */
@@ -41,7 +41,18 @@
   --shadow: hsla(0, 0%, 0%, var(--ghost));
   --light: hsla(0, 0%, 100%, var(--tinted-glass)); /* frosted glass background */
 
-    /* ── Spectral Color Wheel (full saturation, mid lightness) ────────────────────────── */
+  /* ── Scale of Shades ─────────────────────────────────────────────────────── */
+  --black: hsl(0, 0%, 0%);
+  --pitch-black: hsl(0, 0%, 12%);
+  --iron-gray: hsl(0, 0%, 25%);
+  --dark-gray: hsl(0, 0%, 37%);
+  --gray: hsl(0, 0%, 50%);
+  --light-gray: hsl(0, 0%, 62%);
+  --silver: hsl(0, 0%, 75%);
+  --snow-white: hsl(0, 0%, 88%);
+  --white: hsl(0, 0%, 100%);
+
+  /* ── Color Wheel (full saturation, mid lightness) ────────────────────────── */
   --red: hsl(0, 100%, 50%);
   --medlar: hsl(30, 100%, 50%);
   --yellow: hsl(60, 100%, 50%);
@@ -54,17 +65,6 @@
   --lavender: hsl(270, 100%, 50%);
   --cyclamen: hsl(300, 100%, 50%);
   --mulberry: hsl(330, 100%, 50%);
-
-  /* ── Scale of Shades ─────────────────────────────────────────────────────── */
-  --black: hsl(0, 0%, 0%);
-  --pitch-black: hsl(0, 0%, 12%);
-  --iron-gray: hsl(0, 0%, 25%);
-  --dark-gray: hsl(0, 0%, 37%);
-  --gray: hsl(0, 0%, 50%);
-  --light-gray: hsl(0, 0%, 62%);
-  --silver: hsl(0, 0%, 75%);
-  --snow-white: hsl(0, 0%, 88%);
-  --white: hsl(0, 0%, 100%);
 
   /* ── Color Wheel of Darkness (half saturation, low lightness) ────────────── */
   --dark-red: hsl(0, 50%, 25%);
@@ -174,25 +174,36 @@ p {
 }
 
 .subtitle {
-  text-align: center;
+  margin-bottom: var(--maximum-space);
   font-style: italic;
   color: var(--iron-gray);
-  margin-bottom: var(--maximum-space);
+  text-align: center;
 }
 
-.video-wrap {
-    position: relative;
-    padding-bottom: 56.25%; /* 16:9 */
-    height: 0;
-    overflow: hidden;
-  }
+blockquote {
+  margin: var(--maximum-space) var(--space) var(--space);
+  font-style: italic;
+  font-size: 0.9rem;
+  color: var(--iron-gray);
+}
 
-.video-wrap iframe {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+.cite {
+  margin: var(--space) var(--space) var(--maximum-space);
+  font-size: 0.9rem;
+  color: var(--iron-gray);
+}
+
+/* Decorative rule — content generated via ::before to allow custom glyph */
+hr {
+  margin: var(--maximum-space) 0;
+  color: var(--iron-gray);
+  border: none;
+  text-align: center;
+}
+
+hr::before {
+  content: '— — —';
+  letter-spacing: var(--less-space);
 }
 
 /* ============================================================================
@@ -218,60 +229,38 @@ li {
    ============================================================================ */
 
 table {
-  border-collapse: collapse; /* merges adjacent cell borders into one */
   width: 100%;
   margin: var(--maximum-space) 0;
-}
-
-pre {
-  font-size: 0.9rem;
-  background: var(--black);
-  color: var(--white);
-  padding: var(--more-space);
-  margin: var(--space);
-  overflow-x: auto;
+  border-collapse: collapse; /* merges adjacent cell borders into one */
 }
 
 th {
+  padding: var(--less-space);
   background: var(--gray);
   color: var(--white);
-  padding: var(--less-space);
   border: var(--hairline) solid var(--light-gray);
-  text-align: left;
-  font-weight: 600;
   font-size: 0.9rem;
+  font-weight: 600;
+  text-align: left;
 }
 
 td {
   padding: var(--less-space);
+  background: var(--white);
   border: var(--hairline) solid var(--light-gray);
-  background: #fafafa;
 }
 
-blockquote {
-  margin: var(--maximum-space) var(--space) var(--space);
-  font-style: italic;
+/* ============================================================================
+   BASE — CODE
+   ============================================================================ */
+
+pre {
+  margin: var(--space);
+  padding: var(--more-space);
+  background: var(--black);
+  color: var(--white);
   font-size: 0.9rem;
-  color: var(--iron-gray);
-}
-
-.cite {
-  margin: var(--space) var(--space) var(--maximum-space);
-  font-size: 0.9rem;
-  color: var(--iron-gray);
-}
-
-
-hr {
-  border: none;
-  text-align: center;
-  margin: var(--maximum-space) 0;
-  color: var(--iron-gray);
-}
-
-hr::before {
-  content: '— — —';
-  letter-spacing: var(--less-space);
+  overflow-x: auto;
 }
 
 /* ============================================================================
@@ -299,6 +288,33 @@ img, picture, video, canvas, svg {
   max-width: 100%;
 }
 
+img {
+  margin: var(--space) auto;
+  max-width: 100vw;
+  max-height: 100vh;
+}
+
+.miniature {
+  max-width: 50vw;
+  max-height: 50vh;
+}
+
+/* 16:9 responsive embed — padding-bottom 56.25% = 9/16 of container width */
+.video-wrap {
+  position: relative;
+  height: 0;
+  padding-bottom: 56.25%;
+  overflow: hidden;
+}
+
+.video-wrap iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
 /* ============================================================================
    BASE — INTERACTION STATES
    ============================================================================ */
@@ -324,8 +340,8 @@ a {
   text-decoration: inherit; /* strips underline by default; hover restores it */
 }
 
-a:hover  { text-decoration: underline; }
-a:active { color: var(--red); }
+a:hover   { text-decoration: underline; }
+a:active  { color: var(--red); }
 a:visited { color: var(--lavender); }
 
 /* ============================================================================
