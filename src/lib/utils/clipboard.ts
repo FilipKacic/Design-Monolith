@@ -1,51 +1,27 @@
-// src/lib/utils/clipboard.ts
+// ── Clipboard ─────────────────────────────────────────────────────────────────
+// All public functions return { success, message } so callers can feed the
+// message directly into the Toast component without extra formatting logic.
 
-/**
- * Copies text to clipboard
- * @param text - The text to copy
- * @param successMessage - Optional custom success message
- * @returns Object with success status and message
- */
-async function copyToClipboard(
-  text: string,
-  successMessage?: string
-): Promise<{ success: boolean; message: string }> {
+type ClipboardResult = { success: boolean; message: string };
+
+// Private — shared implementation used by both public functions.
+async function copyToClipboard(text: string, successMessage?: string): Promise<ClipboardResult> {
   try {
     await navigator.clipboard.writeText(text);
-    return {
-      success: true,
-      message: successMessage || 'Copied to clipboard!'
-    };
+    return { success: true,  message: successMessage ?? 'Copied to clipboard!' };
   } catch (err) {
     console.error('Failed to copy to clipboard:', err);
-    return {
-      success: false,
-      message: 'Failed to copy...'
-    };
+    return { success: false, message: 'Failed to copy...' };
   }
 }
 
-/**
- * Copies a frequency value to clipboard
- * @param frequency - The frequency value in Hz (formatted to 2 decimal places)
- * @returns Object with success status and message
- */
-export async function copyFrequency(
-  frequency: number
-): Promise<{ success: boolean; message: string }> {
-  const formattedFreq = frequency.toFixed(2);
-  return copyToClipboard(formattedFreq, `${formattedFreq}Hz copied!`);
+// ── Public API ────────────────────────────────────────────────────────────────
+
+export async function copyFrequency(frequency: number): Promise<ClipboardResult> {
+  const formatted = frequency.toFixed(2);
+  return copyToClipboard(formatted, `${formatted}Hz copied!`);
 }
 
-/**
- * Copies a color hex value to clipboard
- * @param hex - The hex color value
- * @param colorName - The name of the color
- * @returns Object with success status and message
- */
-export async function copyColor(
-  hex: string,
-  colorName: string
-): Promise<{ success: boolean; message: string }> {
+export async function copyColor(hex: string, colorName: string): Promise<ClipboardResult> {
   return copyToClipboard(hex, `${colorName}: ${hex} copied!`);
 }

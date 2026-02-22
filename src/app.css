@@ -3,57 +3,47 @@
    ============================================================================ */
 
 :root {
-  /* Pixel Sizes */
+  /* ── Pixel Sizes ─────────────────────────────────────────────────────────── */
   --hairline: 1px;
   --outline: 3px;
   --default-font-size: 16px;
-  --icon-size: 48px; /* minimum interactive area */
+  --icon-size: 48px;        /* minimum tap/click target per WCAG 2.5.5 */
 
-  /* Relative Sizes */
-  --minimum-space: 0.25rem;
-  --less-space: 0.75rem;
-  --space: 1rem;
-  --more-space: 2rem;
-  --maximum-space: 3rem;
+  /* ── Relative Sizes ──────────────────────────────────────────────────────── */
+  --minimum-space: 0.25rem; /* 4px  — nudges and offsets only */
+  --less-space: 0.75rem;    /* 12px — tight gaps, small text margins */
+  --space: 1rem;            /* 16px — base unit */
+  --more-space: 2rem;       /* 32px — section breathing room */
+  --maximum-space: 3rem;    /* 48px — outermost padding only */
 
-   /* View Sizes */
-  --sidebar-width: 15vw;
-  --toast-width: 85vw;
+  /* ── View Sizes ──────────────────────────────────────────────────────────── */
+  --sidebar-width: 15vw;    /* desktop nav panel; must match main margin below */
+  --toast-width: 85vw;      /* keeps toast from touching screen edges on mobile */
 
-  /* Scaling Size */
-  --smaller: 0.9;
-  --larger: 1.2;
+  /* ── Scaling ─────────────────────────────────────────────────────────────── */
+  --smaller: 0.9;           /* active/pressed state */
+  --larger: 1.2;            /* hover state */
 
-  /* Animation Times */
-  --blink: 0.1s;
-  --slow-motion: 0.3s;
-  --heartbeat: 1s;
-  --waltz: 3s;
+  /* ── Animation ───────────────────────────────────────────────────────────── */
+  --blink: 0.1s;            /* imperceptible — feels instantaneous */
+  --slow-motion: 0.3s;      /* perceptible — layout transitions */
+  --heartbeat: 1s;          /* one pulse cycle */
+  --waltz: 3s;              /* slow continuous effects e.g. hue-rotate */
 
-  /* Opacity */
-  --invisibile: 0;
+  /* ── Opacity ─────────────────────────────────────────────────────────────── */
+  --invisible: 0;
   --ghost: 0.3;
   --tinted-glass: 0.7;
 
-  /* Utility Colors */
-  --transparent: hsla(0, 0%, 0%, var(--invisibile));
+  /* ── Utility Colors ──────────────────────────────────────────────────────── */
+  /* Named for intent, not value — use these instead of raw rgba() */
+  --transparent: hsla(0, 0%, 0%, var(--invisible));
   --shadow: hsla(0, 0%, 0%, var(--ghost));
-  --light: hsla(0, 0%, 100%, var(--tinted-glass));
+  --light: hsla(0, 0%, 100%, var(--tinted-glass)); /* frosted glass background */
 
-  /* Scale */
-  --black: hsl(0, 0%, 0%);
-  --pitch-black: hsl(0, 0%, 12%);
-  --iron-gray: hsl(0, 0%, 25%);
-  --dark-gray: hsl(0, 0%, 37%);
-  --gray: hsl(0, 0%, 50%);
-  --light-gray: hsl(0, 0%, 62%);
-  --silver: hsl(0, 0%, 75%);
-  --snow-white: hsl(0, 0%, 88%);
-  --white: hsl(0, 0%, 100%);
-
-  /* Wheel */
+    /* ── Spectral Color Wheel (full saturation, mid lightness) ────────────────────────── */
   --red: hsl(0, 100%, 50%);
-  --mushmula: hsl(30, 100%, 50%);
+  --medlar: hsl(30, 100%, 50%);
   --yellow: hsl(60, 100%, 50%);
   --olive: hsl(90, 100%, 50%);
   --green: hsl(120, 100%, 50%);
@@ -65,9 +55,20 @@
   --cyclamen: hsl(300, 100%, 50%);
   --mulberry: hsl(330, 100%, 50%);
 
-  /* Darkness */
+  /* ── Scale of Shades ─────────────────────────────────────────────────────── */
+  --black: hsl(0, 0%, 0%);
+  --pitch-black: hsl(0, 0%, 12%);
+  --iron-gray: hsl(0, 0%, 25%);
+  --dark-gray: hsl(0, 0%, 37%);
+  --gray: hsl(0, 0%, 50%);
+  --light-gray: hsl(0, 0%, 62%);
+  --silver: hsl(0, 0%, 75%);
+  --snow-white: hsl(0, 0%, 88%);
+  --white: hsl(0, 0%, 100%);
+
+  /* ── Color Wheel of Darkness (half saturation, low lightness) ────────────── */
   --dark-red: hsl(0, 50%, 25%);
-  --dark-mushmula: hsl(30, 50%, 25%);
+  --dark-medlar: hsl(30, 50%, 25%);
   --dark-yellow: hsl(60, 50%, 25%);
   --dark-olive: hsl(90, 50%, 25%);
   --dark-green: hsl(120, 50%, 25%);
@@ -79,9 +80,9 @@
   --dark-cyclamen: hsl(300, 50%, 25%);
   --dark-mulberry: hsl(330, 50%, 25%);
 
-  /* Ghost */
+  /* ── Color Wheel of Ghost (half saturation, mid lightness) ──────────────── */
   --ghost-red: hsl(0, 50%, 50%);
-  --ghost-mushmula: hsl(30, 50%, 50%);
+  --ghost-medlar: hsl(30, 50%, 50%);
   --ghost-yellow: hsl(60, 50%, 50%);
   --ghost-olive: hsl(90, 50%, 50%);
   --ghost-green: hsl(120, 50%, 50%);
@@ -92,10 +93,10 @@
   --ghost-lavender: hsl(270, 50%, 50%);
   --ghost-cyclamen: hsl(300, 50%, 50%);
   --ghost-mulberry: hsl(330, 50%, 50%);
-  
-  /* Light */
+
+  /* ── Color Wheel of Light (half saturation, high lightness) ─────────────── */
   --light-red: hsl(0, 50%, 75%);
-  --light-mushmula: hsl(30, 50%, 75%);
+  --light-medlar: hsl(30, 50%, 75%);
   --light-yellow: hsl(60, 50%, 75%);
   --light-olive: hsl(90, 50%, 75%);
   --light-green: hsl(120, 50%, 75%);
@@ -112,18 +113,18 @@
    FONTS
    ============================================================================ */
 
+/* TODO: Convert both fonts to woff2 for ~30% smaller transfer size */
+
 @font-face {
   font-family: 'Local-Header-Font';
   src: url('/fonts/Major_Mono_Display/MajorMonoDisplay-Regular.ttf');
-  font-display: swap;
-  /* TODO: Convert to woff2 for better performance */
+  font-display: swap; /* renders fallback immediately, swaps when loaded */
 }
 
 @font-face {
   font-family: 'Local-Main-Font';
   src: url('/fonts/Atkinson_Hyperlegible_Mono/AtkinsonHyperlegibleMono-VariableFont_wght.ttf');
   font-display: swap;
-  /* TODO: Convert to woff2 for better performance */
 }
 
 /* ============================================================================
@@ -133,15 +134,15 @@
 *, *::before, *::after {
   margin: 0;
   padding: 0;
-  box-sizing: border-box;
+  box-sizing: border-box; /* padding and border included in declared width/height */
 }
 
 /* ============================================================================
-   BASE STYLES - DOCUMENT
+   BASE — DOCUMENT
    ============================================================================ */
 
 html {
-  font-family: monospace;
+  font-family: monospace; /* system fallback before Local-Main-Font loads */
   font-size: var(--default-font-size);
   line-height: 1.5;
 }
@@ -151,42 +152,61 @@ body {
   font-family: 'Local-Main-Font';
   color: var(--black);
   background: linear-gradient(to bottom, var(--white), var(--snow-white));
-  transition:
-    color var(--slow-motion) ease-in-out,
-    background var(--slow-motion) ease-in-out;
-}
-
-body.night {
-  color: var(--white);
-  background: linear-gradient(to bottom, var(--pitch-black), var(--black));
 }
 
 /* ============================================================================
-   BASE STYLES - TYPOGRAPHY
+   BASE — TYPOGRAPHY
    ============================================================================ */
 
 h1, h2, h3, h4, h5, h6 {
+  margin: var(--maximum-space) 0 var(--more-space);
   font-family: 'Local-Header-Font';
-  margin: var(--space);
   text-align: center;
 }
 
 p {
-  text-align: justify;
   margin: var(--space);
+  text-align: justify;
+}
+
+.title {
+  text-transform: uppercase;
+}
+
+.subtitle {
+  text-align: center;
+  font-style: italic;
+  color: var(--iron-gray);
+  margin-bottom: var(--maximum-space);
+}
+
+.video-wrap {
+    position: relative;
+    padding-bottom: 56.25%; /* 16:9 */
+    height: 0;
+    overflow: hidden;
+  }
+
+.video-wrap iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
 }
 
 /* ============================================================================
-   BASE STYLES - LISTS
+   BASE — LISTS
    ============================================================================ */
 
+/* Reset both, then re-apply styles to ul only */
 ul, ol {
   list-style: none;
 }
 
 ul {
-  list-style: square;
   margin: var(--space);
+  list-style: square;
 }
 
 li {
@@ -194,22 +214,76 @@ li {
 }
 
 /* ============================================================================
-   BASE STYLES - TABLES
+   BASE — TABLES
    ============================================================================ */
 
 table {
-  border-collapse: collapse;
+  border-collapse: collapse; /* merges adjacent cell borders into one */
+  width: 100%;
+  margin: var(--maximum-space) 0;
+}
+
+pre {
+  font-size: 0.9rem;
+  background: var(--black);
+  color: var(--white);
+  padding: var(--more-space);
+  margin: var(--space);
+  overflow-x: auto;
+}
+
+th {
+  background: var(--gray);
+  color: var(--white);
+  padding: var(--less-space);
+  border: var(--hairline) solid var(--light-gray);
+  text-align: left;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+td {
+  padding: var(--less-space);
+  border: var(--hairline) solid var(--light-gray);
+  background: #fafafa;
+}
+
+blockquote {
+  margin: var(--maximum-space) var(--space) var(--space);
+  font-style: italic;
+  font-size: 0.9rem;
+  color: var(--iron-gray);
+}
+
+.cite {
+  margin: var(--space) var(--space) var(--maximum-space);
+  font-size: 0.9rem;
+  color: var(--iron-gray);
+}
+
+
+hr {
+  border: none;
+  text-align: center;
+  margin: var(--maximum-space) 0;
+  color: var(--iron-gray);
+}
+
+hr::before {
+  content: '— — —';
+  letter-spacing: var(--less-space);
 }
 
 /* ============================================================================
-   BASE STYLES - FORM ELEMENTS
+   BASE — FORM ELEMENTS
    ============================================================================ */
 
+/* Inherit body font — browsers default form elements to system-ui */
 input, button, select, textarea {
-  font: inherit;
   color: inherit;
   background: var(--transparent);
   border: 0;
+  font: inherit;
 }
 
 button, [type="button"], [type="submit"] {
@@ -217,77 +291,71 @@ button, [type="button"], [type="submit"] {
 }
 
 /* ============================================================================
-   BASE STYLES - MEDIA ELEMENTS
+   BASE — MEDIA
    ============================================================================ */
 
 img, picture, video, canvas, svg {
-  display: block;
+  display: block;   /* removes inline baseline gap beneath images */
   max-width: 100%;
 }
 
 /* ============================================================================
-   BASE STYLES - INTERACTION STATES
+   BASE — INTERACTION STATES
    ============================================================================ */
 
+/* :focus-visible targets keyboard navigation only, not mouse clicks */
 :focus-visible {
   outline: var(--outline) solid var(--yellow);
   outline-offset: var(--outline);
 }
 
-::selection, ::-moz-selection {
+::selection,
+::-moz-selection {
   background: var(--blue);
   color: var(--yellow);
 }
 
 /* ============================================================================
-   BASE STYLES - LINKS
+   BASE — LINKS
    ============================================================================ */
 
 a {
   color: var(--azure);
-  text-decoration: inherit;
+  text-decoration: inherit; /* strips underline by default; hover restores it */
 }
 
-a:hover {
-  text-decoration: underline;
-}
-
-a:active {
-  color: var(--red);
-}
-
-a:visited {
-  color: var(--lavender);
-}
+a:hover  { text-decoration: underline; }
+a:active { color: var(--red); }
+a:visited { color: var(--lavender); }
 
 /* ============================================================================
-   LAYOUT - HEADER
+   LAYOUT — HEADER
    ============================================================================ */
 
 header {
   position: sticky;
   top: 0;
   z-index: 1000;
-  transition: transform var(--slow-motion) ease-in-out;
-  will-change: transform;
   background-color: var(--light);
+  transition: transform var(--slow-motion) ease-in-out;
+  will-change: transform; /* promotes to GPU layer — avoids paint during slide */
 }
 
+/* Slides out of view on scroll-down; restored on scroll-up (see Header.svelte) */
 header.hidden {
   transform: translateY(-100%);
 }
 
 /* ============================================================================
-   LAYOUT - NAVIGATION
+   LAYOUT — NAVIGATION
    ============================================================================ */
 
 nav {
   display: flex;
   align-items: center;
   justify-content: space-evenly;
-  padding: var(--space);
+  padding: var(--more-space);
   box-shadow: 0 var(--hairline) var(--outline) var(--shadow);
-  margin-top: var(--space);
 }
 
 nav a {
@@ -301,6 +369,7 @@ nav a {
   width: var(--icon-size);
   height: var(--icon-size);
   vertical-align: middle;
+  /* invert(1) turns the black SVG white against the light header background */
   filter: invert(1) drop-shadow(0 0 var(--outline) var(--shadow));
   transition:
     transform var(--blink) ease-in-out,
@@ -311,7 +380,7 @@ nav a {
   transform: scale(var(--larger));
 }
 
-/* Merged: identical rules for click and active link */
+/* invert(0) restores original black SVG on active press and current-page link */
 .nav-icon:active,
 nav a.active .nav-icon {
   filter: invert(0) drop-shadow(0 0 var(--outline) var(--shadow));
@@ -319,75 +388,78 @@ nav a.active .nav-icon {
 }
 
 /* ============================================================================
-   LAYOUT - MAIN
+   LAYOUT — MAIN
    ============================================================================ */
 
 main {
   display: flex;
   flex-direction: column;
-  padding: var(--space);
   min-height: 100vh;
+  padding: var(--space);
 }
 
 /* ============================================================================
-   LAYOUT - FOOTER
+   LAYOUT — FOOTER
    ============================================================================ */
 
 footer {
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
   gap: var(--space) var(--more-space);
   padding: var(--space);
-  margin-bottom: var(--space);
+  margin: var(--maximum-space) var(--space);
   color: var(--gray);
 }
 
 /* ============================================================================
-   COMPONENTS - NAMING TOGGLE
+   COMPONENT — NAMING TOGGLE
    ============================================================================ */
 
 .naming-toggle {
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
   margin: var(--space);
 }
 
 .naming-toggle label {
-  cursor: pointer;
   display: flex;
   align-items: center;
   gap: var(--space);
+  cursor: pointer;
 }
 
+/* appearance: none strips all native OS checkbox rendering */
 .naming-toggle input[type="checkbox"] {
-  appearance: none;
-  -webkit-appearance: none;
+  position: relative;
   width: calc(var(--maximum-space) + var(--space));
   height: var(--more-space);
-  cursor: pointer;
-  position: relative;
   background-color: var(--light-gray);
+  cursor: pointer;
+  appearance: none;
+  -webkit-appearance: none;
   transition: background-color var(--slow-motion) ease-in-out;
 }
 
+/* Sliding knob built with ::before to avoid an extra DOM element */
 .naming-toggle input[type="checkbox"]::before {
   content: '';
   position: absolute;
+  top: var(--minimum-space);
+  left: var(--minimum-space);
   width: calc(var(--more-space) - var(--minimum-space) * 2);
   height: calc(var(--more-space) - var(--minimum-space) * 2);
   background-color: var(--white);
-  top: var(--minimum-space);
-  left: var(--minimum-space);
-  transition: left var(--blink) ease-in-out;
   box-shadow: 0 var(--hairline) var(--outline) var(--shadow);
+  transition: left var(--blink) ease-in-out;
 }
 
 .naming-toggle input[type="checkbox"]:checked {
   background-color: var(--black);
 }
 
+/* Slides knob right: offset = (track-width - knob-width) / 2 ≈ more-space + minimum-space */
 .naming-toggle input[type="checkbox"]:checked::before {
   left: calc(var(--more-space) + var(--minimum-space));
 }
@@ -397,13 +469,13 @@ footer {
 }
 
 /* ============================================================================
-   COMPONENTS - SCALE SELECTOR
+   COMPONENT — SCALE SELECTOR
    ============================================================================ */
 
 .scale-selector {
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
   gap: var(--space);
   margin: var(--space);
 }
@@ -416,11 +488,11 @@ footer {
 
 .scale-selector select {
   padding: var(--less-space) var(--space);
-  font-size: 1rem;
-  border: var(--hairline) solid var(--light-gray);
-  cursor: pointer;
   color: var(--black);
   background-color: var(--white);
+  border: var(--hairline) solid var(--light-gray);
+  font-size: 1rem;
+  cursor: pointer;
   transition: border-color var(--blink) ease-in-out;
 }
 
@@ -429,7 +501,7 @@ footer {
 }
 
 /* ============================================================================
-   COMPONENTS - SCALE OUTPUT
+   COMPONENT — NOTES
    ============================================================================ */
 
 .scale-output {
@@ -438,28 +510,26 @@ footer {
 
 .notes {
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
   flex-wrap: wrap;
   gap: var(--more-space);
   margin: var(--space);
 }
 
 .note {
+  position: relative;
   padding: var(--space) var(--more-space);
   color: var(--black);
   background: var(--white);
+  text-align: center;
+  cursor: pointer;
   transition:
     transform var(--blink) ease-in-out,
     box-shadow var(--blink) ease-in-out;
-  cursor: pointer;
-  text-align: center;
-  position: relative;
 }
 
-.note.root {
-  font-weight: bold;
-}
+.note.root { font-weight: bold; }
 
 .note:hover {
   transform: scale(var(--larger));
@@ -482,7 +552,7 @@ footer {
 }
 
 /* ============================================================================
-   COMPONENTS - CHORDS IN SCALE
+   COMPONENT — CHORDS
    ============================================================================ */
 
 .size-selector {
@@ -494,25 +564,22 @@ footer {
 }
 
 button {
-  cursor: pointer;
-  border: var(--hairline) solid var(--black);
+  padding: var(--less-space);
+  color: var(--black);
   background: var(--silver);
-  color: black;
-  padding: var(--less-space); 
+  border: var(--hairline) solid var(--black);
+  cursor: pointer;
   transition:
     background var(--blink) ease-in-out,
     scale var(--blink) ease-in-out;
 }
 
-button.selected, button:active {
+button:hover { scale: var(--larger); }
+
+/* :active and .selected share identical visual treatment intentionally */
+button:active,
+button.selected {
   background-color: var(--light-gray);
-}
-
-button:hover {
-  scale: var(--larger);
-}
-
-button:active, button.selected {
   scale: var(--smaller);
 }
 
@@ -526,37 +593,25 @@ button:active, button.selected {
 
 .chord-card {
   padding: var(--less-space);
+  background: var(--white);
   border: var(--hairline) solid var(--black);
-  background: white;
 }
 
 .chord-notes {
   display: flex;
-  gap: var(--less-space);
   flex-wrap: wrap;
+  gap: var(--less-space);
   margin-top: var(--less-space);
 }
 
 .intervals {
   margin-top: var(--less-space);
   font-size: var(--less-space);
-  color: var(--iron-gray);
-}
-
-.tuning-list {
-  list-style: none;
-  padding: 0;
-}
-
-.string-row {
-  display: flex;
-  align-items: center;
-  gap: var(--less-space);
-  margin-bottom: var(--less-space);
+  color: var(--gray);
 }
 
 /* ============================================================================
-   COMPONENTS - GUITAR TUNING
+   COMPONENT — GUITAR TUNING
    ============================================================================ */
 
 .tuning-list {
@@ -564,16 +619,16 @@ button:active, button.selected {
   flex-direction: column;
   align-items: center;
   gap: var(--space);
-  list-style: none;
   margin: var(--space) 0;
   padding: 0;
+  list-style: none;
 }
 
 .tuning-list li {
   display: flex;
   align-items: center;
   gap: var(--space);
-  margin: 0;
+  margin: 0; /* overrides base li margin-left */
 }
 
 .string-row {
@@ -583,12 +638,12 @@ button:active, button.selected {
 }
 
 .string-number {
+  min-width: 5rem; /* fixed width keeps note buttons vertically aligned */
   text-align: right;
-  min-width: 5rem;
 }
 
 /* ============================================================================
-   COMPONENTS - DOWNLOAD BUTTONS
+   COMPONENT — DOWNLOAD BUTTONS
    ============================================================================ */
 
 .download-buttons {
@@ -604,14 +659,13 @@ button:active, button.selected {
   padding: var(--less-space) var(--space);
   border: var(--hairline) solid var(--light-gray);
   border-radius: var(--space);
-  cursor: pointer;
   transition:
     transform var(--blink) ease-in-out,
-    filter var(--waltz) ease-in-out;
+    filter var(--waltz) ease-in-out; /* --waltz allows a full hue spin on hover */
 }
 
 .download-buttons button:hover {
-  border: none;
+  /* Spectral gradient; hue-rotate animates over --waltz (3s) continuously */
   background: linear-gradient(
     var(--light-red),
     var(--light-yellow),
@@ -621,40 +675,41 @@ button:active, button.selected {
     var(--light-lavender),
     var(--light-cyclamen)
   );
+  border: none; /* removed so gradient fills to the full edge */
   transform: scale(var(--larger));
   filter: hue-rotate(360deg);
 }
 
 .download-buttons button:active {
   transform: scale(var(--smaller));
-  filter: hue-rotate(0deg);
+  filter: hue-rotate(0deg); /* snaps spin back to origin on click */
 }
 
 /* ============================================================================
-   COMPONENTS - TOAST
+   COMPONENT — TOAST
    ============================================================================ */
 
 .toast {
   position: fixed;
   bottom: var(--more-space);
   left: 50%;
-  transform: translateX(-50%);
+  z-index: 2000; /* above header z-index: 1000 */
+  transform: translateX(-50%); /* centers the element relative to left: 50% */
   padding: var(--space) var(--more-space);
+  max-width: var(--toast-width);
   background-color: var(--black);
   color: var(--white);
   border-radius: var(--space);
   box-shadow: 0 var(--outline) var(--space) var(--shadow);
-  z-index: 2000;
-  animation: toast-slide-up var(--slow-motion) ease-in-out;
-  max-width: var(--toast-width);
   text-align: center;
   opacity: var(--tinted-glass);
+  animation: toast-slide-up var(--slow-motion) ease-in-out;
 }
 
 @keyframes toast-slide-up {
   from {
     bottom: 0;
-    opacity: var(--invisibile);
+    opacity: var(--invisible);
   }
   to {
     bottom: var(--more-space);
@@ -663,18 +718,24 @@ button:active, button.selected {
 }
 
 /* ============================================================================
-   RESPONSIVE - TABLET & DESKTOP
+   RESPONSIVE — TABLET & DESKTOP
    ============================================================================ */
 
+/*
+  The orientation check prevents the sidebar from triggering on tall narrow
+  screens — portrait tablets at ~768px would otherwise incorrectly get the
+  desktop sidebar layout.
+*/
 @media (min-width: 759px) and (orientation: landscape) {
   header {
     position: fixed;
     top: 0;
     left: 0;
     height: 100vh;
-    max-width: var(--sidebar-width);
+    max-width: var(--sidebar-width); /* must equal --sidebar-width in :root */
   }
 
+  /* On desktop the header is a permanent sidebar — never slides away */
   header.hidden {
     transform: translateX(0);
   }
@@ -683,9 +744,9 @@ button:active, button.selected {
     flex-direction: column;
     height: 100%;
     padding: var(--more-space);
-    margin-top: 0;
   }
 
+  /* Push content right to clear the fixed sidebar */
   main {
     margin: 0 var(--sidebar-width);
   }

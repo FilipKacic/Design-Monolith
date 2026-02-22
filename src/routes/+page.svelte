@@ -1,556 +1,507 @@
-<script lang="ts">
-  import {
-    FREQUENCIES, NOTES_ALL, NEW_NOTES_ALL,
-    MODES, NEW_MODES, MODE_PATTERNS,
-    SCALE_DEGREE_KEYS, SCALE_DEGREE_NUMERALS,
-    SONIC_PATTERN,
-  } from '$lib/utils/sounds';
-
-  import {
-    ZODIAC_CONSTELLATIONS,
-    WANDERING_STARS,
-  } from '$lib/utils/stars';
-
-  import { COLOR_PALETTES } from '$lib/utils/colors';
-
-  // ── Frequencies ─────────────────────────────────────────────────────────────
-
-  const frequencyList = FREQUENCIES.map((f, i) => ({
-    note: f.note,
-    frequency: f.frequency,
-    power: i,
-  }));
-
-  // ── Note renames (deduplicated, strip octave suffix) ────────────────────────
-
-  const renamedNotes = NOTES_ALL
-    .map((oldNote, i) => ({
-      oldName: oldNote.replace(/\d+[#]?$/, '').replace(/#$/, '#'),
-      newName: NEW_NOTES_ALL[i].replace(/\d+[#]?$/, '').replace(/#$/, '#'),
-    }))
-    .filter((item, index, arr) =>
-      arr.findIndex(x => x.oldName === item.oldName) === index
-    );
-
-  // ── Mode renames ────────────────────────────────────────────────────────────
-
-  const renamedModes = MODES.map((oldName, i) => ({
-    oldName,
-    newName: NEW_MODES[i],
-  }));
-
-  // ── Mode offsets from Lydian ─────────────────────────────────────────────────
-
-  const MODE_OFFSETS_RAW = [0, -2, -4, -6, -1, -3, -5] as const;
-
-  const modeRotations = MODE_PATTERNS.map(({ mode }, i) => ({
-    mode,
-    newMode: NEW_MODES[i],
-    offset: MODE_OFFSETS_RAW[i],
-  }));
-
-  // ── Scale degrees ───────────────────────────────────────────────────────────
-
-  const scaleDegrees = SCALE_DEGREE_KEYS.map((name, i) => ({
-    name,
-    numeral: SCALE_DEGREE_NUMERALS[i],
-  }));
-
-  // ── Planetary correspondences ────────────────────────────────────────────────
-  // Order matches WANDERING_STARS and NEW_MODES exactly
-
-  const ALCHEMICAL_COLORS = [
-    'Silver / White',
-    'Gray / Mixed',
-    'Green / Copper',
-    'Gold / Yellow',
-    'Red / Iron',
-    'Blue / Tin',
-    'Black / Lead',
-  ] as const;
-
-  const planetaryCorrespondences = WANDERING_STARS.map((star, i) => ({
-    planet:  star.name,
-    symbol:  star.symbol,
-    newMode: NEW_MODES[i],
-    oldMode: MODES[i],
-    color:   ALCHEMICAL_COLORS[i],
-  }));
-
-  // ── Color palette names for dynamic rendering ─────────────────────────────
-
-  const colorWheelNames = COLOR_PALETTES.wheel.map(c => c.name);
-  const colorScaleNames = COLOR_PALETTES.scale.map(c => c.name);
+<script>
+  // no state needed
 </script>
 
-<section>
-  <h2>Music Theory</h2>
+<article>
 
-  <article>
-    <h3>Why Twelve Notes In Music</h3>
-    <p>
-      The 1:2 ratio produces the octave — the same note at a higher pitch — a fundamental
-      property of sound that creates continuity across the frequency spectrum.
-    </p>
-    <p>
-      The 2:3 ratio generates the <i>pure</i>, perfect fifth the most consonant interval after
-      the octave, and the one responsible for producing entirely new notes. These two ratios
-      together form the harmonic backbone of all music.
-    </p>
-    <p>
-      Twelve is the minimum number of notes that nearly evenly divides the circle of fifths.
-      The equation 2<sup>x</sup> ≠ 3<sup>y</sup> for any positive integers x and y confirms
-      that no smaller number achieves this. The next candidate — 53 notes — is mathematically
-      closer but practically unusable.
-    </p>
-  </article>
+  <h1 class="title">Design Monolith</h1>
+  <p class="subtitle">An Audio-Visual Design System of Order Against Chaos</p>
 
-  <article>
-    <h3>Pythagorean Tuning</h3>
-    <p>
-      The system described here is inspired by the so-called Pythagorean tuning.
-      It constructs all notes from a single interval: the perfect fifth, expressed as the ratio 3:2.
-    </p>
-    <p>
-      By stacking twelve perfect fifths and collapsing them into a single octave, one arrives
-      at the twelve-note chromatic scale. The result is a system of pure, mathematically
-      grounded intervals — with one irresolvable flaw. After twelve fifths, the cycle does
-      not close perfectly. The discrepancy — approximately 23.46 cents — is known as the
-      <i>Pythagorean comma</i>: the remainder that emerges from the fundamental
-      incommensurability of the powers of 2 and the powers of 3. It is the crack in the
-      cosmic vessel, the point where the infinite spiral refuses to become a circle.
-    </p>
-    <p>
-      Equal temperament, in near-universal use today, resolves this comma by distributing
-      it evenly across all twelve intervals — a practical solution, and a philosophical
-      compromise.
-    </p>
-  </article>
+  <!-- ══════════════════════════════════════ -->
+  <!-- I. THE FIRST SONG                      -->
+  <!-- ══════════════════════════════════════ -->
+  <h2>The First Song</h2>
 
-  <article>
-    <h3>The First Note & The Frequencies Of All The Notes</h3>
-    <p>
-      One Hertz corresponds roughly to a single heartbeat cycle of a healthy human — a
-      natural and fitting origin for the frequency scale.
-    </p>
-    <p>
-      Applying successive powers of 3, reflecting the 3:2 harmonic ratio, from 1 Hz upward
-      yields the twelve fundamental frequencies:
-    </p>
-    <ul>
-      {#each frequencyList as f}
-        <li>3<sup>{f.power}</sup> = {f.frequency} Hz — {f.note}</li>
-      {/each}
-    </ul>
-    <p>
-      Sound is not a closed circle but an ascending spiral — an infinite progression of
-      harmonics reaching ever upward, never quite returning to where it began.
-    </p>
-  </article>
+  <p>One "Hertz" is equal to one single heartbeat cycle of a healthy human being. The origin is the heart — the heartbeat itself.</p>
 
-  <article>
-    <h3>Cymatics — Sound Made Visible</h3>
-    <p>
-      In 1787, Ernst Chladni demonstrated that sound has a geometric dimension. By drawing
-      a bow across a metal plate covered with sand, he produced intricate symmetrical
-      patterns — the sand migrating to the nodal lines where the plate did not vibrate,
-      revealing the hidden geometry of the frequency.
-    </p>
-    <p>
-      This field, now called <i>cymatics</i>, shows that each frequency produces a
-      characteristic form. Higher frequencies generate more complex patterns; harmonic
-      intervals produce forms of greater symmetry. The ancient intuition that number governs
-      form — that the same ratios which structure music also structure matter — finds in
-      cymatics its most direct visual confirmation.
-    </p>
-    <p>
-      Water responds to sound with particular sensitivity, its surface forming standing
-      waves that mirror the frequency's geometry. The medium does not merely transmit
-      the vibration — it embodies it.
-    </p>
-  </article>
+  <p>When an open string is plucked, a sound, a note, is produced. When that same string is pressed at its midpoint and plucked again, a different pitch emerges — the same note, but at double the frequency. This is the 1:2 ratio, which produces the <em>octave</em>.</p>
 
-  <article>
-    <h3>Why Seven Notes In A Mode And A Scale</h3>
-    <p>
-      A scale built from pure perfect fifths and octaves holds together in natural
-      consonance. The addition of an eighth note breaks this equilibrium, producing what
-      musicians call a <i>wolf fifth</i> — a dissonant interval that disrupts the harmonic
-      order. Seven is therefore not an arbitrary convention but a structural boundary imposed
-      by the mathematics of harmony itself.
-    </p>
-  </article>
+  <p>Playing the same note is the most harmonious thing one can do, yet it is monotone. Playing it at different octaves is equally harmonious, and slightly more varied — yet still quite monotone.</p>
 
-  <article>
-    <h3>The First Mode</h3>
-    <p>
-      Tracing the first seven notes from the circle of fifths naturally yields the Lydian
-      mode. This is why Lydian is the primordial mode — the most direct expression of the
-      fundamental harmonic ratios, unaltered and uncompromised. All other modes are derived
-      from it by rotating the starting position within the same seven-note sequence.
-    </p>
-  </article>
+  <p>How, then, does a new note come into being?</p>
 
-  <article>
-    <h3>The Seven Modes As Rotations</h3>
-    <p>
-      Each mode is an offset from the Lydian origin — a shift along the circle of fifths
-      that alters the character of the scale while preserving its underlying interval
-      structure:
-    </p>
-    <ul>
-      {#each modeRotations as { mode, newMode, offset }}
-        <li>
-          {mode} ({newMode}): {offset === 0 ? 'origin' : `${offset} steps`}
-        </li>
-      {/each}
-    </ul>
-    <p>
-      The further the offset from zero, the more the mode departs from the pure harmonic
-      origin — a gradual descent from brightness into shadow. Locrian, the most displaced,
-      is accordingly the most dissonant and the least stable.
-    </p>
-  </article>
+  <p>The next simplest ratio after 1:2 is 2:3. When a string is pressed at its third and plucked, a new note is produced. This 2:3 ratio yields the <em>pure perfect fifth</em> — the most consonant interval after the octave. These two ratios are the backbone of music.</p>
 
-  <article>
-    <h3>The Scale Degrees</h3>
-    <p>
-      Within any mode, each of the seven notes occupies a named structural position that
-      describes its gravitational function relative to the root:
-    </p>
-    <ul>
-      {#each scaleDegrees as { numeral, name }}
-        <li>{numeral} — {name}</li>
-      {/each}
-    </ul>
-    <p>
-      The Tonic is the center of rest. The Dominant and Subdominant define the primary
-      axis of tension and release. The remaining degrees provide color, movement, and
-      resolution — a complete harmonic vocabulary within seven notes.
-    </p>
-  </article>
+  <p>Neither is a discovery. Plato, in his <em>Timaeus</em>, describes the world itself as constructed from these same two proportions — the 1:2 of the octave and the 2:3 of the fifth. What follows builds upon that foundation.</p>
 
-  <article>
-    <h3>The Sonic Pattern</h3>
-    <p>
-      When a seven-note scale is mapped onto the twelve-note chromatic system, it occupies
-      the following semitone positions:
-    </p>
-    <ul>
-      {#each SONIC_PATTERN as step, i}
-        <li>{SCALE_DEGREE_NUMERALS[i]} — semitone {step}</li>
-      {/each}
-    </ul>
-    <p>
-      The gaps between positions — two semitones between most degrees, one semitone
-      between the third and fourth and the seventh and octave — define the characteristic
-      sound of the major scale. This pattern is invariant across all root notes and
-      mode rotations.
-    </p>
-  </article>
+  <hr />
 
-  <article>
-    <h3>Kepler & The Music Of The Spheres</h3>
-    <p>
-      In 1619, Johannes Kepler published <i>Harmonices Mundi</i> — The Harmony of the
-      World — demonstrating that the angular velocities of the planets at perihelion and
-      aphelion correspond to recognizable musical intervals. Each planet, in his system,
-      traces a melodic fragment as it moves through its elliptical orbit.
-    </p>
-    <p>
-      Kepler was not writing metaphor. He was extending the Pythagorean tradition — that
-      number, ratio, and harmony govern the structure of the cosmos — into a rigorous
-      astronomical framework. His third law of planetary motion emerged directly from this
-      investigation into cosmic proportion.
-    </p>
-    <p>
-      The ancient doctrine of the <i>musica universalis</i> — the music of the spheres —
-      holds that the celestial bodies produce a harmony inaudible to human ears, perceptible
-      only through mathematics. The same ratios that govern musical consonance appear in
-      orbital mechanics, in crystalline geometry, and in the proportions of living forms.
-      The universe, it seems, hums in just intonation.
-    </p>
-  </article>
+  <!-- ══════════════════════════════════════ -->
+  <!-- II. THE CIRCLE OF TWELVE               -->
+  <!-- ══════════════════════════════════════ -->
+  <h2>The Circle of Twelve</h2>
 
-  <article>
-    <h3>The Seventh And Twelfth Note Problematic Taxonomy</h3>
-    <p>
-      The seventh note in the sequence, 3<sup>6</sup> = 729 Hz, corresponds to F#. This
-      exposes a flaw in traditional naming: F is more precisely E#, and what we call F#
-      is effectively the note F. Labelling this seventh step as a sharp — and treating
-      the twelfth as a distinct new note — is a historical inconsistency that obscures the
-      underlying logic of the system.
-    </p>
-  </article>
+  <p>As established in the preceding section, two is the number of duplication, and three is the number of creation.</p>
 
-  <article>
-    <h3>Musical Note & Mode Names Overhaul</h3>
-    <p>
-      The following is a proposal to rename musical notes and modes in accordance with
-      natural harmonic relationships, internal logical consistency, and alchemical
-      symbolism. The mode names are drawn from the seven classical planets — a
-      correspondence too structurally precise to ignore.
-    </p>
-    <p>Renaming of notes:</p>
-    <ul>
-      {#each renamedNotes as n}
-        <li>{n.oldName} → {n.newName}</li>
-      {/each}
-    </ul>
-    <p>Renaming of modes:</p>
-    <ul>
-      {#each renamedModes as m}
-        <li>{m.oldName} → {m.newName}</li>
-      {/each}
-    </ul>
-  </article>
-</section>
+  <p>Beginning from the first note of 1 Hz, the remaining eleven are generated by successive multiplication by the ratio 3:2:</p>
 
-<section>
-  <h2>Color Theory</h2>
+  <ul>
+    <li>1st note: 1 Hz</li>
+    <li>2nd note: 1 × 3/2 = 1.5 Hz</li>
+    <li>3rd note: 1.5 × 3/2 = 2.25 Hz</li>
+    <li>4th note: 2.25 × 3/2 = 3.375 Hz</li>
+    <li>5th note: 3.375 × 3/2 = 5.0625 Hz</li>
+    <li>6th note: 5.0625 × 3/2 = 7.59375 Hz</li>
+    <li>7th note: 7.59375 × 3/2 = 11.390625 Hz</li>
+    <li>8th note: 11.390625 × 3/2 = 17.0859375 Hz</li>
+    <li>9th note: 17.0859375 × 3/2 = 25.62890625 Hz</li>
+    <li>10th note: 25.62890625 × 3/2 = 38.443359375 Hz</li>
+    <li>11th note: 38.443359375 × 3/2 = 57.6650390625 Hz</li>
+    <li>12th note: 57.6650390625 × 3/2 = 86.49755859375 Hz</li>
+  </ul>
 
-  <article>
-    <h3>The First Color</h3>
-    <p>
-      Red occupies the lowest frequency of the visible spectrum, ranging from approximately
-      400 to 480 THz. As the foundation of the rainbow's natural order, it is the fitting
-      point of origin for any harmonic system of color — the tonic of the visible octave.
-    </p>
-  </article>
+  <p>These twelve notes nearly divide the circle into equal parts, which is supremely practical. The division is not perfectly equal because music is, in truth, a spiral — not a circle. The next close division afforded by the 3:2 ratio falls at 53 parts, which is impractical for performance.</p>
 
-  <article>
-    <h3>White Light & The Prism</h3>
-    <p>
-      White light appears uniform to the eye, but is in fact a superposition of all visible
-      frequencies simultaneously. When passed through a glass prism, refraction separates
-      these frequencies by their differing angles of deflection — the shorter the wavelength,
-      the greater the bend. The result is the continuous spectral gradient of the rainbow:
-      the hidden order made visible.
-    </p>
-    <p>
-      Isaac Newton was the first to demonstrate, in 1666, that white light is not pure but
-      composite — and that color is not a property added to light, but already latent within
-      it. The prism does not create color; it reveals it. This principle is the foundation
-      of all color theory that follows.
-    </p>
-  </article>
+  <p>Equivalently, these twelve notes arise from successive powers of three:</p>
 
-  <article>
-    <h3>The Color Wheel</h3>
-    <p>
-      Dividing the visible spectrum into twelve equal sections — beginning with red —
-      yields twelve fundamental colors that correspond directly to the twelve musical notes.
-      The structure of the color wheel mirrors that of the musical octave: a closed cycle
-      of harmonic relationships built from a linear, infinite source.
-    </p>
-    <p>The twelve colors of the wheel are:</p>
-    <ul>
-      {#each colorWheelNames as name}
-        <li>{name}</li>
-      {/each}
-    </ul>
-  </article>
+  <p>3⁰ = C,  3¹ = G,  3² = D,  3³ = A,  3⁴ = E,  3⁵ = B,  3⁶ = F♯,  3⁷ = C♯,  3⁸ = G♯,  3⁹ = D♯,  3¹⁰ = A♯,  3¹¹ = F.</p>
 
-  <article>
-    <h3>The Scale Of Shades</h3>
-    <p>
-      Alongside the chromatic wheel, there exists an achromatic axis — the scale of shades,
-      running from pure black through successive gradations to pure white. These are not
-      colors in the spectral sense, but values: the measure of light's presence or absence.
-      Every chromatic color lives somewhere between these two poles in perceived brightness.
-    </p>
-    <p>The scale of shades:</p>
-    <ul>
-      {#each colorScaleNames as name}
-        <li>{name}</li>
-      {/each}
-    </ul>
-  </article>
+  <p>When arranged by proximity of pitch, the <em>chromatic circle</em> is formed: C–C♯–D–D♯–E–F–F♯–G–G♯–A–A♯–B  (0–1–2–3–4–5–6–7–8–9–10–11).</p>
 
-  <article>
-    <h3>The Other Color Wheels</h3>
-    <p>
-      The twelve spectral colors may be systematically transformed by the addition of
-      black, gray, or white — producing three derivative palettes, each with a distinct
-      character:
-    </p>
-    <p>
-      Adding black deepens a color, producing the <i>color wheel of darkness</i> — shadowed,
-      grounded hues that carry weight and gravity.
-    </p>
-    <p>
-      Introducing gray — the union of black and white — desaturates color into the
-      <i>color wheel of ghost</i>: tones of muted, ethereal presence, neither vivid nor
-      absent.
-    </p>
-    <p>
-      Infusing white elevates a color into the <i>color wheel of light</i> — soft, radiant
-      shades that suggest openness and clarity.
-    </p>
-    <p>
-      These three transformations correspond precisely to the three achromatic forces:
-      darkness, neutrality, and light. Together with the primary wheel, they constitute
-      a complete tonal system.
-    </p>
-  </article>
+  <p>When arranged in the order of their generation, the <em>circle of fifths</em> is formed: C–G–D–A–E–B–F♯–C♯–G♯–D♯–A♯–F  (0–7–2–9–4–11–6–1–8–3–10–5).</p>
 
-  <article>
-    <h3>Light Mixing</h3>
-    <p>
-      The prism divides white light into its spectral components. The inverse operation —
-      combining spectral colors — reconstitutes it. This is the additive model of color,
-      governing all light-emitting systems including screens and projectors.
-    </p>
-    <p>
-      The three primary light colors — red, green, and blue — recombine to produce white.
-      Their complementary triad — yellow, azure, and cyclamen — achieves the same result
-      by a different path. All other combinations produce intermediate hues. Color, in the
-      additive model, is both division and synthesis — the spectrum is a decomposition of
-      unity, and unity is always recoverable.
-    </p>
-  </article>
+  <p>According to the circle of fifths, one ought to be able to travel by a perfect fifth exactly twelve times and return to the note from which the journey began — one octave higher. However, (3:2)¹² = 129.746337891, which is not equal to 2⁷ = 128. The difference of 1.746337891 makes such a return impossible, and that twelfth interval is dissonant.</p>
 
-  <article>
-    <h3>Sonoluminescence — Sound Producing Light</h3>
-    <p>
-      Sonoluminescence is the phenomenon by which sound waves, propagated through a liquid
-      medium, produce flashes of light. A bubble trapped in water and driven by an ultrasonic
-      field will collapse with sufficient violence to emit light — briefly reaching
-      temperatures comparable to the surface of the Sun.
-    </p>
-    <p>
-      The precise mechanism remains incompletely understood, which is itself significant.
-      Here, at the boundary between acoustics and optics, sound and light briefly become
-      one. Frequency — the organizing principle of both music and color — manifests in a
-      medium that is neither, producing the other from the compression of the first.
-    </p>
-    <p>
-      It is the most direct physical demonstration of what this project implies abstractly:
-      that sound and light are not separate phenomena but parallel expressions of the same
-      underlying principle of vibration and frequency.
-    </p>
-  </article>
+  <p>This discrepancy is known as the <em>Pythagorean comma</em>. The imperfect interval it produces has been called the <em>wolf fifth</em>, the <em>Procrustean fifth</em>, or simply the <em>imperfect fifth</em>.</p>
 
-  <article>
-    <h3>Contrast & Complementary Palettes</h3>
-    <p>
-      On a twelve-part color wheel, colors directly opposite one another — six steps apart —
-      are <i>complementary</i>. They produce maximum visual contrast when placed side by
-      side, each amplifying the perceived intensity of the other. The eye, seeking
-      equilibrium, sharpens the distinction between opposites.
-    </p>
-    <p>
-      Colors separated by four steps form a <i>triadic</i> palette — three hues equally
-      spaced around the wheel. Triadic combinations are balanced and versatile, providing
-      variety without sacrificing harmony. Colors separated by two steps or fewer form
-      <i>analogous</i> palettes — cohesive and restful, but dependent on variation in value
-      or saturation to maintain interest.
-    </p>
-  </article>
+  <p>The contemporary remedy is <em>equal temperament</em> — a system that resolves the comma by dividing the octave into twelve steps of identical frequency ratio. In doing so, it introduces a far graver problem: a musical system of pervasive, subtle dissonance to which modern ears have simply grown accustomed. This is a satanic lie of harmony — chaos in disguise.</p>
 
-  <article>
-    <h3>Hierarchy Through Hue, Value, And Saturation</h3>
-    <p>
-      In graphic design, color communicates structure before content. <i>Hue</i> establishes
-      identity — it differentiates elements and creates categorical distinctions.
-      <i>Value</i> — the lightness or darkness of a color — establishes hierarchy: high
-      contrast draws the eye first, low contrast recedes. <i>Saturation</i> — the intensity
-      of a hue — directs emphasis: a single saturated element among desaturated ones
-      commands attention with precision.
-    </p>
-    <p>
-      A disciplined palette operates across all three axes simultaneously. Hue for
-      distinction, value for order, saturation for focus. The twelve-color wheel, combined
-      with its darker, ghosted, and lighter variants, provides the full tonal range needed
-      to build coherent visual systems at any scale.
-    </p>
-  </article>
-</section>
+  <p>The Pythagorean comma is not a flaw to be corrected; it is a golden rule — a natural boundary declaring that a musical scale should contain a maximum of seven notes.</p>
 
-<section>
+  <p>Such a scale is nothing new under the Sun. It is called the <em>Pythagorean scale</em>, constructed entirely from pure perfect fifths.</p>
+
+  <p>In the chromatic circle, a Pythagorean scale follows the pattern 0–2–4–6–7–9–11, or the interval sequence W–W–W–H–W–W–H, where W denotes a whole tone and H a semitone. In the circle of fifths, it is simply seven adjacent notes: 0–1–2–3–4–5–6. The zero in both patterns represents the <em>root note</em> of the scale.</p>
+
+  <p>Beginning from each of the seven degrees, the seven <em>musical modes</em> arise. A mode is a class of scales sharing the same interval pattern:</p>
+
+  <ul>
+    <li><strong>Mode I</strong> (from the 1st degree) — W–W–W–H–W–W–H — <em>Lydian</em></li>
+    <li><strong>Mode II</strong> (from the 2nd degree) — W–W–H–W–W–H–W — <em>Mixolydian</em></li>
+    <li><strong>Mode III</strong> (from the 3rd degree) — W–W–H–W–W–W–H — <em>Aeolian</em></li>
+    <li><strong>Mode IV</strong> (from the 4th degree) — H–W–W–H–W–W–W — <em>Locrian</em></li>
+    <li><strong>Mode V</strong> (from the 5th degree) — W–W–H–W–W–W–H — <em>Ionian</em></li>
+    <li><strong>Mode VI</strong> (from the 6th degree) — W–H–W–W–W–H–W — <em>Dorian</em></li>
+    <li><strong>Mode VII</strong> (from the 7th degree) — H–W–W–W–H–W–W — <em>Phrygian</em></li>
+  </ul>
+
+  <p>Thus, the first scale is the Lydian mode rooted on C: C–D–E–F♯–G–A–B, or expressed through the circle of fifths: C–G–D–A–E–B–F♯.</p>
+
+  <hr />
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- III. THE ASCENDING SPIRAL              -->
+  <!-- ══════════════════════════════════════ -->
+  <h2>The Ascending Spiral</h2>
+
+  <p>A genuine difficulty arises when constructing certain scales.</p>
+
+  <p>The F Lydian scale offers the clearest example. It begins on F, at a frequency of 3¹¹ Hz. Its subsequent notes are:</p>
+
+  <ul>
+    <li>C, at 3¹²</li>
+    <li>G, at 3¹³</li>
+    <li>D, at 3¹⁴</li>
+    <li>A, at 3¹⁵</li>
+    <li>E, at 3¹⁶</li>
+    <li>B, at 3¹⁷</li>
+  </ul>
+
+  <p>These pitches are close — but not identical — to their counterparts among the original twelve. For this reason they are named with the suffix <em>x</em> (as in <em>extra</em>): Cx, Gx, Dx, Ax, Ex, Bx.</p>
+
+  <p>The smallest such discrepancy, for C, is:</p>
+  <p>3¹² / 2¹⁹ − 1 = 7153 / 524288</p>
+
+  <p>This difference accumulates when stacking twelve or more pure fifths and comparing the results to the same tones at lower octaves. Each successive fifth compounds the error by a factor of 3.</p>
+
+  <p>Letting Δ = 7153 / 524288, the deviation for each successive note is:</p>
+
+  <ul>
+    <li>C = 3⁰ × Δ ≈ 0.01</li>
+    <li>G = 3¹ × Δ ≈ 0.04</li>
+    <li>D = 3² × Δ ≈ 0.12</li>
+    <li>A = 3³ × Δ ≈ 0.37</li>
+    <li>E = 3⁴ × Δ ≈ 1.11</li>
+    <li>B = 3⁵ × Δ ≈ 3.32</li>
+  </ul>
+
+  <p>The system of pure fifths (powers of 3) and pure octaves (powers of 2) cannot close. Even at their nearest alignment, 3¹² ≠ 2¹⁹. The residual persists without resolution, opening the circle of fifths into an ascending spiral that generates six additional tones beyond the original twelve. Musical instruments must therefore be tuned to the specific scales in which they are played.</p>
+
+  <hr />
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- IV. A CORRECTION OF NAMES              -->
+  <!-- ══════════════════════════════════════ -->
+  <h2>A Correction of Names</h2>
+
+  <p>The conventional system of note names carries no inner logic. It has been used throughout this document thus far as a concession to familiarity; it will serve no further.</p>
+
+  <p>A sound nomenclature must satisfy two conditions: it must reflect the order of generation, and it must remain legible when the tones are arranged by proximity of pitch. The inherited system satisfies neither, obscuring in the process the very principles established in the preceding sections.</p>
+
+  <p>The first generated tone should bear the first letter of the alphabet. The first seven tones produced form the <em>primary set</em> — the maximum a scale may contain — and their names require no accidental. The five tones generated thereafter form the <em>secondary set</em>, occupying the intermediate positions of the chromatic circle; these require one.</p>
+
+  <p>On a keyboard, the primary set falls upon the white keys; the secondary, upon the black.</p>
+
+  <p>Under the conventional system, the note designated F♯ belongs to the primary set and should therefore carry no accidental. The note designated F belongs to the secondary set and should. The present convention has it precisely inverted.</p>
+
+  <p>The corrected assignment of names to generated tones is as follows:</p>
+
+  <ul>
+    <li>3⁰ Hz  =  A</li>
+    <li>3¹ Hz  =  E</li>
+    <li>3² Hz  =  B</li>
+    <li>3³ Hz  =  F</li>
+    <li>3⁴ Hz  =  C</li>
+    <li>3⁵ Hz  =  G</li>
+    <li>3⁶ Hz  =  D</li>
+    <li>3⁷ Hz  =  A♯</li>
+    <li>3⁸ Hz  =  E♯</li>
+    <li>3⁹ Hz  =  B♯</li>
+    <li>3¹⁰ Hz  =  F♯</li>
+    <li>3¹¹ Hz  =  C♯</li>
+  </ul>
+
+  <p>And for the extra tones of the ascending spiral, where Δ = 7153 / 524288 ≈ 0.013643:</p>
+
+  <ul>
+    <li>3⁰ × Δ Hz  =  Ax</li>
+    <li>3¹ × Δ Hz  =  Ex</li>
+    <li>3² × Δ Hz  =  Bx</li>
+    <li>3³ × Δ Hz  =  Fx</li>
+    <li>3⁴ × Δ Hz  =  Cx</li>
+    <li>3⁵ × Δ Hz  =  Gx</li>
+  </ul>
+
+  <p>All sections that follow use this corrected nomenclature.</p>
+
+  <p>The musical modes inherit the same problem as the notes — names assigned by geography and history rather than by principle. This document establishes, in the sections that follow, that the seven modes correspond to the seven wandering stars. It is fitting, then, that they bear their names. The corrected designations are as follows:</p>
+
+  <ul>
+    <li><strong>Mode I — Lunar</strong> <em>(formerly Lydian)</em></li>
+    <li><strong>Mode II — Mercurial</strong> <em>(formerly Mixolydian)</em></li>
+    <li><strong>Mode III — Venusian</strong> <em>(formerly Aeolian)</em></li>
+    <li><strong>Mode IV — Solar</strong> <em>(formerly Locrian)</em></li>
+    <li><strong>Mode V — Martial</strong> <em>(formerly Ionian)</em></li>
+    <li><strong>Mode VI — Jovial</strong> <em>(formerly Dorian)</em></li>
+    <li><strong>Mode VII — Saturnine</strong> <em>(formerly Phrygian)</em></li>
+  </ul>
+
+  <p>The old names are retained in parentheses for reference only.</p>
+
+  <hr />
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- V. GRAPHIC EVIDENCE                    -->
+  <!-- ══════════════════════════════════════ -->
+  <h2>Graphic Evidence</h2>
+
+  <p>In 1787, Ernst Chladni demonstrated that sound possesses a geometric dimension. By drawing a violin bow along the edge of a flour-dusted plate, he observed symmetrical patterns emerge — the flour migrating to the nodal lines, where the surface was still.</p>
+
+  <p>In the 20th century, Hans Jenny coined the term <em>cymatics</em> to describe such acoustic phenomena. The hidden geometry of frequency is thereby revealed: certain tones resolve into clear, coherent forms; others produce only turbulence.</p>
+
+  <p>The note A in this system, at its fourth octave, carries a frequency of 432 Hz (3³ × 2⁴). In cymatics experiments it yields a precise and beautiful geometric figure. The Stuttgart standard pitch of 440 Hz produces no such clarity — only disorder made comfortable by long familiarity.</p>
+
+  <div class="video-wrap">
+    <iframe
+      src="https://www.youtube.com/embed/zS3DMYF-n1o"
+      title="Cymatics"
+      loading="lazy"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+      allowfullscreen
+    ></iframe>
+  </div>
+
+  <hr />
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- VI. THE SPECTRAL WHEEL                 -->
+  <!-- ══════════════════════════════════════ -->
+  <h2>The Spectral Wheel</h2>
+
+  <p>What has been done with sound can be done with colour.</p>
+
+  <p>A colour is defined by its wavelength in nanometres and its frequency in terahertz. A dispersive prism separates white light into its constituent spectral colours — the rainbow. Isaac Newton demonstrated this in the 17th century. White light is the sum of all spectral colours, or more precisely, the combination of the three primary ones.</p>
+
+  <p>Those three primaries — from which any other spectral colour can be composed, confirming once more that three is the number of creation — are spectral red, spectral green, and spectral blue. Their order is significant: red carries the lowest frequency, blue the highest.</p>
+
+  <p>Colours are described by the ratios in which they contain each primary:</p>
+
+  <ul>
+    <li>Red: 1:0:0</li>
+    <li>Green: 0:1:0</li>
+    <li>Blue: 0:0:1</li>
+    <li>Yellow: 1:1:0</li>
+    <li>Azure: 0:1:1</li>
+    <li>Cyclamen: 1:0:1</li>
+  </ul>
+
+  <p>To reach the intermediate hues between these six, a further ratio is required:</p>
+
+  <ul>
+    <li>Medlar: 2:1:0</li>
+    <li>Olive: 1:2:0</li>
+    <li>Teal: 0:2:1</li>
+    <li>Indigo: 0:1:2</li>
+    <li>Lavender: 1:0:2</li>
+    <li>Mulberry: 2:0:1</li>
+  </ul>
+
+  <p>These twelve ratios divide the hue circle into equal parts.</p>
+
+  <hr />
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- VII. THE SCALE OF SHADES               -->
+  <!-- ══════════════════════════════════════ -->
+  <h2>The Scale of Shades</h2>
+
+  <p>The ratio 1:1:1 yields the achromatic colours. These belong not to a circle but to a linear scale of seven degrees: black, pitch-black, iron gray, dark gray, gray, light gray, silver, and white.</p>
+
+  <hr />
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- VIII. THE COLOUR GYROSCOPE             -->
+  <!-- ══════════════════════════════════════ -->
+  <h2>The Colour Gyroscope</h2>
+
+  <p>A complete palette demands more than fully saturated and achromatic colours. From the spectral hue circle, three further circles are born by the successive application of black, gray, and white light. The full palette, expressed in both HSL and RGB, is as follows:</p>
+
+  <p><strong>Spectral Colour Wheel</strong> <em>— full saturation, mid lightness (100% / 50%)</em></p>
+  <pre>
+red        hsl(0,   100%, 50%)  → rgb(255,   0,   0)
+medlar     hsl(30,  100%, 50%)  → rgb(255, 128,   0)
+yellow     hsl(60,  100%, 50%)  → rgb(255, 255,   0)
+olive      hsl(90,  100%, 50%)  → rgb(128, 255,   0)
+green      hsl(120, 100%, 50%)  → rgb(  0, 255,   0)
+teal       hsl(150, 100%, 50%)  → rgb(  0, 255, 128)
+azure      hsl(180, 100%, 50%)  → rgb(  0, 255, 255)
+indigo     hsl(210, 100%, 50%)  → rgb(  0, 128, 255)
+blue       hsl(240, 100%, 50%)  → rgb(  0,   0, 255)
+lavender   hsl(270, 100%, 50%)  → rgb(128,   0, 255)
+cyclamen   hsl(300, 100%, 50%)  → rgb(255,   0, 255)
+mulberry   hsl(330, 100%, 50%)  → rgb(255,   0, 128)</pre>
+
+  <p><strong>Scale of Shades</strong> <em>— 0% saturation</em></p>
+  <pre>
+black       hsl(0, 0%,   0%)  → rgb(  0,   0,   0)
+pitch-black hsl(0, 0%,  12%)  → rgb( 31,  31,  31)
+iron-gray   hsl(0, 0%,  25%)  → rgb( 64,  64,  64)
+dark-gray   hsl(0, 0%,  37%)  → rgb( 94,  94,  94)
+gray        hsl(0, 0%,  50%)  → rgb(128, 128, 128)
+light-gray  hsl(0, 0%,  62%)  → rgb(158, 158, 158)
+silver      hsl(0, 0%,  75%)  → rgb(191, 191, 191)
+snow-white  hsl(0, 0%,  88%)  → rgb(224, 224, 224)
+white       hsl(0, 0%, 100%)  → rgb(255, 255, 255)</pre>
+
+  <p><strong>Colour Wheel of Darkness</strong> <em>— 50% saturation, 25% lightness</em></p>
+  <pre>
+dark-red        hsl(0,   50%, 25%)  → rgb( 96,  32,  32)
+dark-medlar     hsl(30,  50%, 25%)  → rgb( 96,  64,  32)
+dark-yellow     hsl(60,  50%, 25%)  → rgb( 96,  96,  32)
+dark-olive      hsl(90,  50%, 25%)  → rgb( 64,  96,  32)
+dark-green      hsl(120, 50%, 25%)  → rgb( 32,  96,  32)
+dark-teal       hsl(150, 50%, 25%)  → rgb( 32,  96,  64)
+dark-azure      hsl(180, 50%, 25%)  → rgb( 32,  96,  96)
+dark-indigo     hsl(210, 50%, 25%)  → rgb( 32,  64,  96)
+dark-blue       hsl(240, 50%, 25%)  → rgb( 32,  32,  96)
+dark-lavender   hsl(270, 50%, 25%)  → rgb( 64,  32,  96)
+dark-cyclamen   hsl(300, 50%, 25%)  → rgb( 96,  32,  96)
+dark-mulberry   hsl(330, 50%, 25%)  → rgb( 96,  32,  64)</pre>
+
+  <p><strong>Colour Wheel of Ghost</strong> <em>— 50% saturation, 50% lightness</em></p>
+  <pre>
+ghost-red        hsl(0,   50%, 50%)  → rgb(191,  64,  64)
+ghost-medlar     hsl(30,  50%, 50%)  → rgb(191, 128,  64)
+ghost-yellow     hsl(60,  50%, 50%)  → rgb(191, 191,  64)
+ghost-olive      hsl(90,  50%, 50%)  → rgb(128, 191,  64)
+ghost-green      hsl(120, 50%, 50%)  → rgb( 64, 191,  64)
+ghost-teal       hsl(150, 50%, 50%)  → rgb( 64, 191, 128)
+ghost-azure      hsl(180, 50%, 50%)  → rgb( 64, 191, 191)
+ghost-indigo     hsl(210, 50%, 50%)  → rgb( 64, 128, 191)
+ghost-blue       hsl(240, 50%, 50%)  → rgb( 64,  64, 191)
+ghost-lavender   hsl(270, 50%, 50%)  → rgb(128,  64, 191)
+ghost-cyclamen   hsl(300, 50%, 50%)  → rgb(191,  64, 191)
+ghost-mulberry   hsl(330, 50%, 50%)  → rgb(191,  64, 128)</pre>
+
+  <p><strong>Colour Wheel of Light</strong> <em>— 50% saturation, 75% lightness</em></p>
+  <pre>
+light-red        hsl(0,   50%, 75%)  → rgb(223, 159, 159)
+light-medlar     hsl(30,  50%, 75%)  → rgb(223, 191, 159)
+light-yellow     hsl(60,  50%, 75%)  → rgb(223, 223, 159)
+light-olive      hsl(90,  50%, 75%)  → rgb(191, 223, 159)
+light-green      hsl(120, 50%, 75%)  → rgb(159, 223, 159)
+light-teal       hsl(150, 50%, 75%)  → rgb(159, 223, 191)
+light-azure      hsl(180, 50%, 75%)  → rgb(159, 223, 223)
+light-indigo     hsl(210, 50%, 75%)  → rgb(159, 191, 223)
+light-blue       hsl(240, 50%, 75%)  → rgb(159, 159, 223)
+light-lavender   hsl(270, 50%, 75%)  → rgb(191, 159, 223)
+light-cyclamen   hsl(300, 50%, 75%)  → rgb(223, 159, 223)
+light-mulberry   hsl(330, 50%, 75%)  → rgb(223, 159, 191)</pre>
+
+  <hr />
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- IX. CELESTIAL THEORY                   -->
+  <!-- ══════════════════════════════════════ -->
   <h2>Celestial Theory</h2>
 
-  <article>
-    <h3>The Firmament</h3>
-    <p>
-      The twelve constellations of the zodiac divide the celestial sphere in the same
-      proportion as the twelve notes divide the musical octave — and as the twelve colors
-      divide the visible spectrum. This threefold correspondence across sound, light, and
-      sky is either a remarkable coincidence or a structural principle of nature itself.
-    </p>
-    <p>The twelve zodiacal constellations, with their ecliptic positions and sun transits:</p>
-    <ul>
-      {#each ZODIAC_CONSTELLATIONS as z}
-        <li>
-          {z.symbol} {z.name} — {z.eclipticDeg.from}° to {z.eclipticDeg.to}° — {z.sunTransit}
-        </li>
-      {/each}
-    </ul>
-  </article>
+  <p>Before the stars are measured, they must first be heard.</p>
 
-  <article>
-    <h3>The Wandering Stars</h3>
-    <p>
-      Seven celestial bodies — the classical planets known to antiquity as the wandering
-      stars — move against the fixed backdrop of the firmament. Their number corresponds
-      precisely to the seven notes of a scale, the seven degrees of a mode, and the seven
-      days of the week.
-    </p>
-    <p>
-      In the alchemical tradition, each planet governs a metal, a temperament, and a color.
-      The mode names proposed in this system are drawn directly from these correspondences:
-    </p>
-    <ul>
-      {#each planetaryCorrespondences as p}
-        <li>
-          {p.symbol} {p.planet} → {p.newMode} ({p.oldMode}) → {p.color}
-        </li>
-      {/each}
-    </ul>
-    <p>
-      These correspondences are not decorative. They represent a pre-modern attempt to
-      unify the observable world — sound, matter, light, and time — into a single coherent
-      system. Whether read as symbolic or literal, they carry an internal logic that has
-      proven remarkably durable across millennia of inquiry. The same seven that wander
-      the sky govern the days, rule the metals, and now name the modes.
-    </p>
-  </article>
+  <blockquote>"When the morning stars sang together, and all the sons of God shouted for joy?"</blockquote>
+  <p class="cite">— Job 38:7</p>
 
-  <article>
-    <h3>Orbital Periods & Harmonic Motion</h3>
-    <p>
-      The wandering stars do not merely correspond to modes by number — their motion
-      itself is a kind of music. Each planet traces its orbit at a characteristic speed,
-      completing its dance around the Sun in a period that defines its cosmic character:
-    </p>
-    <ul>
-      {#each WANDERING_STARS as star}
-        <li>
-          {star.symbol} {star.name} — sidereal period: {star.siderealDanceDays} days
-          {#if star.retrogradeDays !== 0}
-            — retrograde: ~{star.retrogradeDays} days
-          {/if}
-        </li>
-      {/each}
-    </ul>
-    <p>
-      The retrograde motion of the outer planets — their apparent reversal against the
-      fixed stars — is a product of relative orbital velocity. In the Ptolemaic system,
-      it required elaborate epicycles to explain. In Kepler's elliptical framework, it
-      is a natural consequence of the same harmonic ratios that generate the musical scale.
-      The planets do not wander arbitrarily; they move in proportions.
-    </p>
-  </article>
-</section>
+  <p>The tradition called <em>musica universalis</em> — the harmony of the spheres — holds that the motions of celestial bodies are expressions of musical proportion, and that the cosmos is, at its root, a sonic order. The idea is traced to Pythagoras, who taught that the distances and velocities of the wandering stars correspond to musical intervals, producing a vast and inaudible harmony. Plato preserved it in the <em>Republic</em>, where the Sirens sing a single note upon each celestial sphere. It passed through the Neoplatonists, through the medieval quadrivium, and arrived — transformed but intact — at the desk of Johannes Kepler.</p>
 
-<section>
-  <article>
-    <h2>Post Scriptum</h2>
-    <p>
-      I have not discovered anything new under the Sun, but rather distilled existing
-      knowledge about sound, color, and the celestial order into a logical and practical
-      reference — for myself, and any other audio or visual designer who may find it
-      useful. Godspeed!
-    </p>
-  </article>
-</section>
+  <p>In his <em>Harmonices Mundi</em> (1619), Kepler calculated the angular velocity of each planet at perihelion and aphelion — its fastest and slowest points in orbit — and derived the musical interval each planet traces across the sky. Saturn spans a minor third; Jupiter, the same. Mars spans a fifth. The Earth, whose variation in speed is the most constrained of all, produces a single semitone — the interval between <em>mi</em> and <em>fa</em>, which Kepler read as <em>miseria</em>: misery. He then assigned a modal character to each wandering star.</p>
+
+  <p>The present work stands in this lineage, but moves in the opposite direction. This system begins with God's simplest gift — the heartbeat, the fifth, the octave — and builds upward from first principles, from the darkness of sin toward the light of the heavenly order. The ancients heard harmony from without. This is an attempt to construct it from within.</p>
+
+  <h3>Sonoluminescence</h3>
+
+  <p>Sonoluminescence is the emission of light from imploding bubbles in a liquid excited by sound — luminescence induced by acoustic energy. It was accidentally discovered in 1934 at the University of Cologne by Hermann Frenzel and H. Schultes during sonar research. The phenomenon has since been observed in nature: the pistol shrimp is the first known creature to produce light by this means, collapsing cavitation bubbles with its claw to generate a flash intense enough to stun or kill prey.</p>
+
+  <p>This is not a curiosity. It is evidence that light can be born from sound.</p>
+
+  <div class="video-wrap">
+    <iframe
+      src="https://www.youtube.com/embed/ONQlTMUYCW4?start=8"
+      title="Sonoluminescence"
+      loading="lazy"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+      allowfullscreen
+    ></iframe>
+  </div>
+
+  <blockquote>"And God said, 'Let there be a canopy in the midst of the waters, and let it separate the waters from the waters.' And God made the canopy and separated the waters that were under the expanse from the waters that were above the expanse. And it was so. And God called the expanse Heaven. And there was evening and there was morning, the second day."</blockquote>
+  <p class="cite">— Genesis 1:6–8</p>
+
+  <p>It is possible that the stars are singing angels — or their reflection of some kind.</p>
+
+  <blockquote>"As for the appearance of the wheels and their construction: their appearance was like the gleaming of beryl. And the four had the same likeness, their appearance and construction being as it were a wheel within a wheel."</blockquote>
+  <p class="cite">— Ezekiel 1:16</p>
+
+  <p>Perhaps the stars are bound to harmonic intervals by the ancient analogy of microcosm and macrocosm.</p>
+
+  <blockquote>"Your kingdom come, your will be done, on earth as it is in heaven."</blockquote>
+  <p class="cite">— Matthew 6:10</p>
+
+  <p>The zodiacal plane is the path the Sun traces across the sky. Traditionally divided into twelve parts, its constellations correspond to the twelve musical notes and the twelve spectral colours alike.</p>
+
+  <p>The zodiac opens with Aries — the spring equinox, when Christ was crucified — followed by Taurus and Gemini. Cancer marks the summer solstice, followed by Leo and Virgo. Libra falls at the autumn equinox, followed by Scorpius and Sagittarius. Capricornus holds the winter solstice, Aquarius follows, and the cycle closes with Pisces.</p>
+
+  <p>The degrees of a scale — and the achromatic shades — find further correspondence in the wandering stars: those visible to the naked eye that move across the firmament against the fixed constellations. Ordered from swiftest to slowest, by sidereal motion and retrograde duration alike, they are the Moon ☽, Mercury ☿, Venus ♀, the Sun ☉, Mars ♂, Jupiter ♃, and Saturn ♄.</p>
+
+  <p>Their measured properties are as follows:</p>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Wandering Star (Old Croatian name)</th>
+        <th>Angular Size</th>
+        <th>Speed (°/day)</th>
+        <th>Sidereal Period (days)</th>
+        <th>Synodic Period (days)</th>
+        <th>Retrograde (days)</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>Moon ☽ (Myšec)</td><td>29′ 23″ – 33′ 28″</td><td>12.2 – 14.8</td><td>27.32</td><td>29.53</td><td>—</td></tr>
+      <tr><td>Mercury ☿</td><td>5″ – 13″</td><td>0.4 – 2.0</td><td>87.97</td><td>115.88</td><td>~22.6 (20–24)</td></tr>
+      <tr><td>Venus ♀ (Zwicerna)</td><td>10″ – 66″</td><td>0.2 – 1.2</td><td>224.7</td><td>583.92</td><td>~41.5 (40–44)</td></tr>
+      <tr><td>Sun ☉ (Šance)</td><td>31′ 28″ – 32′ 32″</td><td>0.953 – 1.017</td><td>365.24</td><td>—</td><td>—</td></tr>
+      <tr><td>Mars ♂ (Rumanica)</td><td>3.5″ – 25″</td><td>0.2 – 0.8</td><td>686.98</td><td>779.94</td><td>~66.5 (54–73)</td></tr>
+      <tr><td>Jupiter ♃ (Plavušyca)</td><td>30″ – 59″</td><td>0.05 – 0.15</td><td>4332.82</td><td>398.88</td><td>~120.4 (118–123)</td></tr>
+      <tr><td>Saturn ♄ (Želenyca)</td><td>14.5″ – 20.1″ (rings: ~40–45″)</td><td>0.03 – 0.08</td><td>10755.7</td><td>378.09</td><td>~140.7 (135–145)</td></tr>
+    </tbody>
+  </table>
+
+  <p>This sequence is rich in pattern and has been preserved since antiquity — perhaps for reasons deeper than we yet understand.</p>
+
+  <hr />
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- X. THE NUMBERS                         -->
+  <!-- ══════════════════════════════════════ -->
+  <h2>The Numbers</h2>
+
+  <p>The system assembled in the preceding sections is governed by two numbers. Twelve commands the circle — the chromatic compass, the hue wheel, the zodiac. Seven commands the living sequence within it — the modes, the scale, the degrees of shade, the wandering stars. Their relationship is the hidden architecture of the entire design.</p>
+
+  <h3>Twelve</h3>
+
+  <p>Twelve is the third superior highly composite number, the third colossally abundant number, and the fifth highly composite number. It is evenly divisible by 1, 2, 3, 4, 6, and 12 — an extraordinary range for so small a quantity. It is the smallest abundant number, a semiperfect number, a refactorable number, and a Pell number. It is the lesser of the two known <em>sublime numbers</em>: those whose divisor count is perfect and whose divisors sum to a perfect number in turn.</p>
+
+  <p>Its geometric character is equally remarkable. The dodecagon — twelve-sided — is the largest regular polygon that tiles the plane alongside other regular polygons. A regular dodecahedron has twelve pentagonal faces. Both the cube and the octahedron carry twelve edges; the icosahedron, twelve vertices. In three dimensions, twelve is the <em>kissing number</em> — the precise count of unit spheres that can simultaneously touch a central one. Both cubic and hexagonal close packings, the densest possible arrangements of spheres in space, place each sphere in contact with exactly twelve neighbours.</p>
+
+  <p>Twelve appears 147 times in Scripture. Ishmael has twelve sons; Jacob, twelve sons who become the twelve tribes of Israel. Christ called twelve Apostles, and when one fell, the assembly was immediately restored to twelve. The Old Testament contains twelve Minor Prophets. The Book of Revelation is threaded with the figure: a woman crowned with twelve stars; twelve thousand sealed from each of twelve tribes, yielding 144,000 in all — the square of twelve, multiplied by a thousand.</p>
+
+  <blockquote>"Through the middle of the street of the city; also, on either side of the river, the tree of life with its twelve kinds of fruit, yielding its fruit each month. The leaves of the tree were for the healing of the nations."</blockquote>
+  <p class="cite">— Revelation 22:2</p>
+
+  <h3>Seven</h3>
+
+  <p>Seven is the fourth prime — and among the most singular. It is a <em>Mersenne prime</em> (2³ − 1 = 7) and a <em>double Mersenne prime</em>, its exponent 3 being Mersenne as well. It is a Newman–Shanks–Williams prime, a safe prime, a lucky prime, a happy prime — and the only number simultaneously Mersenne and safe. It is the lowest natural number that cannot be expressed as the sum of the squares of three integers. In this sense it stands irreducibly apart from all that precede it.</p>
+
+  <p>The heptagon is the first regular polygon that resists classical construction — compass and straightedge cannot build it. Where four, five, and six yield to those ancient instruments, seven withholds itself. There are precisely seven frieze groups in the plane: the seven fundamental symmetries by which a pattern may repeat along a line.</p>
+
+  <p>Seven's most immediate presence in human life is time itself. The days of the week descend directly from the seven wandering stars, each day assigned to its celestial patron in antiquity. The correspondence is legible in every modern tongue: Sunday for the Sun, Monday for the Moon, Saturday for Saturn. In the Germanic languages, the remaining four bear the names of Norse divines equated with the classical planets — Tuesday for Mars (Týr), Wednesday for Mercury (Wōden), Thursday for Jupiter (Thor), Friday for Venus (Frigg). In the Romance languages the lineage is yet more transparent: <em>mardi</em> is Mars, <em>mercredi</em> Mercury, <em>jeudi</em> Jupiter, <em>vendredi</em> Venus. Every week, without exception, the seven wandering stars inscribe themselves upon the days of every human life.</p>
+
+  <p>In Scripture, seven is the signature of completion. Creation unfolds across six days and rests on the seventh. The Book of Revelation turns on seven seals, seven trumpets, seven bowls — seven not as the endless ring of twelve, but as the wholeness of a journey brought to its final degree: a scale resolved, a song concluded.</p>
+
+  <p>Within this design: seven notes in a scale, seven modes, seven wandering stars, seven degrees of achromatic shade. Twelve is the vessel. Seven is what moves inside it.</p>
+
+  <hr />
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- XI. THE SYNTHESIS                      -->
+  <!-- ══════════════════════════════════════ -->
+  <h2>The Synthesis</h2>
+
+  <p>All that has been established converges here. Three domains — sound, colour, and the celestial order — are governed by the same two numbers and the same two ratios. What follows is the complete correspondence.</p>
+
+  <p>The circle of twelve unites the chromatic notes, the spectral hues, and the signs of the zodiac into a single ring. The sequence begins at Aries — the spring equinox, the first sign, the point of resurrection and renewal.</p>
+
+  <table>
+    <thead>
+      <tr><th>Position</th><th>Note</th><th>Colour</th><th>Zodiac Sign</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>1</td><td>A</td><td>Red</td><td>Aries ♈</td></tr>
+      <tr><td>2</td><td>A♯</td><td>Medlar</td><td>Taurus ♉</td></tr>
+      <tr><td>3</td><td>B</td><td>Yellow</td><td>Gemini ♊</td></tr>
+      <tr><td>4</td><td>B♯</td><td>Olive</td><td>Cancer ♋</td></tr>
+      <tr><td>5</td><td>C</td><td>Green</td><td>Leo ♌</td></tr>
+      <tr><td>6</td><td>C♯</td><td>Teal</td><td>Virgo ♍</td></tr>
+      <tr><td>7</td><td>D</td><td>Azure</td><td>Libra ♎</td></tr>
+      <tr><td>8</td><td>E</td><td>Indigo</td><td>Scorpius ♏</td></tr>
+      <tr><td>9</td><td>E♯</td><td>Blue</td><td>Sagittarius ♐</td></tr>
+      <tr><td>10</td><td>F</td><td>Lavender</td><td>Capricornus ♑</td></tr>
+      <tr><td>11</td><td>F♯</td><td>Cyclamen</td><td>Aquarius ♒</td></tr>
+      <tr><td>12</td><td>G</td><td>Mulberry</td><td>Pisces ♓</td></tr>
+    </tbody>
+  </table>
+
+  <p>The sequence of seven binds the musical modes, the wandering stars, and the days of the week into one living order. The modes run in their natural succession; the stars are placed against them by sidereal speed, from the swiftest to the most ancient and slow.</p>
+
+  <table>
+    <thead>
+      <tr><th>Degree</th><th>Mode</th><th>Wandering Star</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>I</td><td>Lunar</td><td>Moon ☽ (Myšec)</td></tr>
+      <tr><td>II</td><td>Mercurial</td><td>Mercury ☿</td></tr>
+      <tr><td>III</td><td>Venusian</td><td>Venus ♀ (Zwicerna)</td></tr>
+      <tr><td>IV</td><td>Solar</td><td>Sun ☉ (Šance)</td></tr>
+      <tr><td>V</td><td>Martial</td><td>Mars ♂ (Rumanica)</td></tr>
+      <tr><td>VI</td><td>Jovial</td><td>Jupiter ♃ (Plavušyca)</td></tr>
+      <tr><td>VII</td><td>Saturnine</td><td>Saturn ♄ (Želenyca)</td></tr>
+    </tbody>
+  </table>
+
+  <div>
+    <p>Sound, colour, and the wandering stars above are governed by the same two proportions — born from the same heartbeat, the same fifth, the same octave, the same one trinitarian God.</p>
+
+    <p>This is not a theory about music. Nor is it a theory about colour. It is a claim about the structure of the created world: that harmony is not a matter of taste but of number; that beauty is not completely subjective but measurable, if not by man-made tools, than certainly by a holy intuition; that the same ratios governing a plucked string also govern the turning of the heavens.</p>
+
+    <p>This document has attempted nothing more than to gather those threads, extend them by arithmetic and first principle, and hold them in a single hand. What it describes was not invented. It was recovered and inscribed to this digital monolith.</p>
+  </div>
+
+</article>

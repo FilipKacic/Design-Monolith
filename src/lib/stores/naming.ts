@@ -1,39 +1,43 @@
-// src/lib/stores/naming.ts
-
 import { writable } from 'svelte/store';
 import { browser } from '$app/environment';
 
-// Get initial value from localStorage or default to false
-const initialUseNewNaming = browser 
-  ? localStorage.getItem('useNewNaming') === 'true'
-  : false;
+// ── Storage keys ──────────────────────────────────────────────────────────
+// Centralised so a key rename is a one-line change with no risk of mismatch
+// between the read and write sides.
 
-// Get initial note index from localStorage or default to 0
-const initialNoteIndex = browser
-  ? parseInt(localStorage.getItem('selectedNoteIndex') || '0', 10)
-  : 0;
+const KEYS = {
+  useNewNaming:      'useNewNaming',
+  selectedNoteIndex: 'selectedNoteIndex',
+  selectedModeIndex: 'selectedModeIndex',
+} as const;
 
-// Get initial mode index from localStorage or default to 0
-const initialModeIndex = browser
-  ? parseInt(localStorage.getItem('selectedModeIndex') || '0', 10)
-  : 0;
+// ── Helpers ───────────────────────────────────────────────────────────────
+// persistedWritable creates a writable store whose initial value is read from
+// localStorage (SSR-safe via the browser guard) and whose changes are written
+// back automatically via a subscribe callback.
 
-// Create the stores
-export const useNewNaming = writable<boolean>(initialUseNewNaming);
-export const selectedNoteIndex = writable<number>(initialNoteIndex);
-export const selectedModeIndex = writable<number>(initialModeIndex);
+function persistedWritable(key: string, defaultValue: boolean): ReturnType<typeof writable<boolean>>;
+function persistedWritable(key: string, defaultValue: number):  ReturnType<typeof writable<number>>;
+function persistedWritable(key: string, defaultValue: boolean | number) {
+  const stored = browser ? localStorage.getItem(key) : null;
 
-// Subscribe to changes and save to localStorage
-if (browser) {
-  useNewNaming.subscribe(value => {
-    localStorage.setItem('useNewNaming', String(value));
-  });
+  const initial = stored === null
+    ? defaultValue
+    : typeof defaultValue === 'boolean'
+      ? stored === 'true'
+      : parseInt(stored, 10);
 
-  selectedNoteIndex.subscribe(value => {
-    localStorage.setItem('selectedNoteIndex', String(value));
-  });
+  const store = writable(initial);
 
-  selectedModeIndex.subscribe(value => {
-    localStorage.setItem('selectedModeIndex', String(value));
-  });
+  if (browser) {
+    store.subscribe(value => localStorage.setItem(key, String(value)));
+  }
+
+  return store;
 }
+
+// ── Stores ────────────────────────────────────────────────────────────────
+
+export const useNewNaming      = persistedWritable(KEYS.useNewNaming,      false);
+export const selectedNoteIndex = persistedWritable(KEYS.selectedNoteIndex, 0);
+export const selectedModeIndex = persistedWritable(KEYS.selectedModeIndex, 0);

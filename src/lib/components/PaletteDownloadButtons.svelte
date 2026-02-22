@@ -1,14 +1,20 @@
 <script lang="ts">
   import type { ExportFormat } from '$lib/utils/palette-export';
 
-  let { onDownload }: { onDownload: (format: ExportFormat) => void } = $props();
+  // ── Props ─────────────────────────────────────────────────────────────────
 
-  const formats: ExportFormat[] = ['gpl', 'xml', 'txt'];
+  const { onDownload }: { onDownload: (format: ExportFormat) => void } = $props();
+
+  // ── Formats ───────────────────────────────────────────────────────────────
+  // as const narrows the type to readonly tuple of literals,
+  // preventing accidental mutation and giving TypeScript full inference.
+
+  const FORMATS = ['gpl', 'xml', 'txt'] as const;
 </script>
 
 <div class="download-buttons">
-  <p>Format download:</p>
-  {#each formats as format}
+  <p>Download palette:</p>
+  {#each FORMATS as format}
     <button onclick={() => onDownload(format)}>.{format.toUpperCase()}</button>
   {/each}
 </div>

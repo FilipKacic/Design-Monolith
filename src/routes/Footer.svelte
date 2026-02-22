@@ -7,7 +7,7 @@
 <footer>
   <span>&copy;{currentYear}</span>
   <span>Filip Kačić</span>
-  <a href="mailto:filipkacic@protonmail.com">
-    <img src="{assetBase}/icons/email.svg" alt="Email" class="nav-icon">
+  <a href="mailto:filipkacic@protonmail.com" aria-label="Send email to Filip Kačić">
+    <img src="{assetBase}/icons/email.svg" alt="" class="nav-icon" />
   </a>
 </footer>
