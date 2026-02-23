@@ -15,7 +15,7 @@
 </script>
 
 <div class="scale-controls">
-  <div class="naming-toggle">
+  <div class="toggle">
     <label>
       Proposed Naming System:
       <input type="checkbox" bind:checked={$useNewNaming} />

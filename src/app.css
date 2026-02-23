@@ -452,17 +452,17 @@ footer {
 }
 
 /* ============================================================================
-   COMPONENT — NAMING TOGGLE
+   COMPONENT — NAMING TOGGLE & INVERSIONS TOGGLE
    ============================================================================ */
 
-.naming-toggle {
+.toggle {
   display: flex;
   align-items: center;
   justify-content: center;
   margin: var(--space);
 }
 
-.naming-toggle label {
+.toggle label {
   display: flex;
   align-items: center;
   gap: var(--space);
@@ -470,7 +470,7 @@ footer {
 }
 
 /* appearance: none strips all native OS checkbox rendering */
-.naming-toggle input[type="checkbox"] {
+.toggle input[type="checkbox"] {
   position: relative;
   width: calc(var(--maximum-space) + var(--space));
   height: var(--more-space);
@@ -482,7 +482,7 @@ footer {
 }
 
 /* Sliding knob built with ::before to avoid an extra DOM element */
-.naming-toggle input[type="checkbox"]::before {
+.toggle input[type="checkbox"]::before {
   content: '';
   position: absolute;
   top: var(--minimum-space);
@@ -494,16 +494,16 @@ footer {
   transition: left var(--blink) ease-in-out;
 }
 
-.naming-toggle input[type="checkbox"]:checked {
+.toggle input[type="checkbox"]:checked {
   background-color: var(--black);
 }
 
 /* Slides knob right: offset = (track-width - knob-width) / 2 ≈ more-space + minimum-space */
-.naming-toggle input[type="checkbox"]:checked::before {
+.toggle input[type="checkbox"]:checked::before {
   left: calc(var(--more-space) + var(--minimum-space));
 }
 
-.naming-toggle input[type="checkbox"]:hover {
+.toggle input[type="checkbox"]:hover {
   opacity: var(--ghost);
 }
 

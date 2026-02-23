@@ -8,14 +8,14 @@
     getHeptachords,
   } from '$lib/utils/chord-construction';
 
-  import { getNoteColor }           from '$lib/utils/colors';
-  import type { ScaleNote }         from '$lib/utils/sounds';
+  import { getNoteColor }   from '$lib/utils/colors';
+  import type { ScaleNote } from '$lib/utils/sounds';
 
   // ── Props ─────────────────────────────────────────────────────────────────
 
   const { scale, oncopy }: {
-    scale:   ScaleNote[];
-    oncopy:  (frequency: number) => void;
+    scale:  ScaleNote[];
+    oncopy: (frequency: number) => void;
   } = $props();
 
   // ── Chord sizes ───────────────────────────────────────────────────────────
@@ -23,35 +23,47 @@
   const CHORD_SIZES = [2, 3, 4, 5, 6, 7] as const;
   type ChordSize = typeof CHORD_SIZES[number];
 
-  let chordSize = $state<ChordSize>(3);
+  // ── State ─────────────────────────────────────────────────────────────────
+
+  let chordSize      = $state<ChordSize>(3);
+  let hideInversions = $state(true);
 
   // ── Chord generation ──────────────────────────────────────────────────────
-  // Recomputed whenever scale or chordSize changes.
+  // Recomputed whenever scale, chordSize, or hideInversions changes.
 
   const chords = $derived.by(() => {
+    const options = { hideInversions };
     switch (chordSize) {
-      case 2: return getDyads(scale);
-      case 3: return getTriads(scale);
-      case 4: return getTetrachords(scale);
-      case 5: return getPentachords(scale);
-      case 6: return getHexachords(scale);
-      case 7: return getHeptachords(scale);
+      case 2: return getDyads(scale, options);
+      case 3: return getTriads(scale, options);
+      case 4: return getTetrachords(scale, options);
+      case 5: return getPentachords(scale, options);
+      case 6: return getHexachords(scale, options);
+      case 7: return getHeptachords(scale, options);
     }
   });
 </script>
 
-<!-- ── Size selector ──────────────────────────────────────────────────────── -->
+<!-- ── Controls ───────────────────────────────────────────────────────────── -->
 
-<div class="size-selector">
-  {#each CHORD_SIZES as size}
-    <button
-      type="button"
-      class:selected={chordSize === size}
-      onclick={() => (chordSize = size)}
-    >
-      {size}-note
-    </button>
-  {/each}
+<div class="chord-controls">
+  <div class="size-selector">
+    {#each CHORD_SIZES as size}
+      <button
+        type="button"
+        class:selected={chordSize === size}
+        onclick={() => (chordSize = size)}
+      >
+        {size}-note
+      </button>
+    {/each}
+  </div>
+
+  <div class="toggle">
+    <label>
+      Hide inversions: <input type="checkbox" bind:checked={hideInversions} />
+    </label>
+  </div>
 </div>
 
 <!-- ── Chord cards ────────────────────────────────────────────────────────── -->
