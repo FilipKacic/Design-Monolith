@@ -26,7 +26,7 @@
   <h1 class="title">Design Monolith</h1>
   <p class="subtitle">An Audio-Visual Design System of Order Against Chaos</p>
 
-  <img src="/images/Paradiso_Canto_31_(148200393).jpg" alt="Paradiso" />
+  <img src="/images/paradiso.jpg" alt="Paradiso" />
 
   <!-- ══════════════════════════════════════ -->
   <!-- I. THE FIRST SONG                      -->
@@ -35,7 +35,7 @@
 
   <p>One "Hertz" is equal to one single heartbeat cycle of a healthy human being. The origin is the heart — the heartbeat itself.</p>
 
-  <img src="/images/Holy card depicting the Sacred Heart of Jesus, c. 1880.jpg" alt="Sacred Heart of Jesus" />
+  <img src="/images/sacred_heart_of_jesus.png" alt="Sacred Heart of Jesus" />
 
   <p>When an open string is plucked, a sound, a note, is produced. When that same string is pressed at its midpoint and plucked again, a different pitch emerges — the same note, but at double the frequency. This is the 1:2 ratio, which produces the <em>octave</em>.</p>
 
@@ -87,7 +87,7 @@
 
   <p>This discrepancy is known as the <em>Pythagorean comma</em>. The imperfect interval it produces has been called the <em>wolf fifth</em>, the <em>Procrustean fifth</em>, or simply the <em>imperfect fifth</em>.</p>
 
-  <img src="/images/Gaffurio_Pythagoras.png" alt="Pythagoras" />
+  <img src="/images/Pythagoras.png" alt="Pythagoras" />
 
   <p>The contemporary remedy is <em>equal temperament</em> — a system that resolves the comma by dividing the octave into twelve steps of identical frequency ratio. In doing so, it introduces a far graver problem: a musical system of pervasive, subtle dissonance to which modern ears have simply grown accustomed. This is a satanic lie of harmony — chaos in disguise.</p>
 
@@ -212,7 +212,7 @@
 
   <p>The old names are retained in parentheses for reference only.</p>
 
-  <img src="/images/Ptolemaicsystem-small.png" alt="Ptolemaic System" />
+  <img src="/images/ptolemaic_system.png" alt="Ptolemaic System" />
 
   <hr />
 
@@ -223,11 +223,9 @@
 
   <p>In 1787, Ernst Chladni demonstrated that sound possesses a geometric dimension. By drawing a violin bow along the edge of a flour-dusted plate, he observed symmetrical patterns emerge — the flour migrating to the nodal lines, where the surface was still.</p>
 
-  <img src="/images/Bowing_chladni_plate.png" alt="Cymatics - Chladni Plate" />
+  <img src="/images/cymatics_chladni_plate.png" alt="Cymatics - Chladni Plate" />
 
   <p>In the 20th century, Hans Jenny coined the term <em>cymatics</em> to describe such acoustic phenomena. The hidden geometry of frequency is thereby revealed: certain tones resolve into clear, coherent forms; other... not so much.</p>
-
-  <img src="/images/Sonoluminescence3.jpg" alt="Sonoiluminescence - Sulfuric Acid" />
 
   <p>The note A in this system, at its fourth octave, carries a frequency of 432 Hz (3³ × 2⁴). In cymatics experiments it yields a precise and beautiful geometric figure. The Stuttgart standard pitch of 440 Hz produces no such clarity — only disorder made comfortable by long familiarity.</p>
 
@@ -428,11 +426,11 @@ light-mulberry   hsl(330, 50%, 75%)  → rgb(223, 159, 191)</pre>
 
   <p>The tradition called <em>musica universalis</em> — the harmony of the spheres — holds that the motions of celestial bodies are expressions of musical proportion, and that the cosmos is, at its root, a sonic order. The idea is traced to Pythagoras, who taught that the distances and velocities of the wandering stars correspond to musical intervals, producing a vast and inaudible harmony. Plato preserved it in the <em>Republic</em>, where the Sirens sing a single note upon each celestial sphere. It passed through the Neoplatonists, through the medieval quadrivium, and arrived — transformed but intact — at the desk of Johannes Kepler.</p>
 
-  <img src="/images/Ioanniskepplerih00kepl_0081.jpg" alt="Ioannis Keppler - Platonic Solids" />
+  <img src="/images/Kepler_platonic_solids.png" alt="Ioannis Keppler - Platonic Solids" />
 
   <p>In his <em>Harmonices Mundi</em> (1619), Kepler calculated the angular velocity of each planet at perihelion and aphelion — its fastest and slowest points in orbit — and derived the musical interval each planet traces across the sky. Saturn spans a minor third; Jupiter, the same. Mars spans a fifth. The Earth, whose variation in speed is the most constrained of all, produces a single semitone — the interval between <em>mi</em> and <em>fa</em>, which Kepler read as <em>miseria</em>: misery. He then assigned a modal character to each wandering star.</p>
 
-  <img src="/images/Kepler_Mars_retrograde.jpg" alt="Ioannis Keppler - Mars' Retrograde Motion" />
+  <img src="/images/Kepler_Mars_retrograde.png" alt="Ioannis Keppler - Mars' Retrograde Motion" />
 
   <p>The present work stands in this lineage, but moves in the opposite direction. This system begins with God's simplest gift — the heartbeat, the fifth, the octave — and builds upward from first principles, from the darkness of sin toward the light of the heavenly order. The ancients heard harmony from without. This is an attempt to construct it from within.</p>
 
@@ -440,9 +438,11 @@ light-mulberry   hsl(330, 50%, 75%)  → rgb(223, 159, 191)</pre>
 
   <p>Sonoluminescence is the emission of light from imploding bubbles in a liquid excited by sound — luminescence induced by acoustic energy. It was accidentally discovered in 1934 at the University of Cologne by Hermann Frenzel and H. Schultes during sonar research.</p>
 
+  <img src="/images/sonoluminesence_sulfuric_acid.jpg" alt="Sonoiluminescence - Sulfuric Acid" />
+
   <p>The phenomenon has since been observed in nature: the pistol shrimp is the first known creature to produce light by this means, collapsing cavitation bubbles with its claw to generate a flash intense enough to stun or kill prey.</p>
 
-  <img src="/images/Pistol-Shrimp.jpg" alt="Sonoiluminescence - Pistol Shrimp" />
+  <img src="/images/sonoluminesence_pistol_shrimp.jpg" alt="Sonoiluminescence - Pistol Shrimp" />
 
   <p>This is not a curiosity. It is evidence that light can be born from sound.</p>
 
@@ -463,7 +463,7 @@ light-mulberry   hsl(330, 50%, 75%)  → rgb(223, 159, 191)</pre>
 
   <img src="/images/Nikon P1000 - Zooming On A Star!.jpg" alt="NikonP1000 Star Zoom" />
 
-  <img src="/images/Ezekiel's_vision.jpg" alt="Ezekiel's Vision" />
+  <img src="/images/Ezekiel's_vision.png" alt="Ezekiel's Vision" />
 
   <blockquote>"As for the appearance of the wheels and their construction: their appearance was like the gleaming of beryl. And the four had the same likeness, their appearance and construction being as it were a wheel within a wheel."</blockquote>
   <p class="cite">— Ezekiel 1:16</p>
@@ -477,7 +477,7 @@ light-mulberry   hsl(330, 50%, 75%)  → rgb(223, 159, 191)</pre>
 
   <p>The zodiac opens with Aries — the spring equinox, when Christ was crucified — followed by Taurus and Gemini. Cancer marks the summer solstice, followed by Leo and Virgo. Libra falls at the autumn equinox, followed by Scorpius and Sagittarius. Capricornus holds the winter solstice, Aquarius follows, and the cycle closes with Pisces.</p>
 
-  <img src="/images/Beit_alfa01.jpg" alt="The Zodiac" />
+  <img src="/images/zodiac.png" alt="The Zodiac" />
 
   <p>The degrees of a scale — and the achromatic shades — find further correspondence in the wandering stars: those visible to the naked eye that move across the firmament against the fixed constellations. Ordered from swiftest to slowest, by sidereal motion and retrograde duration alike, they are the Moon ☽, Mercury ☿, Venus ♀, the Sun ☉, Mars ♂, Jupiter ♃, and Saturn ♄.</p>
 
@@ -520,7 +520,7 @@ light-mulberry   hsl(330, 50%, 75%)  → rgb(223, 159, 191)</pre>
 
   <p>The system assembled in the preceding sections is governed by two numbers. Twelve commands the circle — the chromatic compass, the hue wheel, the zodiac. Seven commands the living sequence within it — the modes, the scale, the degrees of shade, the wandering stars. Their relationship is the hidden architecture of the entire design.</p>
 
-  <img src="/images/Tabernakel.jpg" alt="The Twelve Tribes of Isreael - Tabernacle" />
+  <img src="/images/tabernacle.png" alt="The Twelve Tribes of Isreael - Tabernacle" />
 
   <h3>Twelve</h3>
 
@@ -530,7 +530,7 @@ light-mulberry   hsl(330, 50%, 75%)  → rgb(223, 159, 191)</pre>
 
   <p>Twelve appears 147 times in Scripture. Ishmael has twelve sons; Jacob, twelve sons who become the twelve tribes of Israel. Christ called twelve Apostles, and when one fell, the assembly was immediately restored to twelve. The Old Testament contains twelve Minor Prophets. The Book of Revelation is threaded with the figure: a woman crowned with twelve stars; twelve thousand sealed from each of twelve tribes, yielding 144,000 in all — the square of twelve, multiplied by a thousand.</p>
 
-  <img src="/images/Mosaic_Tribes.jpg" alt="The Twelve Tribes of Isreael - Coat of Arms" />
+  <img src="/images/12tribes.png" alt="The Twelve Tribes of Isreael - Coat of Arms" />
 
   <blockquote>"Through the middle of the street of the city; also, on either side of the river, the tree of life with its twelve kinds of fruit, yielding its fruit each month. The leaves of the tree were for the healing of the nations."</blockquote>
   <p class="cite">— Revelation 22:2</p>
@@ -545,7 +545,7 @@ light-mulberry   hsl(330, 50%, 75%)  → rgb(223, 159, 191)</pre>
 
   <p>In Scripture, seven is the signature of completion. Creation unfolds across six days and rests on the seventh. The Book of Revelation turns on seven seals, seven trumpets, seven bowls — seven not as the endless ring of twelve, but as the wholeness of a journey brought to its final degree: a scale resolved, a song concluded.</p>
 
-  <img src="/images/Angels_receiving_seven_trumpets_-_Apocalypse_Picture_Book,_Pierpont_Morgan.jpg" alt="The Seven Trumpets" />
+  <img src="/images/7trumpets.png" alt="The Seven Trumpets" />
 
   <p>Within this design: seven notes in a scale, seven modes, seven wandering stars, seven degrees of achromatic shade. Twelve is the vessel. Seven is what moves inside it.</p>
 
@@ -602,12 +602,12 @@ light-mulberry   hsl(330, 50%, 75%)  → rgb(223, 159, 191)</pre>
 
   <p>Sound, colour, and the wandering stars above are governed by the same two proportions — born from the same heartbeat, the same fifth, the same octave, the same one trinitarian God.</p>
 
-  <img src="/images/Kepler_Optica.jpg" alt="Ioannis Keppler - Optica" />
+  <img src="/images/Kepler_optica.png" alt="Ioannis Keppler - Optica" />
 
   <p>This is not a theory about music. Nor is it a theory about colour. It is a claim about the structure of the created world: that harmony is not a matter of taste but of number; that beauty is not completely subjective but measurable, if not by man-made tools, than certainly by a holy intuition; that the same ratios governing a plucked string also govern the turning of the heavens.</p>
 
   <p>This document has attempted nothing more than to gather those threads, extend them by arithmetic and first principle, and hold them in a single hand. What it describes was not invented. It was recovered and inscribed to this digital monolith.</p>
 
-  <img src="/images/Polaris Time lapse.jpg" alt="Polaris Time Lapse" />
+  <img src="/images/Polaris_time_lapse.jpg" alt="Polaris Time Lapse" />
 
 </article>
