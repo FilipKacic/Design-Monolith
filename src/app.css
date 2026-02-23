@@ -693,9 +693,9 @@ button.selected {
 
 .download-buttons {
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
+  flex-wrap: wrap;
   gap: var(--more-space);
   margin: var(--space);
 }
@@ -794,19 +794,6 @@ button.selected {
   /* Push content right to clear the fixed sidebar */
   main {
     margin: 0 var(--sidebar-width);
-  }
-
-  h1, h2, h3, h4, h5, h6 {
-    margin: var(--more-space) 0 var(--space);
-  }
-
-  footer {
-    flex-direction: row;
-    gap: var(--space) var(--less-space);
-  }
-
-  .download-buttons {
-    flex-direction: row;
   }
 
   .string-row {
