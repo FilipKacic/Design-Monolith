@@ -146,7 +146,6 @@ html {
   font-family: monospace; /* system fallback before Local-Main-Font loads */
   font-size: var(--default-font-size);
   line-height: 1.5;
-  -webkit-text-size-adjust: 100%; /* viewport text scaling safety which prevents iOS zoom quirks */
 }
 
 body {
