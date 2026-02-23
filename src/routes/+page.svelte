@@ -1,12 +1,32 @@
-<script>
-  // no state needed
+<script lang="ts">
+  import { NEW_NOTES_1_ALL, NEW_MODES, SCALE_DEGREE_NUMERALS } from '$lib/utils/sounds';
+  import { COLOR_PALETTES }                                      from '$lib/utils/colors';
+  import { ZODIAC_CONSTELLATIONS, WANDERING_STARS }             from '$lib/utils/stars';
+
+  // ── Synthesis table data ───────────────────────────────────────────────────
+  // Derived at module load — the three systems can never diverge from each other
+  // or from the essay's claim: same index, same correspondence, always in sync.
+
+  const circleOfTwelve = NEW_NOTES_1_ALL.map((note, i) => ({
+    note,
+    color:    COLOR_PALETTES.wheel[i].name,
+    colorVar: COLOR_PALETTES.wheel[i].variable,
+    zodiac:   ZODIAC_CONSTELLATIONS[i],
+  }));
+
+  const sequenceOfSeven = NEW_MODES.map((mode, i) => ({
+    numeral: SCALE_DEGREE_NUMERALS[i],
+    mode,
+    star:    WANDERING_STARS[i],
+  }));
 </script>
 
 <article>
 
   <h1 class="title">Design Monolith</h1>
   <p class="subtitle">An Audio-Visual Design System of Order Against Chaos</p>
-  <img src="/images/Canto31_The_Saintly_Throng_in_the_Form_of_a_Rose.jpg" alt="img" />
+
+  <img src="/images/Paradiso_Canto_31_(148200393).jpg" alt="Paradiso" />
 
   <!-- ══════════════════════════════════════ -->
   <!-- I. THE FIRST SONG                      -->
@@ -14,6 +34,8 @@
   <h2>The First Song</h2>
 
   <p>One "Hertz" is equal to one single heartbeat cycle of a healthy human being. The origin is the heart — the heartbeat itself.</p>
+
+  <img src="/images/Holy card depicting the Sacred Heart of Jesus, c. 1880.jpg" alt="Sacred Heart of Jesus" />
 
   <p>When an open string is plucked, a sound, a note, is produced. When that same string is pressed at its midpoint and plucked again, a different pitch emerges — the same note, but at double the frequency. This is the 1:2 ratio, which produces the <em>octave</em>.</p>
 
@@ -65,13 +87,13 @@
 
   <p>This discrepancy is known as the <em>Pythagorean comma</em>. The imperfect interval it produces has been called the <em>wolf fifth</em>, the <em>Procrustean fifth</em>, or simply the <em>imperfect fifth</em>.</p>
 
+  <img src="/images/Gaffurio_Pythagoras.png" alt="Pythagoras" />
+
   <p>The contemporary remedy is <em>equal temperament</em> — a system that resolves the comma by dividing the octave into twelve steps of identical frequency ratio. In doing so, it introduces a far graver problem: a musical system of pervasive, subtle dissonance to which modern ears have simply grown accustomed. This is a satanic lie of harmony — chaos in disguise.</p>
 
   <p>The Pythagorean comma is not a flaw to be corrected; it is a golden rule — a natural boundary declaring that a musical scale should contain a maximum of seven notes.</p>
 
   <p>Such a scale is nothing new under the Sun. It is called the <em>Pythagorean scale</em>, constructed entirely from pure perfect fifths.</p>
-
-  <img src="/images/Gaffurio_Pythagoras.png" alt="img" class="miniature"/>
 
   <p>In the chromatic circle, a Pythagorean scale follows the pattern 0–2–4–6–7–9–11, or the interval sequence W–W–W–H–W–W–H, where W denotes a whole tone and H a semitone. In the circle of fifths, it is simply seven adjacent notes: 0–1–2–3–4–5–6. The zero in both patterns represents the <em>root note</em> of the scale.</p>
 
@@ -190,6 +212,8 @@
 
   <p>The old names are retained in parentheses for reference only.</p>
 
+  <img src="/images/Ptolemaicsystem-small.png" alt="Ptolemaic System" />
+
   <hr />
 
   <!-- ══════════════════════════════════════ -->
@@ -199,11 +223,11 @@
 
   <p>In 1787, Ernst Chladni demonstrated that sound possesses a geometric dimension. By drawing a violin bow along the edge of a flour-dusted plate, he observed symmetrical patterns emerge — the flour migrating to the nodal lines, where the surface was still.</p>
 
-  <img src="/images/bowing_chladni_plate.png" alt="img" class="miniature"/>
+  <img src="/images/Bowing_chladni_plate.png" alt="Cymatics - Chladni Plate" />
 
   <p>In the 20th century, Hans Jenny coined the term <em>cymatics</em> to describe such acoustic phenomena. The hidden geometry of frequency is thereby revealed: certain tones resolve into clear, coherent forms; other... not so much.</p>
 
-  <img src="/images/432Hz_VS_440Hz.png" alt="img" class="miniature"/>
+  <img src="/images/Sonoluminescence3.jpg" alt="Sonoiluminescence - Sulfuric Acid" />
 
   <p>The note A in this system, at its fourth octave, carries a frequency of 432 Hz (3³ × 2⁴). In cymatics experiments it yields a precise and beautiful geometric figure. The Stuttgart standard pitch of 440 Hz produces no such clarity — only disorder made comfortable by long familiarity.</p>
 
@@ -218,12 +242,12 @@
   </div>
 
   <div class="video-wrap">
-   <iframe
-     src="https://www.youtube.com/watch?v=Up3X5dtnCus"
-     title="Cymatics2"
-     loading="lazy"
-     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-     allowfullscreen
+    <iframe
+      src="https://www.youtube.com/embed/Up3X5dtnCus"
+      title="Cymatics 2"
+      loading="lazy"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+      allowfullscreen
     ></iframe>
   </div>
 
@@ -238,11 +262,11 @@
 
   <p>A colour is defined by its wavelength in nanometres and its frequency in terahertz. A dispersive prism separates white light into its constituent spectral colours — the rainbow. Isaac Newton demonstrated this in the 17th century. White light is the sum of all spectral colours, or more precisely, the combination of the three primary ones.</p>
 
-  <img src="\images\Newton's_color_circle.png" alt="img" class="miniature"/>
+  <img src="/images/Dispersive_prism.png" alt="Issac Newton - Dispersive Prism" />
 
   <p>Those three primaries — from which any other spectral colour can be composed, confirming once more that three is the number of creation — are spectral red, spectral green, and spectral blue. Their order is significant: red carries the lowest frequency, blue the highest.</p>
 
-  <img src="/images/dispersive_prism.png" alt="img"/>
+  <img src="/images/Newton's_color_circle.png" alt="Issac Newton - Color Circle" />
 
   <p>Colours are described by the ratios in which they contain each primary:</p>
 
@@ -277,7 +301,7 @@
 
   <p>The ratio 1:1:1 yields the achromatic colours. These belong not to a circle but to a linear scale of seven degrees: black, pitch-black, iron gray, dark gray, gray, light gray, silver, and white.</p>
 
-  <img src="/images/moonbow_at_lower_Yosemite_fall.jpg" alt="img" />
+  <img src="/images/moonbow_at_lower_Yosemite_fall.jpg" alt="Moonbow at lower Yosemite Fall" />
 
   <hr />
 
@@ -288,7 +312,13 @@
 
   <p>A complete palette demands more than fully saturated and achromatic colours. From the spectral hue circle, three further circles are born by the successive application of black, gray, and white light. The full palette, expressed in both HSL and RGB, is as follows:</p>
 
+  <!-- ── Spectral Colour Wheel ── -->
   <p><strong>Spectral Colour Wheel</strong> <em>— full saturation, mid lightness (100% / 50%)</em></p>
+  <div class="swatch-strip">
+    {#each COLOR_PALETTES.wheel as { name, variable }}
+      <div class="swatch" style="background-color: var({variable});" title={name}></div>
+    {/each}
+  </div>
   <pre>
 red        hsl(0,   100%, 50%)  → rgb(255,   0,   0)
 medlar     hsl(30,  100%, 50%)  → rgb(255, 128,   0)
@@ -303,7 +333,13 @@ lavender   hsl(270, 100%, 50%)  → rgb(128,   0, 255)
 cyclamen   hsl(300, 100%, 50%)  → rgb(255,   0, 255)
 mulberry   hsl(330, 100%, 50%)  → rgb(255,   0, 128)</pre>
 
+  <!-- ── Scale of Shades ── -->
   <p><strong>Scale of Shades</strong> <em>— 0% saturation</em></p>
+  <div class="swatch-strip">
+    {#each COLOR_PALETTES.scale as { name, variable }}
+      <div class="swatch" style="background-color: var({variable});" title={name}></div>
+    {/each}
+  </div>
   <pre>
 black       hsl(0, 0%,   0%)  → rgb(  0,   0,   0)
 pitch-black hsl(0, 0%,  12%)  → rgb( 31,  31,  31)
@@ -315,7 +351,13 @@ silver      hsl(0, 0%,  75%)  → rgb(191, 191, 191)
 snow-white  hsl(0, 0%,  88%)  → rgb(224, 224, 224)
 white       hsl(0, 0%, 100%)  → rgb(255, 255, 255)</pre>
 
+  <!-- ── Colour Wheel of Darkness ── -->
   <p><strong>Colour Wheel of Darkness</strong> <em>— 50% saturation, 25% lightness</em></p>
+  <div class="swatch-strip">
+    {#each COLOR_PALETTES.wheel_of_darkness as { name, variable }}
+      <div class="swatch" style="background-color: var({variable});" title={name}></div>
+    {/each}
+  </div>
   <pre>
 dark-red        hsl(0,   50%, 25%)  → rgb( 96,  32,  32)
 dark-medlar     hsl(30,  50%, 25%)  → rgb( 96,  64,  32)
@@ -330,7 +372,13 @@ dark-lavender   hsl(270, 50%, 25%)  → rgb( 64,  32,  96)
 dark-cyclamen   hsl(300, 50%, 25%)  → rgb( 96,  32,  96)
 dark-mulberry   hsl(330, 50%, 25%)  → rgb( 96,  32,  64)</pre>
 
+  <!-- ── Colour Wheel of Ghost ── -->
   <p><strong>Colour Wheel of Ghost</strong> <em>— 50% saturation, 50% lightness</em></p>
+  <div class="swatch-strip">
+    {#each COLOR_PALETTES.wheel_of_ghost as { name, variable }}
+      <div class="swatch" style="background-color: var({variable});" title={name}></div>
+    {/each}
+  </div>
   <pre>
 ghost-red        hsl(0,   50%, 50%)  → rgb(191,  64,  64)
 ghost-medlar     hsl(30,  50%, 50%)  → rgb(191, 128,  64)
@@ -345,7 +393,13 @@ ghost-lavender   hsl(270, 50%, 50%)  → rgb(128,  64, 191)
 ghost-cyclamen   hsl(300, 50%, 50%)  → rgb(191,  64, 191)
 ghost-mulberry   hsl(330, 50%, 50%)  → rgb(191,  64, 128)</pre>
 
+  <!-- ── Colour Wheel of Light ── -->
   <p><strong>Colour Wheel of Light</strong> <em>— 50% saturation, 75% lightness</em></p>
+  <div class="swatch-strip">
+    {#each COLOR_PALETTES.wheel_of_light as { name, variable }}
+      <div class="swatch" style="background-color: var({variable});" title={name}></div>
+    {/each}
+  </div>
   <pre>
 light-red        hsl(0,   50%, 75%)  → rgb(223, 159, 159)
 light-medlar     hsl(30,  50%, 75%)  → rgb(223, 191, 159)
@@ -374,21 +428,21 @@ light-mulberry   hsl(330, 50%, 75%)  → rgb(223, 159, 191)</pre>
 
   <p>The tradition called <em>musica universalis</em> — the harmony of the spheres — holds that the motions of celestial bodies are expressions of musical proportion, and that the cosmos is, at its root, a sonic order. The idea is traced to Pythagoras, who taught that the distances and velocities of the wandering stars correspond to musical intervals, producing a vast and inaudible harmony. Plato preserved it in the <em>Republic</em>, where the Sirens sing a single note upon each celestial sphere. It passed through the Neoplatonists, through the medieval quadrivium, and arrived — transformed but intact — at the desk of Johannes Kepler.</p>
 
-  <img src="/images/Ptolemaic_system.png" alt="img" class="miniature"/>
+  <img src="/images/Ioanniskepplerih00kepl_0081.jpg" alt="Ioannis Keppler - Platonic Solids" />
 
   <p>In his <em>Harmonices Mundi</em> (1619), Kepler calculated the angular velocity of each planet at perihelion and aphelion — its fastest and slowest points in orbit — and derived the musical interval each planet traces across the sky. Saturn spans a minor third; Jupiter, the same. Mars spans a fifth. The Earth, whose variation in speed is the most constrained of all, produces a single semitone — the interval between <em>mi</em> and <em>fa</em>, which Kepler read as <em>miseria</em>: misery. He then assigned a modal character to each wandering star.</p>
+
+  <img src="/images/Kepler_Mars_retrograde.jpg" alt="Ioannis Keppler - Mars' Retrograde Motion" />
 
   <p>The present work stands in this lineage, but moves in the opposite direction. This system begins with God's simplest gift — the heartbeat, the fifth, the octave — and builds upward from first principles, from the darkness of sin toward the light of the heavenly order. The ancients heard harmony from without. This is an attempt to construct it from within.</p>
 
   <h3>Sonoluminescence</h3>
 
   <p>Sonoluminescence is the emission of light from imploding bubbles in a liquid excited by sound — luminescence induced by acoustic energy. It was accidentally discovered in 1934 at the University of Cologne by Hermann Frenzel and H. Schultes during sonar research.</p>
-  
-  <img src="/images/sulfuric_acid_sonoluminescence.jpg" alt="img"/>
 
   <p>The phenomenon has since been observed in nature: the pistol shrimp is the first known creature to produce light by this means, collapsing cavitation bubbles with its claw to generate a flash intense enough to stun or kill prey.</p>
 
-  <img src="/images/pistol_shrimp.jpg" alt="img" class="miniature"/>
+  <img src="/images/Pistol-Shrimp.jpg" alt="Sonoiluminescence - Pistol Shrimp" />
 
   <p>This is not a curiosity. It is evidence that light can be born from sound.</p>
 
@@ -405,11 +459,11 @@ light-mulberry   hsl(330, 50%, 75%)  → rgb(223, 159, 191)</pre>
   <blockquote>"And God said, 'Let there be a canopy in the midst of the waters, and let it separate the waters from the waters.' And God made the canopy and separated the waters that were under the expanse from the waters that were above the expanse. And it was so. And God called the expanse Heaven. And there was evening and there was morning, the second day."</blockquote>
   <p class="cite">— Genesis 1:6–8</p>
 
-  <img src="/images/NikonP1000_stars.jpg" alt="img"/>
-
   <p>It is possible that the stars are singing angels — or their reflection of some kind.</p>
 
-  <img src="/images/Ezekiel's_vision.jpg" alt="img" class="miniature"/>
+  <img src="/images/Nikon P1000 - Zooming On A Star!.jpg" alt="NikonP1000 Star Zoom" />
+
+  <img src="/images/Ezekiel's_vision.jpg" alt="Ezekiel's Vision" />
 
   <blockquote>"As for the appearance of the wheels and their construction: their appearance was like the gleaming of beryl. And the four had the same likeness, their appearance and construction being as it were a wheel within a wheel."</blockquote>
   <p class="cite">— Ezekiel 1:16</p>
@@ -421,15 +475,16 @@ light-mulberry   hsl(330, 50%, 75%)  → rgb(223, 159, 191)</pre>
 
   <p>The zodiacal plane is the path the Sun traces across the sky. Traditionally divided into twelve parts, its constellations correspond to the twelve musical notes and the twelve spectral colours alike.</p>
 
-  <img src="/images/zodiac.jpg" alt="img" class="miniature"/>
-
   <p>The zodiac opens with Aries — the spring equinox, when Christ was crucified — followed by Taurus and Gemini. Cancer marks the summer solstice, followed by Leo and Virgo. Libra falls at the autumn equinox, followed by Scorpius and Sagittarius. Capricornus holds the winter solstice, Aquarius follows, and the cycle closes with Pisces.</p>
+
+  <img src="/images/Beit_alfa01.jpg" alt="The Zodiac" />
 
   <p>The degrees of a scale — and the achromatic shades — find further correspondence in the wandering stars: those visible to the naked eye that move across the firmament against the fixed constellations. Ordered from swiftest to slowest, by sidereal motion and retrograde duration alike, they are the Moon ☽, Mercury ☿, Venus ♀, the Sun ☉, Mars ♂, Jupiter ♃, and Saturn ♄.</p>
 
   <p>Their measured properties are as follows:</p>
 
-  <table>
+  <!-- Derived from WANDERING_STARS (stars.ts) -->
+  <table class="table-wrap">
     <thead>
       <tr>
         <th>Wandering Star (Old Croatian name)</th>
@@ -441,13 +496,16 @@ light-mulberry   hsl(330, 50%, 75%)  → rgb(223, 159, 191)</pre>
       </tr>
     </thead>
     <tbody>
-      <tr><td>Moon ☽ (Myšec)</td><td>29′ 23″ – 33′ 28″</td><td>12.2 – 14.8</td><td>27.32</td><td>29.53</td><td>—</td></tr>
-      <tr><td>Mercury ☿</td><td>5″ – 13″</td><td>0.4 – 2.0</td><td>87.97</td><td>115.88</td><td>~22.6 (20–24)</td></tr>
-      <tr><td>Venus ♀ (Zwicerna)</td><td>10″ – 66″</td><td>0.2 – 1.2</td><td>224.7</td><td>583.92</td><td>~41.5 (40–44)</td></tr>
-      <tr><td>Sun ☉ (Šance)</td><td>31′ 28″ – 32′ 32″</td><td>0.953 – 1.017</td><td>365.24</td><td>—</td><td>—</td></tr>
-      <tr><td>Mars ♂ (Rumanica)</td><td>3.5″ – 25″</td><td>0.2 – 0.8</td><td>686.98</td><td>779.94</td><td>~66.5 (54–73)</td></tr>
-      <tr><td>Jupiter ♃ (Plavušyca)</td><td>30″ – 59″</td><td>0.05 – 0.15</td><td>4332.82</td><td>398.88</td><td>~120.4 (118–123)</td></tr>
-      <tr><td>Saturn ♄ (Želenyca)</td><td>14.5″ – 20.1″ (rings: ~40–45″)</td><td>0.03 – 0.08</td><td>10755.7</td><td>378.09</td><td>~140.7 (135–145)</td></tr>
+      {#each WANDERING_STARS as star}
+        <tr>
+          <td>{star.name} {star.symbol}{star.ime !== '(Unknown)' ? ` (${star.ime})` : ''}</td>
+          <td>{star.angularSizeRange}</td>
+          <td>{star.speedDegPerDay}</td>
+          <td>{star.siderealDanceDays}</td>
+          <td>{star.solarDanceDays || '—'}</td>
+          <td>{star.retrogradeDays !== 0 ? `~${star.retrogradeDays}` : '—'}</td>
+        </tr>
+      {/each}
     </tbody>
   </table>
 
@@ -462,9 +520,9 @@ light-mulberry   hsl(330, 50%, 75%)  → rgb(223, 159, 191)</pre>
 
   <p>The system assembled in the preceding sections is governed by two numbers. Twelve commands the circle — the chromatic compass, the hue wheel, the zodiac. Seven commands the living sequence within it — the modes, the scale, the degrees of shade, the wandering stars. Their relationship is the hidden architecture of the entire design.</p>
 
-  <h3>Twelve</h3>
+  <img src="/images/Tabernakel.jpg" alt="The Twelve Tribes of Isreael - Tabernacle" />
 
-  <img src="/images/12_tribes_of_Israel_mosaic.jpg" alt="img" class="miniature"/>
+  <h3>Twelve</h3>
 
   <p>Twelve is the third superior highly composite number, the third colossally abundant number, and the fifth highly composite number. It is evenly divisible by 1, 2, 3, 4, 6, and 12 — an extraordinary range for so small a quantity. It is the smallest abundant number, a semiperfect number, a refactorable number, and a Pell number. It is the lesser of the two known <em>sublime numbers</em>: those whose divisor count is perfect and whose divisors sum to a perfect number in turn.</p>
 
@@ -472,12 +530,12 @@ light-mulberry   hsl(330, 50%, 75%)  → rgb(223, 159, 191)</pre>
 
   <p>Twelve appears 147 times in Scripture. Ishmael has twelve sons; Jacob, twelve sons who become the twelve tribes of Israel. Christ called twelve Apostles, and when one fell, the assembly was immediately restored to twelve. The Old Testament contains twelve Minor Prophets. The Book of Revelation is threaded with the figure: a woman crowned with twelve stars; twelve thousand sealed from each of twelve tribes, yielding 144,000 in all — the square of twelve, multiplied by a thousand.</p>
 
+  <img src="/images/Mosaic_Tribes.jpg" alt="The Twelve Tribes of Isreael - Coat of Arms" />
+
   <blockquote>"Through the middle of the street of the city; also, on either side of the river, the tree of life with its twelve kinds of fruit, yielding its fruit each month. The leaves of the tree were for the healing of the nations."</blockquote>
   <p class="cite">— Revelation 22:2</p>
 
   <h3>Seven</h3>
-
-  <img src="\images\Lamb opening the seven seals, by Julius Schnorr von Carolsfeld, 1860.png" alt="img"/>
 
   <p>Seven is the fourth prime — and among the most singular. It is a <em>Mersenne prime</em> (2³ − 1 = 7) and a <em>double Mersenne prime</em>, its exponent 3 being Mersenne as well. It is a Newman–Shanks–Williams prime, a safe prime, a lucky prime, a happy prime — and the only number simultaneously Mersenne and safe. It is the lowest natural number that cannot be expressed as the sum of the squares of three integers. In this sense it stands irreducibly apart from all that precede it.</p>
 
@@ -486,6 +544,8 @@ light-mulberry   hsl(330, 50%, 75%)  → rgb(223, 159, 191)</pre>
   <p>Seven's most immediate presence in human life is time itself. The days of the week descend directly from the seven wandering stars, each day assigned to its celestial patron in antiquity. The correspondence is legible in every modern tongue: Sunday for the Sun, Monday for the Moon, Saturday for Saturn. In the Germanic languages, the remaining four bear the names of Norse divines equated with the classical planets — Tuesday for Mars (Týr), Wednesday for Mercury (Wōden), Thursday for Jupiter (Thor), Friday for Venus (Frigg). In the Romance languages the lineage is yet more transparent: <em>mardi</em> is Mars, <em>mercredi</em> Mercury, <em>jeudi</em> Jupiter, <em>vendredi</em> Venus. Every week, without exception, the seven wandering stars inscribe themselves upon the days of every human life.</p>
 
   <p>In Scripture, seven is the signature of completion. Creation unfolds across six days and rests on the seventh. The Book of Revelation turns on seven seals, seven trumpets, seven bowls — seven not as the endless ring of twelve, but as the wholeness of a journey brought to its final degree: a scale resolved, a song concluded.</p>
+
+  <img src="/images/Angels_receiving_seven_trumpets_-_Apocalypse_Picture_Book,_Pierpont_Morgan.jpg" alt="The Seven Trumpets" />
 
   <p>Within this design: seven notes in a scale, seven modes, seven wandering stars, seven degrees of achromatic shade. Twelve is the vessel. Seven is what moves inside it.</p>
 
@@ -500,51 +560,54 @@ light-mulberry   hsl(330, 50%, 75%)  → rgb(223, 159, 191)</pre>
 
   <p>The circle of twelve unites the chromatic notes, the spectral hues, and the signs of the zodiac into a single ring. The sequence begins at Aries — the spring equinox, the first sign, the point of resurrection and renewal.</p>
 
-  <table>
+  <!-- Derived from NEW_NOTES_1_ALL (sounds.ts) + COLOR_PALETTES.wheel (colors.ts)
+       + ZODIAC_CONSTELLATIONS (stars.ts) — same index, same correspondence. -->
+  <table class="table-wrap">
     <thead>
       <tr><th>Position</th><th>Note</th><th>Colour</th><th>Zodiac Sign</th></tr>
     </thead>
     <tbody>
-      <tr><td>1</td><td>A</td><td>Red</td><td>Aries ♈</td></tr>
-      <tr><td>2</td><td>E</td><td>Medlar</td><td>Taurus ♉</td></tr>
-      <tr><td>3</td><td>B</td><td>Yellow</td><td>Gemini ♊</td></tr>
-      <tr><td>4</td><td>F</td><td>Olive</td><td>Cancer ♋</td></tr>
-      <tr><td>5</td><td>C</td><td>Green</td><td>Leo ♌</td></tr>
-      <tr><td>6</td><td>G</td><td>Teal</td><td>Virgo ♍</td></tr>
-      <tr><td>7</td><td>D</td><td>Azure</td><td>Libra ♎</td></tr>
-      <tr><td>8</td><td>A#</td><td>Indigo</td><td>Scorpius ♏</td></tr>
-      <tr><td>9</td><td>E♯</td><td>Blue</td><td>Sagittarius ♐</td></tr>
-      <tr><td>10</td><td>B#</td><td>Lavender</td><td>Capricornus ♑</td></tr>
-      <tr><td>11</td><td>F♯</td><td>Cyclamen</td><td>Aquarius ♒</td></tr>
-      <tr><td>12</td><td>C#</td><td>Mulberry</td><td>Pisces ♓</td></tr>
+      {#each circleOfTwelve as { note, color, colorVar, zodiac }, i}
+        <tr>
+          <td>{i + 1}</td>
+          <td>{note}</td>
+          <td>
+            <span class="color-swatch" style="background-color: var({colorVar});"></span>
+            {color}
+          </td>
+          <td>{zodiac.name} {zodiac.symbol}</td>
+        </tr>
+      {/each}
     </tbody>
   </table>
 
   <p>The sequence of seven binds the musical modes, the wandering stars, and the days of the week into one living order. The modes run in their natural succession; the stars are placed against them by sidereal speed, from the swiftest to the most ancient and slow.</p>
 
-  <table>
+  <!-- Derived from NEW_MODES + SCALE_DEGREE_NUMERALS (sounds.ts)
+       + WANDERING_STARS (stars.ts). -->
+  <table class="table-wrap">
     <thead>
       <tr><th>Degree</th><th>Mode</th><th>Wandering Star</th></tr>
     </thead>
     <tbody>
-      <tr><td>I</td><td>Lunar</td><td>Moon ☽ (Myšec)</td></tr>
-      <tr><td>II</td><td>Mercurial</td><td>Mercury ☿</td></tr>
-      <tr><td>III</td><td>Venusian</td><td>Venus ♀ (Zwicerna)</td></tr>
-      <tr><td>IV</td><td>Solar</td><td>Sun ☉ (Šance)</td></tr>
-      <tr><td>V</td><td>Martial</td><td>Mars ♂ (Rumanica)</td></tr>
-      <tr><td>VI</td><td>Jovial</td><td>Jupiter ♃ (Plavušyca)</td></tr>
-      <tr><td>VII</td><td>Saturnine</td><td>Saturn ♄ (Želenyca)</td></tr>
+      {#each sequenceOfSeven as { numeral, mode, star }}
+        <tr>
+          <td>{numeral}</td>
+          <td>{mode}</td>
+          <td>{star.name} {star.symbol}{star.ime !== '(Unknown)' ? ` (${star.ime})` : ''}</td>
+        </tr>
+      {/each}
     </tbody>
   </table>
 
-  <div>
-    <p>Sound, colour, and the wandering stars above are governed by the same two proportions — born from the same heartbeat, the same fifth, the same octave, the same one trinitarian God.</p>
+  <p>Sound, colour, and the wandering stars above are governed by the same two proportions — born from the same heartbeat, the same fifth, the same octave, the same one trinitarian God.</p>
 
-    <img src="/images/Andrey_Rublev_-_Св._Троица.jpg" alt="img"/>
+  <img src="/images/Kepler_Optica.jpg" alt="Ioannis Keppler - Optica" />
 
-    <p>This is not a theory about music. Nor is it a theory about colour. It is a claim about the structure of the created world: that harmony is not a matter of taste but of number; that beauty is not completely subjective but measurable, if not by man-made tools, than certainly by a holy intuition; that the same ratios governing a plucked string also govern the turning of the heavens.</p>
+  <p>This is not a theory about music. Nor is it a theory about colour. It is a claim about the structure of the created world: that harmony is not a matter of taste but of number; that beauty is not completely subjective but measurable, if not by man-made tools, than certainly by a holy intuition; that the same ratios governing a plucked string also govern the turning of the heavens.</p>
 
-    <p>This document has attempted nothing more than to gather those threads, extend them by arithmetic and first principle, and hold them in a single hand. What it describes was not invented. It was recovered and inscribed to this digital monolith.</p>
-  </div>
+  <p>This document has attempted nothing more than to gather those threads, extend them by arithmetic and first principle, and hold them in a single hand. What it describes was not invented. It was recovered and inscribed to this digital monolith.</p>
+
+  <img src="/images/Polaris Time lapse.jpg" alt="Polaris Time Lapse" />
 
 </article>

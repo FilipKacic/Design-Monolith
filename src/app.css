@@ -135,6 +135,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box; /* padding and border included in declared width/height */
+  overflow-wrap: break-word;
 }
 
 /* ============================================================================
@@ -145,10 +146,11 @@ html {
   font-family: monospace; /* system fallback before Local-Main-Font loads */
   font-size: var(--default-font-size);
   line-height: 1.5;
+  -webkit-text-size-adjust: 100%; /* viewport text scaling safety which prevents iOS zoom quirks */
 }
 
 body {
-  min-height: 100vh;
+  min-height: 100dvh;
   font-family: 'Local-Main-Font';
   color: var(--black);
   background: linear-gradient(to bottom, var(--white), var(--snow-white));
@@ -250,6 +252,28 @@ td {
   border: var(--hairline) solid var(--light-gray);
 }
 
+th, td {
+  word-break: break-word;
+}
+
+tr:nth-child(even) td {
+  background: var(--snow-white); /* zebra rows for readability */
+}
+
+/* ============================================================================
+   RESPONSIVE — TABLES (SCROLL ON SMALL SCREENS)
+   ============================================================================ */
+
+.table-wrap {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.table-wrap table {
+  min-width: min(600px, 100%); /* adjust to your real column needs */
+}
+
 /* ============================================================================
    BASE — CODE
    ============================================================================ */
@@ -284,19 +308,17 @@ button, [type="button"], [type="submit"] {
    ============================================================================ */
 
 img, picture, video, canvas, svg {
-  display: block;   /* removes inline baseline gap beneath images */
+  display: block; /* removes inline baseline gap beneath images */
   max-width: 100%;
 }
 
 img {
-  margin: var(--space) auto;
-  max-width: 100vw;
-  max-height: 100vh;
+  margin: var(--more-space) auto;
+  max-height: 85vh;
 }
 
 .miniature {
-  max-width: 50vw;
-  max-height: 50vh;
+  max-height: 40vh;
 }
 
 /* 16:9 responsive embed — padding-bottom 56.25% = 9/16 of container width */
@@ -304,6 +326,7 @@ img {
   position: relative;
   height: 0;
   padding-bottom: 56.25%;
+  margin: var(--more-space) 0;
   overflow: hidden;
 }
 
@@ -370,7 +393,7 @@ nav {
   display: flex;
   align-items: center;
   justify-content: space-evenly;
-  padding: var(--more-space);
+  padding: var(--space);
   box-shadow: 0 var(--hairline) var(--outline) var(--shadow);
 }
 
@@ -422,6 +445,7 @@ footer {
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-direction: column;
   gap: var(--space) var(--more-space);
   padding: var(--space);
   margin: var(--maximum-space) var(--space);
@@ -531,6 +555,7 @@ footer {
   flex-wrap: wrap;
   gap: var(--more-space);
   margin: var(--space);
+  max-width: 100%;
 }
 
 .note {
@@ -575,6 +600,7 @@ footer {
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-wrap: wrap;
   gap: var(--space);
   margin-bottom: var(--space);
 }
@@ -588,6 +614,8 @@ button {
   transition:
     background var(--blink) ease-in-out,
     scale var(--blink) ease-in-out;
+  min-height: var(--icon-size);
+  min-width: var(--icon-size);
 }
 
 button:hover { scale: var(--larger); }
@@ -634,6 +662,7 @@ button.selected {
   display: flex;
   flex-direction: column;
   align-items: center;
+  flex-wrap: wrap;
   gap: var(--space);
   margin: var(--space) 0;
   padding: 0;
@@ -767,7 +796,70 @@ button.selected {
     margin: 0 var(--sidebar-width);
   }
 
+  h1, h2, h3, h4, h5, h6 {
+    margin: var(--more-space) 0 var(--space);
+  }
+
+  footer {
+    flex-direction: row;
+    gap: var(--space) var(--less-space);
+  }
+
   .download-buttons {
     flex-direction: row;
   }
+
+  .string-row {
+    flex-wrap: wrap;
+  }
+
+  .string-number {
+    min-width: auto;
+  }
 }
+
+@media (hover: none) {
+  .nav-icon:hover,
+  button:hover,
+  .note:hover {
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+
+/* ============================================================================
+   OTHER
+   ============================================================================ */
+
+/*
+  Swatch strip above each colour palette pre block
+*/
+
+.swatch-strip {
+  display: flex;
+  gap: 2px;
+  margin-bottom: 0.5rem;
+}
+
+.swatch {
+  flex: 1;
+  height: 2rem;
+  border-radius: 2px;
+}
+
+/* Inline colour swatch in the synthesis table colour column */
+.color-swatch {
+  display: inline-block;
+  width: var(--space);
+  height: var(--space);
+  border-radius: var(--hairline);
+  vertical-align: middle;
+  margin-right: var(--less-space);
+  }

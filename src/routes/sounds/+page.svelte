@@ -17,7 +17,7 @@
     getPentachords,
     getHexachords,
     getHeptachords,
-  } from '$lib/utils/chord-contruction';
+  } from '$lib/utils/chord-construction';
 
   import Toast from '$lib/components/Toast.svelte';
   import ScaleControls from '$lib/components/ScaleControl.svelte';
