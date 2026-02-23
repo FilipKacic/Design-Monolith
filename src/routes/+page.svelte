@@ -217,6 +217,16 @@
     ></iframe>
   </div>
 
+  <div class="video-wrap">
+   <iframe
+     src="https://www.youtube.com/watch?v=Up3X5dtnCus"
+     title="Cymatics2"
+     loading="lazy"
+     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+     allowfullscreen
+    ></iframe>
+  </div>
+
   <hr />
 
   <!-- ══════════════════════════════════════ -->

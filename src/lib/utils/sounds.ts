@@ -1,257 +1,216 @@
-/* ============================================================================
-   Pythagorean Spiral + Chromatic Wrap Scale Engine
-   ----------------------------------------------------------------------------
-   • Circle-of-fifths generation
-   • 18-tone ascending spiral
-   • Optional 12-tone chromatic wrapping
-   • Mode-based scale construction
-   • Frequency lookup (3^n)
-   • Octave reduction utilities
+// ── Notes ─────────────────────────────────────────────────────────────────────
+// NOTES_1 / NEW_NOTES_1: the 7 primary tones (white keys) in circle-of-fifths order.
+// NOTES_1_SHARP / NEW_NOTES_1_SHARP: the 5 secondary tones (black keys).
+// NOTES_2 / NEW_NOTES_2: the 6 extra tones of the ascending spiral (suffix x),
+//   generated when stacking beyond 12 fifths — see essay §III "The Ascending Spiral".
 
-   Designed for modern TypeScript / SvelteKit projects.
-============================================================================ */
+export const NOTES_1       = ["C",  "G",  "D",  "A",  "E",  "B",  "F#"] as const;
+export const NEW_NOTES_1   = ["A",  "E",  "B",  "F",  "C",  "G",  "D" ] as const;
 
+export const NOTES_1_SHARP     = ["C#", "G#", "D#", "A#", "F" ] as const;
+export const NEW_NOTES_1_SHARP = ["A#", "E#", "B#", "F#", "C#"] as const;
 
-/* ============================================================================
-   Notes — Generative Order
-============================================================================ */
-
-export const NOTES_1       = ["C","G","D","A","E","B","F#"] as const;
-export const NEW_NOTES_1   = ["A","E","B","F","C","G","D"] as const;
-
-export const NOTES_1_SHARP     = ["C#","G#","D#","A#","F"] as const;
-export const NEW_NOTES_1_SHARP = ["A#","E#","B#","F#","C#"] as const;
-
-export const NOTES_1_ALL     = [...NOTES_1,     ...NOTES_1_SHARP] as const;
+export const NOTES_1_ALL     = [...NOTES_1,     ...NOTES_1_SHARP    ] as const;
 export const NEW_NOTES_1_ALL = [...NEW_NOTES_1, ...NEW_NOTES_1_SHARP] as const;
 
-export const NOTES_2     = ["Cx","Gx","Dx","Ax","Ex","Bx"] as const;
-export const NEW_NOTES_2 = ["Ax","Ex","Bx","Fx","Cx","Gx"] as const;
+export const NOTES_2     = ["Cx", "Gx", "Dx", "Ax", "Ex", "Bx"] as const;
+export const NEW_NOTES_2 = ["Ax", "Ex", "Bx", "Fx", "Cx", "Gx"] as const;
 
-export const NOTES_ALL     = [...NOTES_1,     ...NOTES_1_SHARP,     ...NOTES_2] as const;
-export const NEW_NOTES_ALL = [...NEW_NOTES_1, ...NEW_NOTES_1_SHARP, ...NEW_NOTES_2] as const;
+// ── Wrap copy ─────────────────────────────────────────────────────────────────
+// createWrapCopy returns the same 12 notes in the same forward order.
+// Appended after the x-tones in NOTES_ALL, it creates a 30-entry circular
+// scaffold: flat-mode patterns with negative offsets resolve via wrapSpiral()
+// to indices 18–29, retrieving the correct notes without going out of bounds.
+//
+// The copy must be in FORWARD order, not reversed. wrapSpiral() accesses it
+// right-to-left (index 29 downward), which effectively reads it in reverse —
+// reversing it here would double-invert and produce wrong notes.
 
+function createWrapCopy<T extends readonly string[]>(notes: T): readonly string[] {
+  return [...notes];
+}
 
-/* ============================================================================
-   Frequency Generation — Pythagorean Powers of 3
-============================================================================ */
+export const NOTES_1_ALL_WRAP     = createWrapCopy(NOTES_1_ALL);
+export const NEW_NOTES_1_ALL_WRAP = createWrapCopy(NEW_NOTES_1_ALL);
 
-export type NoteFrequency = {
-  note: string;
-  frequency: number;
-};
+// NOTES_ALL: 30 entries = 12 primary+secondary + 6 x-tones + 12 wrap copy.
+// The wrap copy enables all 84 root×mode combinations to resolve correctly.
+export const NOTES_ALL     = [...NOTES_1_ALL, ...NOTES_2,      ...NOTES_1_ALL_WRAP    ] as const;
+export const NEW_NOTES_ALL = [...NEW_NOTES_1_ALL, ...NEW_NOTES_2, ...NEW_NOTES_1_ALL_WRAP] as const;
 
-export const FREQUENCIES = NOTES_ALL.map((note, i) => ({
-  note,
-  frequency: 3 ** i,
-})) as readonly NoteFrequency[];
+// ── Frequencies ───────────────────────────────────────────────────────────────
+// Pythagorean frequencies for the 18 generative tones only (3^0 through 3^17).
+// The wrap copy (indices 18–29) carries the same frequencies as indices 0–11 —
+// identical pitch-class, with octave register handled by reduceToOctave.
+// Built from the first 18 entries of NOTES_ALL to stay coupled to note order.
 
-export const NEW_FREQUENCIES = NEW_NOTES_ALL.map((note, i) => ({
-  note,
-  frequency: 3 ** i,
-})) as readonly NoteFrequency[];
+export type NoteFrequency = { note: string; frequency: number };
 
+export const FREQUENCIES: readonly NoteFrequency[] =
+  NOTES_ALL.slice(0, 18).map((note, i) => ({ note, frequency: 3 ** i }));
 
-/* ============================================================================
-   Lookup Maps (O(1))
-============================================================================ */
+export const NEW_FREQUENCIES: readonly NoteFrequency[] =
+  NEW_NOTES_ALL.slice(0, 18).map((note, i) => ({ note, frequency: 3 ** i }));
 
-export const FREQUENCY_MAP     = new Map(FREQUENCIES.map(f => [f.note, f.frequency]));
+// ── Lookup maps ───────────────────────────────────────────────────────────────
+// note → frequency (public) and note → generation index (private).
+// Built from the 18-note arrays so each note maps to its first (and correct) occurrence.
+// O(1) access replaces O(n) findIndex / find in getScale and getFrequency.
+
+export const FREQUENCY_MAP     = new Map(FREQUENCIES.map(f     => [f.note, f.frequency]));
 export const NEW_FREQUENCY_MAP = new Map(NEW_FREQUENCIES.map(f => [f.note, f.frequency]));
 
-const NOTE_INDEX_MAP     = new Map(FREQUENCIES.map((f,i)=>[f.note,i]));
-const NEW_NOTE_INDEX_MAP = new Map(NEW_FREQUENCIES.map((f,i)=>[f.note,i]));
+const NOTE_INDEX_MAP     = new Map(FREQUENCIES.map((f, i)     => [f.note, i]));
+const NEW_NOTE_INDEX_MAP = new Map(NEW_FREQUENCIES.map((f, i) => [f.note, i]));
 
+// ── Wrap frequency arrays ─────────────────────────────────────────────────────
+// 30-entry arrays mirroring NOTES_ALL layout, used exclusively by getScale.
+// Entries 18–29 are copies of entries 0–11 — same NoteFrequency objects.
 
-/* ============================================================================
-   Chromatic System Definition
-============================================================================ */
+const FREQUENCIES_WRAP:     readonly NoteFrequency[] = [...FREQUENCIES,     ...FREQUENCIES.slice(0, 12)];
+const NEW_FREQUENCIES_WRAP: readonly NoteFrequency[] = [...NEW_FREQUENCIES, ...NEW_FREQUENCIES.slice(0, 12)];
 
-export const CHROMATIC_SIZE = 12;
-
-
-/* ============================================================================
-   Modes
-============================================================================ */
+// ── Modes ─────────────────────────────────────────────────────────────────────
+// NEW_MODES are named after the seven classical planets — see essay §IV.
+// Order is fixed: index 0–6 maps to SCALE_DEGREE_KEYS and WANDERING_STARS.
 
 export const MODES = [
-  "Lydian","Mixolydian","Aeolian","Locrian",
-  "Ionian","Dorian","Phrygian",
+  "Lydian", "Mixolydian", "Aeolian", "Locrian",
+  "Ionian", "Dorian", "Phrygian",
 ] as const;
 
 export const NEW_MODES = [
-  "Lunar","Mercurial","Venusian","Solar",
-  "Martial","Jovial","Saturnine",
+  "Lunar", "Mercurial", "Venusian", "Solar",
+  "Martial", "Jovial", "Saturnine",
 ] as const;
 
 export type Mode    = typeof MODES[number];
 export type NewMode = typeof NEW_MODES[number];
 
-const MODE_INDEX     = new Map(MODES.map((m,i)=>[m,i]));
-const NEW_MODE_INDEX = new Map(NEW_MODES.map((m,i)=>[m,i]));
+const MODE_INDEX     = new Map(MODES.map((m, i)     => [m, i]));
+const NEW_MODE_INDEX = new Map(NEW_MODES.map((m, i) => [m, i]));
 
-
-/* ============================================================================
-   Scale Degrees
-============================================================================ */
+// ── Scale degrees ─────────────────────────────────────────────────────────────
 
 export const SCALE_DEGREES = {
-  Tonic:0,
-  Supertonic:1,
-  Mediant:2,
-  Subdominant:3,
-  Dominant:4,
-  Submediant:5,
-  Subtonic:6,
+  Tonic:       0,
+  Supertonic:  1,
+  Mediant:     2,
+  Subdominant: 3,
+  Dominant:    4,
+  Submediant:  5,
+  Subtonic:    6,
 } as const;
 
-export type ScaleDegree = keyof typeof SCALE_DEGREES;
+export type ScaleDegree      = keyof typeof SCALE_DEGREES;
+export type ScaleDegreeIndex = typeof SCALE_DEGREES[ScaleDegree];
 
-export const SCALE_DEGREE_KEYS = Object.keys(SCALE_DEGREES) as ScaleDegree[];
-export const SCALE_DEGREE_NUMERALS = ["I","II","III","IV","V","VI","VII"] as const;
+export const SCALE_DEGREE_KEYS     = Object.keys(SCALE_DEGREES) as ScaleDegree[];
+export const SCALE_DEGREE_NUMERALS = ["I", "II", "III", "IV", "V", "VI", "VII"] as const;
 
+// ── Mode patterns ─────────────────────────────────────────────────────────────
+// Each offset is the step count from the root along the circle of fifths.
+// Lydian = 0 (brightest); negative values = flatter, more dissonant.
 
-/* ============================================================================
-   Mode Patterns — Circle of Fifths Offsets
-============================================================================ */
+const MODE_OFFSETS = [0, -2, -4, -6, -1, -3, -5] as const;
 
-const MODE_OFFSETS = [0,-2,-4,-6,-1,-3,-5] as const;
+export const MODE_PATTERNS: readonly { mode: Mode; pattern: readonly number[] }[] =
+  MODES.map((mode, i) => ({
+    mode,
+    pattern: Array.from({ length: 7 }, (_, j) => MODE_OFFSETS[i] + j),
+  }));
 
-const MODE_PATTERNS: ReadonlyArray<{
-  mode: Mode;
-  pattern: readonly number[];
-}> = MODE_OFFSETS.map((offset, i) => ({
-  mode: MODES[i],
-  pattern: Array.from({ length: 7 }, (_, j) => offset + j),
-}));
+// ── Sorted notes ──────────────────────────────────────────────────────────────
+// Primary tones only (no sharps, no x-tones), sorted alphabetically.
+// Used by components that display notes in chromatic rather than generative order.
 
-/* ============================================================================
-   Index Wrapping Utilities
-============================================================================ */
+export const NOTES_1_ALL_SORTED: NoteFrequency[] = (() => {
+  const noteSet = new Set(NOTES_1_ALL as readonly string[]);
+  return FREQUENCIES
+    .filter(f => noteSet.has(f.note))
+    .sort((a, b) => a.note.localeCompare(b.note));
+})();
 
-function mod(n:number, m:number):number {
-  return ((n % m) + m) % m;
-}
-
-function wrapChromatic(index:number):number {
-  return mod(index, CHROMATIC_SIZE);
-}
-
-function wrapSpiral(index:number, size:number):number {
-  return mod(index, size);
-}
-
-/* ============================================================================
-   Scale Generation Strategy
-============================================================================ */
-
-export type IndexStrategy =
-  | "linear"   // strict spiral
-  | "wrap12"  // 12-tone chromatic wrap (default)
-  | "wrapSpiral"; 
-
+// ── getScale ──────────────────────────────────────────────────────────────────
+// Uses wrapSpiral() into the 30-entry FREQUENCIES_WRAP — a single strategy
+// that handles all 84 root×mode combinations:
+//
+//   • rootIndex + offset ∈ [0..17]  → original or x-tone (no change)
+//   • rootIndex + offset ∈ [18..29] → sharp-root Lydian x-tones (correct)
+//   • rootIndex + offset < 0        → wraps to [18..29] (flat-mode wrap copy)
+//
+// F Lunar correctly yields F Cx Gx Dx Ax Ex Bx (ascending spiral).
+// C Phrygian correctly yields C# G# D# A# F C G (flat wrap copy).
 
 export type ScaleNote = NoteFrequency & {
-  degree:number;
-  degreeName:ScaleDegree;
-  numeral:string;
+  degree:     number;
+  degreeName: ScaleDegree;
+  numeral:    string;
 };
 
-
-/* ============================================================================
-   getScale — Core Engine
-============================================================================ */
-
 export function getScale(
-  rootNote:string,
-  mode:Mode|NewMode,
-  sorted=false,
-  useNew=false,
-  strategy:IndexStrategy="wrapSpiral",
-):ScaleNote[] {
+  rootNote: string,
+  mode:     Mode | NewMode,
+  sorted  = false,
+  useNew  = false,
+): ScaleNote[] {
+  const freqWrap     = useNew ? NEW_FREQUENCIES_WRAP : FREQUENCIES_WRAP;
+  const noteIndexMap = useNew ? NEW_NOTE_INDEX_MAP   : NOTE_INDEX_MAP;
 
-const freqArray    = useNew ? NEW_FREQUENCIES : FREQUENCIES;
-const noteIndexMap = useNew ? NEW_NOTE_INDEX_MAP : NOTE_INDEX_MAP;
+  const rootIndex = noteIndexMap.get(rootNote);
+  if (rootIndex === undefined) throw new Error(`Root note "${rootNote}" not found`);
 
-const rootIndex = noteIndexMap.get(rootNote);
-if(rootIndex===undefined) throw new Error(`Root note "${rootNote}" not found`);
+  const modeIndex = (useNew ? NEW_MODE_INDEX : MODE_INDEX).get(mode as Mode & NewMode);
+  if (modeIndex === undefined) throw new Error(`Mode "${mode}" not found`);
 
-let modeIndex: number | undefined;
+  const { pattern } = MODE_PATTERNS[modeIndex];
+  const size        = freqWrap.length; // 30
 
-if (useNew) {
-  if (!NEW_MODE_INDEX.has(mode as NewMode)) {
-    throw new Error(`Mode "${mode}" not found`);
-  }
-  modeIndex = NEW_MODE_INDEX.get(mode as NewMode);
-} else {
-  if (!MODE_INDEX.has(mode as Mode)) {
-    throw new Error(`Mode "${mode}" not found`);
-  }
-  modeIndex = MODE_INDEX.get(mode as Mode);
+  // No bounds guard needed: rootIndex ∈ [0..11], mode offsets ∈ [-6..+6],
+  // so rootIndex + offset ∈ [-6..17] — always wraps safely within [0..29].
+
+  const scale: ScaleNote[] = pattern.map((offset, i) => {
+    const idx = ((rootIndex + offset) % size + size) % size;
+    return {
+      ...freqWrap[idx],
+      degree:     i + 1,
+      degreeName: SCALE_DEGREE_KEYS[i],
+      numeral:    SCALE_DEGREE_NUMERALS[i],
+    };
+  });
+
+  if (!sorted) return scale;
+
+  // Re-root after sort: rotate so the root note leads the sorted sequence.
+  const sortedScale = [...scale].sort((a, b) => a.note.localeCompare(b.note));
+  const rootPos     = sortedScale.findIndex(n => n.note === rootNote);
+  return [...sortedScale.slice(rootPos), ...sortedScale.slice(0, rootPos)];
 }
 
-if(modeIndex===undefined) throw new Error(`Mode "${mode}" not found`);
+// ── getFrequency ──────────────────────────────────────────────────────────────
 
-const pattern = MODE_PATTERNS[modeIndex].pattern;
-
-const scale:ScaleNote[] = pattern.map((offset,i)=>{
-
-  let idx = rootIndex + offset;
-
-  if (strategy === "linear") {
-    if (idx < 0 || idx >= freqArray.length) {
-      throw new Error(`Index ${idx} outside spiral range`);
-    }
-  }
-  else if (strategy === "wrap12") {
-    idx = wrapChromatic(idx);
-  }
-  else if (strategy === "wrapSpiral") {
-    idx = wrapSpiral(idx, freqArray.length);
-  }
-
-  return {
-    ...freqArray[idx],
-    degree:i+1,
-    degreeName:SCALE_DEGREE_KEYS[i],
-    numeral:SCALE_DEGREE_NUMERALS[i],
-  };
-});
-
-  if(!sorted) return scale;
-
-  const sortedScale = [...scale].sort((a,b)=>a.note.localeCompare(b.note));
-  const rootPos = sortedScale.findIndex(n=>n.note===rootNote);
-  return [...sortedScale.slice(rootPos), ...sortedScale.slice(0,rootPos)];
-}
-
-
-/* ============================================================================
-   Frequency Lookup
-============================================================================ */
-
-export function getFrequency(note:string,useNew=false){
+export function getFrequency(note: string, useNew = false): number | undefined {
   return (useNew ? NEW_FREQUENCY_MAP : FREQUENCY_MAP).get(note);
 }
 
+// ── reduceToOctave ────────────────────────────────────────────────────────────
+// Shifts frequencyToReduce up or down by octaves (×2 or ÷2) until it lands in
+// the same octave register as frequencyToMatch, then picks the closer neighbour.
 
-/* ============================================================================
-   Octave Reduction
-============================================================================ */
+export function reduceToOctave(frequencyToReduce: number, frequencyToMatch: number): number {
+  if (frequencyToReduce <= 0 || frequencyToMatch <= 0) {
+    throw new Error('Frequencies must be positive');
+  }
 
-export function reduceToOctave(f:number,target:number):number{
-  if(f<=0 || target<=0) throw new Error("Frequencies must be positive");
+  let r = frequencyToReduce;
+  while (r >= frequencyToMatch * 2) r /= 2;
+  while (r <  frequencyToMatch / 2) r *= 2;
 
-  let r=f;
-  while(r>=target*2) r/=2;
-  while(r<target/2) r*=2;
-
-  return Math.abs(r/2-target) < Math.abs(r-target) ? r/2 : r;
+  return Math.abs(r / 2 - frequencyToMatch) < Math.abs(r - frequencyToMatch) ? r / 2 : r;
 }
 
+// ── Sonic pattern ─────────────────────────────────────────────────────────────
+// Semitone positions of a 7-note Pythagorean scale within the 12-note chromatic
+// circle: [0, 2, 4, 6, 7, 9, 11] = W–W–W–H–W–W–H interval pattern.
 
-/* ============================================================================
-   Sonic Pattern — Pythagorean Heptatonic Layout
-============================================================================ */
-
-export const SONIC_PATTERN = [0,2,4,6,7,9,11] as const;
+export const SONIC_PATTERN = [0, 2, 4, 6, 7, 9, 11] as const;
