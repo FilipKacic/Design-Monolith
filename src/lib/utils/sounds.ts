@@ -169,13 +169,20 @@ export function getScale(
   // No bounds guard needed: rootIndex ∈ [0..11], mode offsets ∈ [-6..+6],
   // so rootIndex + offset ∈ [-6..17] — always wraps safely within [0..29].
 
+  // Degree assignments rotate around the root's position in the pattern.
+  // For Lydian, offset 0 is at index 0 — degrees run I..VII as-is.
+  // For other modes the root sits deeper (e.g. Phrygian index 5), so without
+  // rotation index 0 would be mislabeled Mediant, Subtonic, etc.
+  const rootOffsetIndex = pattern.indexOf(0);
+
   const scale: ScaleNote[] = pattern.map((offset, i) => {
-    const idx = ((rootIndex + offset) % size + size) % size;
+    const idx       = ((rootIndex + offset) % size + size) % size;
+    const degreeIdx = (i - rootOffsetIndex + 7) % 7;
     return {
       ...freqWrap[idx],
-      degree:     i + 1,
-      degreeName: SCALE_DEGREE_KEYS[i],
-      numeral:    SCALE_DEGREE_NUMERALS[i],
+      degree:     degreeIdx + 1,
+      degreeName: SCALE_DEGREE_KEYS[degreeIdx],
+      numeral:    SCALE_DEGREE_NUMERALS[degreeIdx],
     };
   });
 
