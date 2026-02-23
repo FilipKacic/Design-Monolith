@@ -49,7 +49,7 @@
   <nav>
     {#each NAV_ITEMS as { href, icon, alt }}
       <a {href} class:active={pathname === href}>
-        <img src="{assetBase}/icons/{icon}.svg" {alt} class="nav-icon" />
+        <img src={`${assetBase}/icons/${icon}.svg`} {alt} class="nav-icon" />
       </a>
     {/each}
   </nav>

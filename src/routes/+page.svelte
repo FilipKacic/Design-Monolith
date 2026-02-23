@@ -461,12 +461,12 @@ light-mulberry   hsl(330, 50%, 75%)  → rgb(223, 159, 191)</pre>
 
   <p>It is possible that the stars are singing angels — or their reflection of some kind.</p>
 
-  <img src="/images/Nikon P1000 - Zooming On A Star!.jpg" alt="NikonP1000 Star Zoom" />
-
-  <img src="/images/Ezekiel's_vision.png" alt="Ezekiel's Vision" />
+  <img src="/images/NikonP1000_star_zoom.jpg" alt="NikonP1000 Star Zoom" />
 
   <blockquote>"As for the appearance of the wheels and their construction: their appearance was like the gleaming of beryl. And the four had the same likeness, their appearance and construction being as it were a wheel within a wheel."</blockquote>
   <p class="cite">— Ezekiel 1:16</p>
+
+  <img src="/images/Ezekiel's_vision.png" alt="Ezekiel's Vision" />
 
   <p>Perhaps the stars are bound to harmonic intervals by the ancient analogy of microcosm and macrocosm.</p>
 
