@@ -23,10 +23,10 @@
   // STRING_EXPONENTS: the x in 2^x applied per string to place its frequency
   // in the correct octave register (low E through high E).
   //
-  // TUNING_SCALE_DEGREES: the scale degree index each string is tuned to,
-  // mirroring standard tuning's pitch-class layout (E A D G B E).
-  // These are fixed — changing the scale substitutes different pitches at
-  // the same degree positions, which is what makes this scale-based tuning.
+  // TUNING_SCALE_DEGREES: positional indices into the degree-display-ordered scale
+  // (Tonic, Mediant, Dominant, Subtonic, Supertonic, Subdominant, Submediant).
+  // For C Lydian: [C, D, E, F#, G, A, B] → indices [2,5,1,4,6,2] = E A D G B E,
+  // mirroring standard guitar tuning's pitch-class layout.
   //
   // referenceScale is C Lydian (first note, first mode) and serves as the
   // octave-reduction anchor so string registers stay stable across scale changes.

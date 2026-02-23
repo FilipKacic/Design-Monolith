@@ -108,6 +108,16 @@ export type ScaleDegreeIndex = typeof SCALE_DEGREES[ScaleDegree];
 export const SCALE_DEGREE_KEYS     = Object.keys(SCALE_DEGREES) as ScaleDegree[];
 export const SCALE_DEGREE_NUMERALS = ["I", "II", "III", "IV", "V", "VI", "VII"] as const;
 
+// ── Degree display order ──────────────────────────────────────────────────────
+// The order in which scale degrees are displayed: the odd-numbered stack of
+// thirds (Tonic→Mediant→Dominant→Subtonic) followed by the even stack
+// (Supertonic→Subdominant→Submediant). Exported for use in sort and display.
+export const DEGREE_DISPLAY_ORDER = [0, 2, 4, 6, 1, 3, 5] as const;
+
+// Private rank map for O(1) sort lookup: degree index → display position.
+// Tonic maps to 0, so sorted scales need no root-rotation step.
+const DEGREE_SORT_RANK: Map<number, number> = new Map(DEGREE_DISPLAY_ORDER.map((degreeIdx, pos) => [degreeIdx, pos]));
+
 // ── Mode patterns ─────────────────────────────────────────────────────────────
 // Each offset is the step count from the root along the circle of fifths.
 // Lydian = 0 (brightest); negative values = flatter, more dissonant.
@@ -188,10 +198,11 @@ export function getScale(
 
   if (!sorted) return scale;
 
-  // Re-root after sort: rotate so the root note leads the sorted sequence.
-  const sortedScale = [...scale].sort((a, b) => a.note.localeCompare(b.note));
-  const rootPos     = sortedScale.findIndex(n => n.note === rootNote);
-  return [...sortedScale.slice(rootPos), ...sortedScale.slice(0, rootPos)];
+  // Sort by DEGREE_DISPLAY_ORDER rank — Tonic always position 0, so no
+  // root-rotation step needed.
+  return [...scale].sort((a, b) =>
+    DEGREE_SORT_RANK.get(a.degree - 1)! - DEGREE_SORT_RANK.get(b.degree - 1)!
+  );
 }
 
 // ── getFrequency ──────────────────────────────────────────────────────────────
