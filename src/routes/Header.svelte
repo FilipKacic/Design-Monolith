@@ -35,7 +35,7 @@
   // Defined as data so adding/removing a route is a one-line change.
 
   const NAV_ITEMS = [
-    { href: resolve('/'),       icon: 'home',           alt: 'Home'   },
+    { href: resolve('/'),       icon: 'scroll',         alt: 'Scroll'   },
     { href: resolve('/sounds'), icon: 'guitar_strings', alt: 'Sounds' },
     { href: resolve('/colors'), icon: 'color_pallete',  alt: 'Colors' },
   ] as const;

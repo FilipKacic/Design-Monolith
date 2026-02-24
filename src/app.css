@@ -444,7 +444,8 @@ footer {
   display: flex;
   align-items: center;
   justify-content: center;
-  flex-direction: column;
+  flex-direction: row;
+  flex-wrap: wrap;
   gap: var(--space) var(--more-space);
   padding: var(--space);
   margin: var(--maximum-space) var(--space);
