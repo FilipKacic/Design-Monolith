@@ -33,7 +33,7 @@
   <!-- ══════════════════════════════════════ -->
   <h2>The First Song</h2>
 
-  <p>One "Hertz" is equal to one single heartbeat cycle of a healthy human being. The origin is the heart — the heartbeat itself.</p>
+  <p>One "Hertz" is equal to one single heartbeat cycle of a healthy human being. The origin of this system is the heart — the heartbeat itself.</p>
 
   <img src="images/sacred_heart_of_jesus.png" alt="Sacred Heart of Jesus" />
 
@@ -45,7 +45,7 @@
 
   <p>The next simplest ratio after 1:2 is 2:3. When a string is pressed at its third and plucked, a new note is produced. This 2:3 ratio yields the <em>pure perfect fifth</em> — the most consonant interval after the octave. These two ratios are the backbone of music.</p>
 
-  <p>Neither is a discovery. Plato, in his <em>Timaeus</em>, describes the world itself as constructed from these same two proportions — the 1:2 of the octave and the 2:3 of the fifth. What follows builds upon that foundation.</p>
+  <p>Neither is a discovery. Plato, an ancient Greek philosopher, in his <em>Timaeus</em>, describes the world itself as constructed from these same two proportions — the 1:2 of the octave and the 2:3 of the fifth. What follows builds upon that foundation.</p>
 
   <hr />
 
@@ -73,7 +73,7 @@
     <li>12th note: 57.6650390625 × 3/2 = 86.49755859375 Hz</li>
   </ul>
 
-  <p>These twelve notes nearly divide the circle into equal parts, which is supremely practical. The division is not perfectly equal because music is, in truth, a spiral — not a circle. The next close division afforded by the 3:2 ratio falls at 53 parts, which is impractical for performance.</p>
+  <p>These twelve notes divide the circle into almost equal parts, which is practical. The division is not perfectly equal because music is, in truth, a spiral — not a circle. The next close division afforded by the 3:2 ratio falls at 53 parts, which is impractical for performance.</p>
 
   <p>Equivalently, these twelve notes arise from successive powers of three:</p>
 
