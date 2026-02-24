@@ -1,12 +1,14 @@
 import adapter from '@sveltejs/adapter-static';
 
+const dev = process.argv.includes('dev'); 
+
 export default {
   kit: {
     adapter: adapter({
       fallback: '404.html'
     }),
     paths: {
-      base: process.env.NODE_ENV === 'production' ? '/Design-Monolith' : ''
+      base: dev ? '' : '/Design-Monolith'
     },
     prerender: {
       handleHttpError: ({ path, message }) => {
