@@ -260,7 +260,7 @@
 
   <p>A colour is defined by its wavelength in nanometres and its frequency in terahertz. A dispersive prism separates white light into its constituent spectral colours — the rainbow. Isaac Newton demonstrated this in the 17th century. White light is the sum of all spectral colours, or more precisely, the combination of the three primary ones.</p>
 
-  <img src="images/Dispersive_prism.png" alt="Issac Newton - Dispersive Prism" />
+  <img src="images/dispersive_prism.jpg" alt="Issac Newton - Dispersive Prism" />
 
   <p>Those three primaries — from which any other spectral colour can be composed, confirming once more that three is the number of creation — are spectral red, spectral green, and spectral blue. Their order is significant: red carries the lowest frequency, blue the highest.</p>
 
