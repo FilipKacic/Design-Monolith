@@ -9,20 +9,18 @@
   let { show = $bindable(false), message, duration = 2000, onHide }: Props = $props();
 
   // ── Auto-hide ─────────────────────────────────────────────────────────────
-  // Returning a function from $effect registers it as a cleanup callback,
-  // called both when the effect re-runs and when the component is destroyed.
-  // This replaces the separate onDestroy import entirely.
-
-  let timeout: ReturnType<typeof setTimeout>;
+  // The timeout is scoped inside the effect — it has no meaning outside it.
+  // The cleanup function returned from $effect runs automatically before each
+  // re-run and on component destroy, so clearTimeout is always called exactly
+  // once per timer regardless of how show changes.
 
   $effect(() => {
-    if (show) {
-      clearTimeout(timeout);
-      timeout = setTimeout(() => {
-        show = false;
-        onHide?.();
-      }, duration);
-    }
+    if (!show) return;
+
+    const timeout = setTimeout(() => {
+      show = false;
+      onHide?.();
+    }, duration);
 
     return () => clearTimeout(timeout);
   });

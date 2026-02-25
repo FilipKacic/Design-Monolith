@@ -11,17 +11,17 @@
 </script>
 
 <div class="notes">
-  {#each scale as { note, frequency, degreeName, numeral }, i}
+  {#each scale as { note, frequency, degreeName, numeral, degree } (degree)}
     <button
       type="button"
       class="note"
-      class:root={i === 0}
+      class:root={degreeName === 'Tonic'}
       style="background-color: {getNoteColor(frequency)};"
       onclick={() => oncopy(frequency)}
     >
       {note}
-      <span class="frequency">({frequency.toFixed(2)}Hz)</span>
-      <br />
+      <span class="frequency">({frequency.toFixed(2)} Hz)</span>
+      <br>
       <span class="degree"><i>{degreeName} ({numeral})</i></span>
     </button>
   {/each}
