@@ -2,6 +2,7 @@
   import { NEW_NOTES_1_ALL, NEW_MODES, SCALE_DEGREE_NUMERALS } from '$lib/utils/sounds';
   import { COLOR_PALETTES }                                      from '$lib/utils/colors';
   import { ZODIAC_CONSTELLATIONS, WANDERING_STARS }             from '$lib/utils/stars';
+  import type { RetrogradeDays, AngularSize, NumericRange }     from '$lib/utils/stars';
 
   // ── Synthesis table data ───────────────────────────────────────────────────
   // Derived at module load — the three systems can never diverge from each other
@@ -19,6 +20,49 @@
     mode,
     star:    WANDERING_STARS[i],
   }));
+
+  // ── Star data formatters ───────────────────────────────────────────────────
+  // These produce display strings from the structured min/max data in stars.ts.
+  // Formatting is kept close to the template so the prose and the numbers read
+  // as one continuous voice rather than two separate systems.
+
+  /** Formats a numeric range as "min – max", e.g. "12.2 – 14.8". */
+  function formatRange({ min, max }: NumericRange): string {
+    return `${min} – ${max}`;
+  }
+
+  /**
+   * Formats angular size for display.
+   * Moon and Sun are stored in arcseconds but conventionally shown in
+   * arcminutes/arcseconds — they are converted back for legibility.
+   * All other bodies remain in arcseconds (″).
+   */
+  function formatAngularSize(body: string, size: AngularSize): string {
+    // Moon and Sun: stored as arcseconds, displayed as arcmin′ arcsec″
+    if (body === 'Moon' || body === 'Sun') {
+      const fmt = (s: number) => {
+        const m = Math.floor(s / 60);
+        const sec = Math.round(s % 60);
+        return `${m}′ ${String(sec).padStart(2, '0')}″`;
+      };
+      const base = `${fmt(size.min)} to ${fmt(size.max)}`;
+      return size.note ? `${base} (${size.note})` : base;
+    }
+    // All others: arcseconds
+    const base = `${size.min}″ to ${size.max}″`;
+    return size.note ? `${base} (${size.note})` : base;
+  }
+
+  /**
+   * Formats retrograde duration.
+   * Returns "—" for the sentinel 0 (no retrograde), or "~avg (min–max)" for
+   * bodies that do retrograde, preserving the range that was previously hidden
+   * inside a string.
+   */
+  function formatRetrograde(r: RetrogradeDays): string {
+    if (r === 0) return '—';
+    return `~${r.avg} (${r.min}–${r.max})`;
+  }
 </script>
 
 <article>
@@ -481,13 +525,15 @@ light-mulberry   hsl(330, 50%, 75%)  → rgb(223, 159, 191)</pre>
 
   <p>The degrees of a scale — and the achromatic shades — find further correspondence in the wandering stars: those visible to the naked eye that move across the firmament against the fixed constellations. Ordered from swiftest to slowest, by sidereal motion and retrograde duration alike, they are the Moon ☽, Mercury ☿, Venus ♀, the Sun ☉, Mars ♂, Jupiter ♃, and Saturn ♄.</p>
 
-  <p>Their measured properties are as follows:</p>
+  <p>Their measured properties are as follows. Angular sizes are given in their observed range — the Moon and Sun in arcminutes and arcseconds as tradition demands, all others in arcseconds. Retrograde durations record both the mean and the observed extremes, for the wandering stars do not keep perfect time.</p>
 
-  <!-- Derived from WANDERING_STARS (stars.ts) -->
+  <!-- Derived from WANDERING_STARS (stars.ts).
+       Angular size and retrograde are structured min/max objects — see formatAngularSize()
+       and formatRetrograde() in the script block above. -->
   <table class="table-wrap">
     <thead>
       <tr>
-        <th>Wandering Star (Old Croatian name)</th>
+        <th>Wandering Star (Old Croatian Name)</th>
         <th>Angular Size</th>
         <th>Speed (°/day)</th>
         <th>Sidereal Period (days)</th>
@@ -498,12 +544,17 @@ light-mulberry   hsl(330, 50%, 75%)  → rgb(223, 159, 191)</pre>
     <tbody>
       {#each WANDERING_STARS as star}
         <tr>
-          <td>{star.name} {star.symbol}{star.ime !== '(Unknown)' ? ` (${star.ime})` : ''}</td>
-          <td>{star.angularSizeRange}</td>
-          <td>{star.speedDegPerDay}</td>
+          <td>
+            {star.name} {star.symbol}
+            {#if star.ime !== null}
+              <span class="old-name">({star.ime})</span>
+            {/if}
+          </td>
+          <td>{formatAngularSize(star.name, star.angularSize)}</td>
+          <td>{formatRange(star.speedDegPerDay)}</td>
           <td>{star.siderealDanceDays}</td>
           <td>{star.solarDanceDays || '—'}</td>
-          <td>{star.retrogradeDays !== 0 ? `~${star.retrogradeDays}` : '—'}</td>
+          <td>{formatRetrograde(star.retrogradeDays)}</td>
         </tr>
       {/each}
     </tbody>
@@ -594,7 +645,9 @@ light-mulberry   hsl(330, 50%, 75%)  → rgb(223, 159, 191)</pre>
         <tr>
           <td>{numeral}</td>
           <td>{mode}</td>
-          <td>{star.name} {star.symbol}{star.ime !== '(Unknown)' ? ` (${star.ime})` : ''}</td>
+          <td>
+            {star.name} {star.symbol}
+          </td>
         </tr>
       {/each}
     </tbody>
