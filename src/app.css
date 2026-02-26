@@ -310,7 +310,7 @@ tr:nth-child(even) td {
 pre {
   margin: var(--space);
   padding: var(--more-space);
-  background: var(--black);
+  background: var(--pitch-black);
   color: var(--white);
   font-size: var(--quote-space);
   overflow-x: auto;

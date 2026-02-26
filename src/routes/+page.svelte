@@ -3,7 +3,6 @@
   import { COLOR_PALETTES }                                     from '$lib/utils/colors';
   import { ZODIAC_CONSTELLATIONS, WANDERING_STARS }             from '$lib/utils/stars';
   import { downloadPdf }                                        from '$lib/utils/pdf-download';
-  import '$lib/styles/print.css';
   import type { RetrogradeDays, AngularSize, NumericRange }     from '$lib/utils/stars';
 
   // ── Synthesis table data ───────────────────────────────────────────────────
