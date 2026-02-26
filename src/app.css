@@ -774,6 +774,12 @@ button.selected {
   filter: hue-rotate(0deg); /* snaps spin back to origin on click */
 }
 
+.download-pdf {
+  display: flex;
+  justify-content: right;
+  margin: var(--maximum-space) var(--space);
+}
+
 /* ============================================================================
    COMPONENT — TOAST
    z-index: 2000 keeps the toast above the header (z-index: 1000).

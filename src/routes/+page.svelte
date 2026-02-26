@@ -1,7 +1,9 @@
 <script lang="ts">
-  import { NEW_NOTES_1_ALL, NEW_MODES, SCALE_DEGREE_NUMERALS } from '$lib/utils/sounds';
-  import { COLOR_PALETTES }                                      from '$lib/utils/colors';
+  import { NEW_NOTES_1_ALL, NEW_MODES, SCALE_DEGREE_NUMERALS }  from '$lib/utils/sounds';
+  import { COLOR_PALETTES }                                     from '$lib/utils/colors';
   import { ZODIAC_CONSTELLATIONS, WANDERING_STARS }             from '$lib/utils/stars';
+  import { downloadPdf }                                        from '$lib/utils/pdf-download';
+  import '$lib/styles/print.css';
   import type { RetrogradeDays, AngularSize, NumericRange }     from '$lib/utils/stars';
 
   // ── Synthesis table data ───────────────────────────────────────────────────
@@ -662,5 +664,11 @@ light-mulberry   hsl(330, 50%, 75%)  → rgb(223, 159, 191)</pre>
   <p>This document has attempted nothing more than to gather those threads, extend them by arithmetic and first principle, and hold them in a single hand. What it describes was not invented. It was recovered and inscribed to this digital monolith.</p>
 
   <img src="images/Polaris_time_lapse.jpg" alt="Polaris Time Lapse" />
+
+  <div class="download-pdf">
+    <button on:click={downloadPdf}>
+      Download as a PDF
+    </button>
+  </div>
 
 </article>
