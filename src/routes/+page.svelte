@@ -473,11 +473,14 @@ light-mulberry   hsl(330, 50%, 75%)  → rgb(223, 159, 191)</pre>
 
   <img src="images/Kepler_platonic_solids.png" alt="Ioannis Keppler - Platonic Solids" />
 
+
   <p>In his <em>Harmonices Mundi</em> (1619), Kepler calculated the angular velocity of each planet at perihelion and aphelion — its fastest and slowest points in orbit — and derived the musical interval each planet traces across the sky. Saturn spans a minor third; Jupiter, the same. Mars spans a fifth. The Earth, whose variation in speed is the most constrained of all, produces a single semitone — the interval between <em>mi</em> and <em>fa</em>, which Kepler read as <em>miseria</em>: misery. He then assigned a modal character to each wandering star.</p>
 
   <img src="images/Kepler_Mars_retrograde.png" alt="Ioannis Keppler - Mars' Retrograde Motion" />
 
   <p>The present work stands in this lineage, but moves in the opposite direction. This system begins with God's simplest gift — the heartbeat, the fifth, the octave — and builds upward from first principles, from the darkness of sin toward the light of the heavenly order. The ancients heard harmony from without. This is an attempt to construct it from within.</p>
+
+  <img src="images/firmament.png" alt="Firmament" />
 
   <h3>Sonoluminescence</h3>
 
