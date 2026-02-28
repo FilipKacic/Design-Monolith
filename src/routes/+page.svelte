@@ -122,7 +122,20 @@
 
   <p>Equivalently, these twelve notes arise from successive powers of three:</p>
 
-  <p>3⁰ = C,  3¹ = G,  3² = D,  3³ = A,  3⁴ = E,  3⁵ = B,  3⁶ = F♯,  3⁷ = C♯,  3⁸ = G♯,  3⁹ = D♯,  3¹⁰ = A♯,  3¹¹ = F.</p>
+  <ul>
+    <li>3⁰ = 1 = C</li>
+    <li>3¹ = 3 = G</li>
+    <li>3² = 9 = D</li>
+    <li>3³ = 27 = A</li>
+    <li>3⁴ = 81 = E</li>
+    <li>3⁵ = 243 = B</li>
+    <li>3⁶ = 729 = F♯</li>
+    <li>3⁷ = 2187 = C♯</li>
+    <li>3⁸ = 6561 = G♯</li>
+    <li>3⁹ = 19683 = D♯</li>
+    <li>3¹⁰ = 59049 = A♯</li>
+    <li>3¹¹ = 177147 = F</li>
+  </ul>
 
   <p>When arranged by proximity of pitch, the <em>chromatic circle</em> is formed: C–C♯–D–D♯–E–F–F♯–G–G♯–A–A♯–B  (0–1–2–3–4–5–6–7–8–9–10–11).</p>
 
@@ -168,12 +181,12 @@
   <p>The F Lydian scale offers the clearest example. It begins on F, at a frequency of 3¹¹ Hz. Its subsequent notes are:</p>
 
   <ul>
-    <li>C, at 3¹²</li>
-    <li>G, at 3¹³</li>
-    <li>D, at 3¹⁴</li>
-    <li>A, at 3¹⁵</li>
-    <li>E, at 3¹⁶</li>
-    <li>B, at 3¹⁷</li>
+    <li>C, at 3¹² = 531441</li>
+    <li>G, at 3¹³ = 1594323</li>
+    <li>D, at 3¹⁴ = 4782969</li>
+    <li>A, at 3¹⁵ = 14348907</li>
+    <li>E, at 3¹⁶ = 43046721</li>
+    <li>B, at 3¹⁷ = 129140163</li>
   </ul>
 
   <p>These pitches are close — but not identical — to their counterparts among the original twelve. For this reason they are named with the suffix <em>x</em> (as in <em>extra</em>): Cx, Gx, Dx, Ax, Ex, Bx.</p>
