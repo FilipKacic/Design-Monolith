@@ -1,9 +1,17 @@
 <script lang="ts">
-  import { NEW_NOTES_1_ALL, NEW_MODES, SCALE_DEGREE_NUMERALS }  from '$lib/utils/sounds';
+  import {
+    NEW_NOTES_1_ALL, NEW_NOTES_2,
+    NEW_MODES, SCALE_DEGREE_NUMERALS,
+    FREQUENCIES, NEW_FREQUENCIES,
+  } from '$lib/utils/sounds';
   import { COLOR_PALETTES }                                     from '$lib/utils/colors';
   import { ZODIAC_CONSTELLATIONS, WANDERING_STARS }             from '$lib/utils/stars';
   import { downloadPdf }                                        from '$lib/utils/pdf-download';
   import type { RetrogradeDays, AngularSize, NumericRange }     from '$lib/utils/stars';
+
+  // sounds.ts stores accidentals as "#"; the essay uses the Unicode sharp "♯".
+  // This single helper keeps the source data untouched while the display stays correct.
+  const sharp = (s: string) => s.replace(/#/g, '♯');
 
   // ── Synthesis table data ───────────────────────────────────────────────────
   // Derived at module load — the three systems can never diverge from each other
@@ -39,7 +47,6 @@
    * All other bodies remain in arcseconds (″).
    */
   function formatAngularSize(body: string, size: AngularSize): string {
-    // Moon and Sun: stored as arcseconds, displayed as arcmin′ arcsec″
     if (body === 'Moon' || body === 'Sun') {
       const fmt = (s: number) => {
         const m = Math.floor(s / 60);
@@ -49,7 +56,6 @@
       const base = `${fmt(size.min)} to ${fmt(size.max)}`;
       return size.note ? `${base} (${size.note})` : base;
     }
-    // All others: arcseconds
     const base = `${size.min}″ to ${size.max}″`;
     return size.note ? `${base} (${size.note})` : base;
   }
@@ -64,6 +70,103 @@
     if (r === 0) return '—';
     return `~${r.avg} (${r.min}–${r.max})`;
   }
+
+  // ── Helper: clean numeric display ─────────────────────────────────────────
+  // toPrecision + parseFloat strips trailing zeros so "1.50000" becomes "1.5".
+  function sig(n: number, digits = 10): string {
+    return parseFloat(n.toPrecision(digits)).toString();
+  }
+
+  // ── Section II: Circle of Twelve ──────────────────────────────────────────
+
+  // Successive multiplication by 3/2, starting at 1 Hz.
+  // freq = (3/2)^i — the note's frequency.
+  // prev = freq × (2/3) = (3/2)^(i-1) — the preceding note's frequency,
+  //        precomputed so the template never calls Math.pow directly.
+  //        For i=0 this yields 2/3, but the {#if n === 1} guard ensures it is
+  //        never rendered — the type stays a clean `number` with no null branch.
+  const circleOfFifthsSequence = Array.from({ length: 12 }, (_, i) => {
+    const freq = Math.pow(3 / 2, i);
+    return { n: i + 1, freq, prev: freq * (2 / 3) };
+  });
+
+  // Powers of 3 with conventional note names.
+  // Reuses FREQUENCIES from sounds.ts (already computed as 3^i) rather than
+  // redeclaring a duplicate note-name array — FREQUENCIES[0..11] = the 12
+  // chromatic tones in circle-of-fifths order.
+  const powersOfThreeNotes = FREQUENCIES.slice(0, 12).map((f, i) => ({
+    exp:   i,
+    value: f.frequency,   // 3^i, already computed in sounds.ts
+    note:  sharp(f.note),
+  }));
+
+  // f12 = 3^12 = 531441. Shared by §II (Pythagorean comma) and §III (Δ) —
+  // declared here so both blocks can reuse it without accessing FREQUENCIES[12] twice.
+  const f12 = FREQUENCIES[12].frequency;
+
+  // Pythagorean comma: (3/2)^12 vs 2^7.
+  // (3/2)^12 = 3^12 / 2^12 — reuses f12 so 3^12 is evaluated exactly once.
+  const pythagoreanStack  = f12 / Math.pow(2, 12); // 129.746…
+  const pythagoreanTarget = Math.pow(2, 7);          // 128
+  const pythagoreanDiff   = pythagoreanStack - pythagoreanTarget;
+
+  // ── Section III: Ascending Spiral ─────────────────────────────────────────
+
+  // F Lydian extra tones: 3^12 through 3^17.
+  // FREQUENCIES[12..17] already holds these values under the NOTES_2 names
+  // (Cx, Gx, Dx, Ax, Ex, Bx) — no separate recomputation needed.
+  const fLydianExtraTones = FREQUENCIES.slice(12, 18).map((f, i) => ({
+    note:  f.note,       // Cx, Gx, Dx, Ax, Ex, Bx — no sharps, no conversion needed
+    exp:   12 + i,
+    value: f.frequency,  // 3^(12+i), already in sounds.ts
+  }));
+
+  // Δ = 3^12 / 2^19 − 1  (exact rational: 7153 / 524288).
+  // Reuses f12 (declared above) — 3^12 is never recomputed.
+  // deltaFracDen serves double duty as the computation denominator AND the
+  // display value, so no separate alias is needed.
+  const deltaFracDen = Math.pow(2, 19);   // 524288
+  const DELTA        = f12 / deltaFracDen - 1;
+  const deltaFracNum = f12 - deltaFracDen; // 7153
+
+  // Cumulative error per spiral note: 3^n × Δ for n = 0…5.
+  // FREQUENCIES[0..5].frequency = 3^0…3^5, already computed — reused directly.
+  const spiralDeviations = FREQUENCIES.slice(0, 6).map((f, i) => ({
+    note:  f.note,              // C, G, D, A, E, B
+    exp:   i,
+    value: f.frequency * DELTA, // 3^i × Δ
+  }));
+
+  // ── Section IV: Corrected nomenclature ────────────────────────────────────
+
+  // NEW_FREQUENCIES[0..11] carries the corrected note names (A, E, B, F, C, G, D,
+  // A♯, E♯, B♯, F♯, C♯) paired with their 3^i frequencies — one import replaces
+  // the two separate primary/secondary arrays that were previously declared here.
+  // `value` (3^i) is intentionally omitted: the template only displays exp and note.
+  const correctedAllNotes = NEW_FREQUENCIES.slice(0, 12).map((f, i) => ({
+    exp:  i,
+    note: sharp(f.note),
+  }));
+
+  // Extra tones under corrected names (Ax, Ex, Bx, Fx, Cx, Gx).
+  // Names come from NEW_NOTES_2. `value` is omitted — the template only needs
+  // exp and note for these entries.
+  const correctedExtraTones = NEW_NOTES_2.map((note, i) => ({
+    exp: i,
+    note,
+  }));
+  // ── Section V, X: Precomputed display values ──────────────────────────────
+  // Keeping all arithmetic in the script rather than inline in the template
+  // makes the template purely declarative and keeps logic testable.
+
+  /** A=432 Hz: note A at its 4th octave = 3³ × 2⁴. */
+  const A_432 = Math.pow(3, 3) * Math.pow(2, 4);         // 432
+
+  /** 2³ − 1 = 7 (Mersenne prime). */
+  const MERSENNE_7 = Math.pow(2, 3) - 1;                 // 7
+
+  /** 12 × 12 × 1000 = 144 000 (12² × 1000, the sealed number from Revelation). */
+  const TRIBES_144K = 12 * 12 * 1000;                    // 144 000
 </script>
 
 <article>
@@ -103,45 +206,36 @@
 
   <p>Beginning from the first note of 1 Hz, the remaining eleven are generated by successive multiplication by the ratio 3:2:</p>
 
+  <!-- Computed: (3/2)^(n-1) for n = 1…12 -->
   <ul>
-    <li>1st note: 1 Hz</li>
-    <li>2nd note: 1 × 3/2 = 1.5 Hz</li>
-    <li>3rd note: 1.5 × 3/2 = 2.25 Hz</li>
-    <li>4th note: 2.25 × 3/2 = 3.375 Hz</li>
-    <li>5th note: 3.375 × 3/2 = 5.0625 Hz</li>
-    <li>6th note: 5.0625 × 3/2 = 7.59375 Hz</li>
-    <li>7th note: 7.59375 × 3/2 = 11.390625 Hz</li>
-    <li>8th note: 11.390625 × 3/2 = 17.0859375 Hz</li>
-    <li>9th note: 17.0859375 × 3/2 = 25.62890625 Hz</li>
-    <li>10th note: 25.62890625 × 3/2 = 38.443359375 Hz</li>
-    <li>11th note: 38.443359375 × 3/2 = 57.6650390625 Hz</li>
-    <li>12th note: 57.6650390625 × 3/2 = 86.49755859375 Hz</li>
+    {#each circleOfFifthsSequence as { n, freq, prev }}
+      <li>{n}{n === 1 ? 'st' : n === 2 ? 'nd' : n === 3 ? 'rd' : 'th'} note:
+        {#if n === 1}
+          1 Hz
+        {:else}
+          {sig(prev)} × 3/2 = {sig(freq)} Hz
+        {/if}
+      </li>
+    {/each}
   </ul>
 
   <p>These twelve notes divide the circle into almost equal parts, which is practical. The division is not perfectly equal because music is, in truth, a spiral — not a circle. The next close division afforded by the 3:2 ratio falls at 53 parts, which is impractical for performance.</p>
 
   <p>Equivalently, these twelve notes arise from successive powers of three:</p>
 
+  <!-- Computed: 3^i for i = 0…11, with conventional note names -->
   <ul>
-    <li>3⁰ = 1 = C</li>
-    <li>3¹ = 3 = G</li>
-    <li>3² = 9 = D</li>
-    <li>3³ = 27 = A</li>
-    <li>3⁴ = 81 = E</li>
-    <li>3⁵ = 243 = B</li>
-    <li>3⁶ = 729 = F♯</li>
-    <li>3⁷ = 2187 = C♯</li>
-    <li>3⁸ = 6561 = G♯</li>
-    <li>3⁹ = 19683 = D♯</li>
-    <li>3¹⁰ = 59049 = A♯</li>
-    <li>3¹¹ = 177147 = F</li>
+    {#each powersOfThreeNotes as { exp, value, note }}
+      <li>3<sup>{exp}</sup> = {value} = {note}</li>
+    {/each}
   </ul>
 
   <p>When arranged by proximity of pitch, the <em>chromatic circle</em> is formed: C–C♯–D–D♯–E–F–F♯–G–G♯–A–A♯–B  (0–1–2–3–4–5–6–7–8–9–10–11).</p>
 
   <p>When arranged in the order of their generation, the <em>circle of fifths</em> is formed: C–G–D–A–E–B–F♯–C♯–G♯–D♯–A♯–F  (0–7–2–9–4–11–6–1–8–3–10–5).</p>
 
-  <p>According to the circle of fifths, one ought to be able to travel by a perfect fifth exactly twelve times and return to the note from which the journey began — one octave higher. However, (3:2)¹² = 129.746337891, which is not equal to 2⁷ = 128. The difference of 1.746337891 makes such a return impossible, and that twelfth interval is dissonant.</p>
+  <!-- Computed: (3/2)^12 vs 2^7 -->
+  <p>According to the circle of fifths, one ought to be able to travel by a perfect fifth exactly twelve times and return to the note from which the journey began — one octave higher. However, (3:2)¹² = {sig(pythagoreanStack, 12)}, which is not equal to 2⁷ = {pythagoreanTarget}. The difference of {sig(pythagoreanDiff)} makes such a return impossible, and that twelfth interval is dissonant.</p>
 
   <p>This discrepancy is known as the <em>Pythagorean comma</em>. The imperfect interval it produces has been called the <em>wolf fifth</em>, the <em>Procrustean fifth</em>, or simply the <em>imperfect fifth</em>.</p>
 
@@ -180,31 +274,28 @@
 
   <p>The F Lydian scale offers the clearest example. It begins on F, at a frequency of 3¹¹ Hz. Its subsequent notes are:</p>
 
+  <!-- Computed: 3^12 through 3^17, with corrected extra-tone names -->
   <ul>
-    <li>C, at 3¹² = 531441</li>
-    <li>G, at 3¹³ = 1594323</li>
-    <li>D, at 3¹⁴ = 4782969</li>
-    <li>A, at 3¹⁵ = 14348907</li>
-    <li>E, at 3¹⁶ = 43046721</li>
-    <li>B, at 3¹⁷ = 129140163</li>
+    {#each fLydianExtraTones as { note, exp, value }}
+      <li>{note}, at 3<sup>{exp}</sup> = {value}</li>
+    {/each}
   </ul>
 
   <p>These pitches are close — but not identical — to their counterparts among the original twelve. For this reason they are named with the suffix <em>x</em> (as in <em>extra</em>): Cx, Gx, Dx, Ax, Ex, Bx.</p>
 
+  <!-- Computed: Δ = 3^12 / 2^19 − 1 = 7153/524288 -->
   <p>The smallest such discrepancy, for C, is:</p>
-  <p>3¹² / 2¹⁹ − 1 = 7153 / 524288</p>
+  <p>3¹² / 2¹⁹ − 1 = {deltaFracNum} / {deltaFracDen}</p>
 
   <p>This difference accumulates when stacking twelve or more pure fifths and comparing the results to the same tones at lower octaves. Each successive fifth compounds the error by a factor of 3.</p>
 
-  <p>Letting Δ = 7153 / 524288, the deviation for each successive note is:</p>
+  <!-- Computed: 3^n × Δ for n = 0…5 -->
+  <p>Letting Δ = {deltaFracNum} / {deltaFracDen}, the deviation for each successive note is:</p>
 
   <ul>
-    <li>C = 3⁰ × Δ ≈ 0.01</li>
-    <li>G = 3¹ × Δ ≈ 0.04</li>
-    <li>D = 3² × Δ ≈ 0.12</li>
-    <li>A = 3³ × Δ ≈ 0.37</li>
-    <li>E = 3⁴ × Δ ≈ 1.11</li>
-    <li>B = 3⁵ × Δ ≈ 3.32</li>
+    {#each spiralDeviations as { note, exp, value }}
+      <li>{note} = 3<sup>{exp}</sup> × Δ ≈ {value.toFixed(2)}</li>
+    {/each}
   </ul>
 
   <p>The system of pure fifths (powers of 3) and pure octaves (powers of 2) cannot close. Even at their nearest alignment, 3¹² ≠ 2¹⁹. The residual persists without resolution, opening the circle of fifths into an ascending spiral that generates six additional tones beyond the original twelve. Musical instruments must therefore be tuned to the specific scales in which they are played.</p>
@@ -228,30 +319,20 @@
 
   <p>The corrected assignment of names to generated tones is as follows:</p>
 
+  <!-- Computed: 3^i Hz with corrected note names (primary + secondary) -->
   <ul>
-    <li>3⁰ Hz  =  A</li>
-    <li>3¹ Hz  =  E</li>
-    <li>3² Hz  =  B</li>
-    <li>3³ Hz  =  F</li>
-    <li>3⁴ Hz  =  C</li>
-    <li>3⁵ Hz  =  G</li>
-    <li>3⁶ Hz  =  D</li>
-    <li>3⁷ Hz  =  A♯</li>
-    <li>3⁸ Hz  =  E♯</li>
-    <li>3⁹ Hz  =  B♯</li>
-    <li>3¹⁰ Hz  =  F♯</li>
-    <li>3¹¹ Hz  =  C♯</li>
+    {#each correctedAllNotes as { exp, note }}
+      <li>3<sup>{exp}</sup> Hz  =  {note}</li>
+    {/each}
   </ul>
 
-  <p>And for the extra tones of the ascending spiral, where Δ = 7153 / 524288 ≈ 0.013643:</p>
+  <!-- Computed: 3^n × Δ Hz with corrected extra-tone names -->
+  <p>And for the extra tones of the ascending spiral, where Δ = {deltaFracNum} / {deltaFracDen} ≈ {DELTA.toFixed(6)}:</p>
 
   <ul>
-    <li>3⁰ × Δ Hz  =  Ax</li>
-    <li>3¹ × Δ Hz  =  Ex</li>
-    <li>3² × Δ Hz  =  Bx</li>
-    <li>3³ × Δ Hz  =  Fx</li>
-    <li>3⁴ × Δ Hz  =  Cx</li>
-    <li>3⁵ × Δ Hz  =  Gx</li>
+    {#each correctedExtraTones as { exp, note }}
+      <li>3<sup>{exp}</sup> × Δ Hz  =  {note}</li>
+    {/each}
   </ul>
 
   <p>All sections that follow use this corrected nomenclature.</p>
@@ -285,7 +366,8 @@
 
   <p>In the 20th century, Hans Jenny coined the term <em>cymatics</em> to describe such acoustic phenomena. The hidden geometry of frequency is thereby revealed: certain tones resolve into clear, coherent forms; other... not so much.</p>
 
-  <p>The note A in this system, at its fourth octave, carries a frequency of 432 Hz (3³ × 2⁴). In cymatics experiments it yields a precise and beautiful geometric figure. The Stuttgart standard pitch of 440 Hz produces no such clarity — only disorder made comfortable by long familiarity.</p>
+  <!-- §V: A_432 = 3³ × 2⁴, precomputed in script -->
+  <p>The note A in this system, at its fourth octave, carries a frequency of {A_432} Hz (3³ × 2⁴). In cymatics experiments it yields a precise and beautiful geometric figure. The Stuttgart standard pitch of 440 Hz produces no such clarity — only disorder made comfortable by long familiarity.</p>
 
   <div class="video-wrap">
     <iframe
@@ -486,7 +568,6 @@ light-mulberry   hsl(330, 50%, 75%)  → rgb(223, 159, 191)</pre>
 
   <img src="images/Kepler_platonic_solids.png" alt="Ioannis Keppler - Platonic Solids" />
 
-
   <p>In his <em>Harmonices Mundi</em> (1619), Kepler calculated the angular velocity of each planet at perihelion and aphelion — its fastest and slowest points in orbit — and derived the musical interval each planet traces across the sky. Saturn spans a minor third; Jupiter, the same. Mars spans a fifth. The Earth, whose variation in speed is the most constrained of all, produces a single semitone — the interval between <em>mi</em> and <em>fa</em>, which Kepler read as <em>miseria</em>: misery. He then assigned a modal character to each wandering star.</p>
 
   <img src="images/Kepler_Mars_retrograde.png" alt="Ioannis Keppler - Mars' Retrograde Motion" />
@@ -544,9 +625,6 @@ light-mulberry   hsl(330, 50%, 75%)  → rgb(223, 159, 191)</pre>
 
   <p>Their measured properties are as follows. Angular sizes are given in their observed range — the Moon and Sun in arcminutes and arcseconds as tradition demands, all others in arcseconds. Retrograde durations record both the mean and the observed extremes, for the wandering stars do not keep perfect time.</p>
 
-  <!-- Derived from WANDERING_STARS (stars.ts).
-       Angular size and retrograde are structured min/max objects — see formatAngularSize()
-       and formatRetrograde() in the script block above. -->
   <table class="table-wrap">
     <thead>
       <tr>
@@ -596,7 +674,7 @@ light-mulberry   hsl(330, 50%, 75%)  → rgb(223, 159, 191)</pre>
 
   <p>Its geometric character is equally remarkable. The dodecagon — twelve-sided — is the largest regular polygon that tiles the plane alongside other regular polygons. A regular dodecahedron has twelve pentagonal faces. Both the cube and the octahedron carry twelve edges; the icosahedron, twelve vertices. In three dimensions, twelve is the <em>kissing number</em> — the precise count of unit spheres that can simultaneously touch a central one. Both cubic and hexagonal close packings, the densest possible arrangements of spheres in space, place each sphere in contact with exactly twelve neighbours.</p>
 
-  <p>Twelve appears 147 times in Scripture. Ishmael has twelve sons; Jacob, twelve sons who become the twelve tribes of Israel. Christ called twelve Apostles, and when one fell, the assembly was immediately restored to twelve. The Old Testament contains twelve Minor Prophets. The Book of Revelation is threaded with the figure: a woman crowned with twelve stars; twelve thousand sealed from each of twelve tribes, yielding 144,000 in all — the square of twelve, multiplied by a thousand.</p>
+  <p>Twelve appears 147 times in Scripture. Ishmael has twelve sons; Jacob, twelve sons who become the twelve tribes of Israel. Christ called twelve Apostles, and when one fell, the assembly was immediately restored to twelve. The Old Testament contains twelve Minor Prophets. The Book of Revelation is threaded with the figure: a woman crowned with twelve stars; twelve thousand sealed from each of twelve tribes, yielding {TRIBES_144K} in all — the square of twelve, multiplied by a thousand.</p>
 
   <img src="images/12tribes.png" alt="The Twelve Tribes of Isreael - Coat of Arms" />
 
@@ -605,7 +683,8 @@ light-mulberry   hsl(330, 50%, 75%)  → rgb(223, 159, 191)</pre>
 
   <h3>Seven</h3>
 
-  <p>Seven is the fourth prime — and among the most singular. It is a <em>Mersenne prime</em> (2³ − 1 = 7) and a <em>double Mersenne prime</em>, its exponent 3 being Mersenne as well. It is a Newman–Shanks–Williams prime, a safe prime, a lucky prime, a happy prime — and the only number simultaneously Mersenne and safe. It is the lowest natural number that cannot be expressed as the sum of the squares of three integers. In this sense it stands irreducibly apart from all that precede it.</p>
+  <!-- §X: MERSENNE_7 = 2³ − 1, precomputed in script -->
+  <p>Seven is the fourth prime — and among the most singular. It is a <em>Mersenne prime</em> (2³ − 1 = {MERSENNE_7}) and a <em>double Mersenne prime</em>, its exponent 3 being Mersenne as well. It is a Newman–Shanks–Williams prime, a safe prime, a lucky prime, a happy prime — and the only number simultaneously Mersenne and safe. It is the lowest natural number that cannot be expressed as the sum of the squares of three integers. In this sense it stands irreducibly apart from all that precede it.</p>
 
   <p>The heptagon is the first regular polygon that resists classical construction — compass and straightedge cannot build it. Where four, five, and six yield to those ancient instruments, seven withholds itself. There are precisely seven frieze groups in the plane: the seven fundamental symmetries by which a pattern may repeat along a line.</p>
 
@@ -628,8 +707,6 @@ light-mulberry   hsl(330, 50%, 75%)  → rgb(223, 159, 191)</pre>
 
   <p>The circle of twelve unites the chromatic notes, the spectral hues, and the signs of the zodiac into a single ring. The sequence begins at Aries — the spring equinox, the first sign, the point of resurrection and renewal.</p>
 
-  <!-- Derived from NEW_NOTES_1_ALL (sounds.ts) + COLOR_PALETTES.wheel (colors.ts)
-       + ZODIAC_CONSTELLATIONS (stars.ts) — same index, same correspondence. -->
   <table class="table-wrap">
     <thead>
       <tr><th>Position</th><th>Note</th><th>Colour</th><th>Zodiac Sign</th></tr>
@@ -651,8 +728,6 @@ light-mulberry   hsl(330, 50%, 75%)  → rgb(223, 159, 191)</pre>
 
   <p>The sequence of seven binds the musical modes, the wandering stars, and the days of the week into one living order. The modes run in their natural succession; the stars are placed against them by sidereal speed, from the swiftest to the most ancient and slow.</p>
 
-  <!-- Derived from NEW_MODES + SCALE_DEGREE_NUMERALS (sounds.ts)
-       + WANDERING_STARS (stars.ts). -->
   <table class="table-wrap">
     <thead>
       <tr><th>Degree</th><th>Mode</th><th>Wandering Star</th></tr>
