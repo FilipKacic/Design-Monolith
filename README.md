@@ -1,42 +1,79 @@
-# sv
+# Design Monolith
 
-Everything you need to build a Svelte project, powered by [`sv`](https://github.com/sveltejs/cli).
+A SvelteKit web application, a digital essay and a practical design tool.
 
-## Creating a project
+## The Essay
 
-If you're seeing this, you've probably already done this step. Congrats!
+A long-form illustrated essay unveiling the logic behind an audio-visual design system.
+Downloadable as a PDF directly from the page.
 
-```sh
-# create a new project
-npx sv create my-app
-```
+## Chord Finder & Standard Guitar Tuner
 
-To recreate this project with the same configuration:
+A tool for finding all the chords in a spefific scale with correct frequencies and proposed new naming system.
+Also a tuner for the standard guitar tuning.
 
-```sh
-# recreate this project
-npx sv create --template minimal --types ts --add prettier eslint --install npm ./
-```
+## Colour Palette
+A colour palette available for download in formats suitable for three design tools: Inkscape, CorelDRAW, and Paint.NET.
 
-## Developing
+---
 
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
+## Tech Stack
 
-```sh
+- [SvelteKit](https://kit.svelte.dev/) — framework
+- TypeScript — all utility logic
+- CSS custom properties — design token system
+- `window.print()` — PDF export (no dependencies)
+
+---
+
+## Getting Started
+
+```bash
+git clone https://github.com/filipkacic/Design-Monolith.git
+cd Design-Monolith
+npm install
 npm run dev
-
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
 ```
 
-## Building
+---
 
-To create a production version of your app:
+## Structure
 
-```sh
-npm run build
+```
+src/
+├── lib/
+│   ├── components/               # seperation of concerns
+│   │   ├── ChordDisplay.svelte
+│   │   ├── PaletteDownloadButtons.svelte
+│   │   ├── ScaleControl.svelte
+│   │   ├── ScaleDisplay.svelte
+│   │   ├── Toast.svelte
+│   │   └── TuningDisplay.svelte
+│   ├── stores/
+│   │   └── naming.ts             # note/mode naming conventions
+│   └── utils/
+│       ├── chord-construction.ts # important chord generation
+│       ├── clipboard.ts
+│       ├── color-conversion.ts
+│       ├── colors.ts             # colour palettes and HSL data
+│       ├── palette-export.ts     # XML / GPL / TXT export
+│       ├── paths.ts
+│       ├── pdf-download.ts       # print-to-PDF trigger
+│       ├── sounds.ts             # notes, modes, scale degree numerals
+│       └── stars.ts              # zodiac constellations and wandering star data
+└── routes/
+    ├── +layout.svelte
+    ├── +page.svelte              # the essay
+    ├── Header.svelte
+    ├── Footer.svelte
+    ├── colors/
+    │   └── +page.svelte          # audio
+    └── sounds/
+        └── +page.svelte          # visual
 ```
 
-You can preview the production build with `npm run preview`.
+---
 
-> To deploy your app, you may need to install an [adapter](https://svelte.dev/docs/kit/adapters) for your target environment.
+## License
+
+© 2026 Filip Kačić. All rights reserved.
