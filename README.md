@@ -35,6 +35,8 @@ npm install
 npm run dev
 ```
 
+Or visit the live site: [filipkacic.github.io/Design-Monolith](https://filipkacic.github.io/Design-Monolith/)
+
 ---
 
 ## Structure
