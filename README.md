@@ -78,4 +78,4 @@ src/
 
 ## License
 
-© 2026 Filip Kačić. All rights reserved.
+™ & © 2026 Filip Kačić
