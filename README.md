@@ -35,6 +35,8 @@ npm install
 npm run dev
 ```
 
+Or visit the live site: [filipkacic.github.io/Design-Monolith](https://filipkacic.github.io/Design-Monolith/)
+
 ---
 
 ## Structure
@@ -76,4 +78,4 @@ src/
 
 ## License
 
-© 2026 Filip Kačić. All rights reserved.
+™ & © 2026 Filip Kačić
