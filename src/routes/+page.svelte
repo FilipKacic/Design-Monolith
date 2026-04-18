@@ -601,7 +601,7 @@ light-mulberry   hsl(330, 50%, 75%)  → rgb(223, 159, 191)</pre>
   <blockquote>"And God said, 'Let there be a canopy in the midst of the waters, and let it separate the waters from the waters.' And God made the canopy and separated the waters that were under the expanse from the waters that were above the expanse. And it was so. And God called the expanse Heaven. And there was evening and there was morning, the second day."</blockquote>
   <p class="cite">— Genesis 1:6–8</p>
 
-  <p>It is possible that the stars are singing angels — or their reflection of some kind.</p>
+  <p>The question, dismissed as naive by <i>academonic</i> convention, remains genuinely unanswered: what, or who, is a star?</p>
 
   <img src="images/NikonP1000_star_zoom.jpg" alt="NikonP1000 Star Zoom" />
 
