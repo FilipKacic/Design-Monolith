@@ -235,7 +235,7 @@
   <p>When arranged in the order of their generation, the <em>circle of fifths</em> is formed: C–G–D–A–E–B–F♯–C♯–G♯–D♯–A♯–F  (0–7–2–9–4–11–6–1–8–3–10–5).</p>
 
   <!-- Computed: (3/2)^12 vs 2^7 -->
-  <p>According to the circle of fifths, one ought to be able to travel by a perfect fifth exactly twelve times and return to the note from which the journey began — one octave higher. However, (3:2)¹² = {sig(pythagoreanStack, 12)}, which is not equal to 2⁷ = {pythagoreanTarget}. The difference of {sig(pythagoreanDiff)} makes such a return impossible, and that twelfth interval is dissonant.</p>
+  <p>According to the circle of fifths, one ought to be able to travel by a perfect fifth exactly twelve times and return to the note from which the journey began — one octave higher. However, (3:2)¹² = {sig(pythagoreanStack, 12)}, which is not equal to 2⁷ = {pythagoreanTarget}. The difference of {sig(pythagoreanDiff)} is the culprit of dissonance.</p>
 
   <p>This discrepancy is known as the <em>Pythagorean comma</em>. The imperfect interval it produces has been called the <em>wolf fifth</em>, the <em>Procrustean fifth</em>, or simply the <em>imperfect fifth</em>.</p>
 
